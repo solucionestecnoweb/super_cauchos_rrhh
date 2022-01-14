@@ -1,0 +1,199 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* purchase_report_supercauchos
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-06-24 14:30+0000\n"
+"PO-Revision-Date: 2021-06-24 14:30+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: purchase_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.external_layout_purchase_order_budget_extend
+msgid "<b>Alta</b>"
+msgstr ""
+
+#. module: purchase_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.external_layout_purchase_order_budget_extend
+msgid "<b>Baja</b>"
+msgstr ""
+
+#. module: purchase_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.external_layout_purchase_order_budget_extend
+msgid "<b>Media</b>"
+msgstr ""
+
+#. module: purchase_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.external_layout_purchase_order_budget_extend
+msgid "<b>Muy Baja</b>"
+msgstr ""
+
+#. module: purchase_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.external_layout_purchase_order_budget_extend
+#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.external_layout_purchase_order_purchases_extend
+msgid "<b>Notas</b> <br/>"
+msgstr ""
+
+#. module: purchase_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.external_layout_purchase_order_purchases_extend
+msgid "<b>Orden de Compra Realizada a:</b>"
+msgstr ""
+
+#. module: purchase_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.external_layout_purchase_order_budget_extend
+msgid "<b>Prioridad </b>"
+msgstr ""
+
+#. module: purchase_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.external_layout_purchase_order_purchases_extend
+msgid "<span>Dirección: </span>"
+msgstr ""
+
+#. module: purchase_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.external_layout_purchase_order_budget_extend
+#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.external_layout_purchase_order_purchases_extend
+msgid "<span>Emisión</span>"
+msgstr ""
+
+#. module: purchase_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.external_layout_purchase_order_budget_extend
+msgid "<span>F Solicitud</span>"
+msgstr ""
+
+#. module: purchase_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.external_layout_purchase_order_purchases_extend
+msgid "<span>Proveedor: </span>"
+msgstr ""
+
+#. module: purchase_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.external_layout_purchase_order_budget_extend
+msgid "<span>Proveedor</span>"
+msgstr ""
+
+#. module: purchase_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.external_layout_purchase_order_purchases_extend
+msgid "<span>R.I.F: </span>"
+msgstr ""
+
+#. module: purchase_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.external_layout_purchase_order_purchases_extend
+msgid "<span>Telefono: </span>"
+msgstr ""
+
+#. module: purchase_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.external_layout_purchase_order_purchases_extend
+msgid ""
+"<span>Total Interno</span> <br/>\n"
+"                                    <span>Impuestos</span> <br/>\n"
+"                                    <span>Total Orden de Compra</span>"
+msgstr ""
+
+#. module: purchase_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.external_layout_purchase_order_budget_extend
+msgid "<span>Usuario Solicitante</span>"
+msgstr ""
+
+#. module: purchase_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.external_layout_purchase_order_purchases_extend
+msgid "<span>Vencimiento</span>"
+msgstr ""
+
+#. module: purchase_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.purchase_order_budget_extend
+#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.purchase_order_purchases_extend
+msgid "Cant."
+msgstr ""
+
+#. module: purchase_report_supercauchos
+#: model:ir.actions.report,name:purchase_report_supercauchos.action_purchase_order_purchases_extend
+msgid "Compras"
+msgstr ""
+
+#. module: purchase_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.purchase_order_purchases_extend
+msgid "Costo"
+msgstr ""
+
+#. module: purchase_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.purchase_order_budget_extend
+#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.purchase_order_purchases_extend
+msgid "Código"
+msgstr ""
+
+#. module: purchase_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.purchase_order_budget_extend
+#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.purchase_order_purchases_extend
+msgid "Descripción"
+msgstr ""
+
+#. module: purchase_report_supercauchos
+#: model:ir.model.fields,field_description:purchase_report_supercauchos.field_purchase_order__date_end
+msgid "End Date"
+msgstr "Fecha de Vencimiento"
+
+#. module: purchase_report_supercauchos
+#: model:ir.model.fields.selection,name:purchase_report_supercauchos.selection__purchase_order__priority__high
+msgid "High"
+msgstr "Alta"
+
+#. module: purchase_report_supercauchos
+#: model:ir.model.fields.selection,name:purchase_report_supercauchos.selection__purchase_order__priority__low
+msgid "Low"
+msgstr "Baja"
+
+#. module: purchase_report_supercauchos
+#: model:ir.model.fields.selection,name:purchase_report_supercauchos.selection__purchase_order__priority__meddium
+msgid "Meddium"
+msgstr "Media"
+
+#. module: purchase_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.external_layout_purchase_order_budget_extend
+msgid "Nro. de Presupuesto"
+msgstr ""
+
+#. module: purchase_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.external_layout_purchase_order_purchases_extend
+msgid "Orden de Compra N°"
+msgstr ""
+
+#. module: purchase_report_supercauchos
+#: model:ir.actions.report,name:purchase_report_supercauchos.action_purchase_order_budget_extend
+msgid "Presupuestos"
+msgstr ""
+
+#. module: purchase_report_supercauchos
+#: model:ir.model.fields,field_description:purchase_report_supercauchos.field_purchase_order__priority
+msgid "Priority"
+msgstr "Prioridad"
+
+#. module: purchase_report_supercauchos
+#: model:ir.model,name:purchase_report_supercauchos.model_purchase_order
+msgid "Purchase Order"
+msgstr "Pedido de compra"
+
+#. module: purchase_report_supercauchos
+#: model:ir.model.fields,field_description:purchase_report_supercauchos.field_purchase_order__rate
+msgid "Rate"
+msgstr "Tasa"
+
+#. module: purchase_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.purchase_order_purchases_extend
+msgid "Total"
+msgstr ""
+
+#. module: purchase_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:purchase_report_supercauchos.purchase_order_purchases_extend
+msgid "Total Piezas"
+msgstr ""
+
+#. module: purchase_report_supercauchos
+#: model:ir.model.fields.selection,name:purchase_report_supercauchos.selection__purchase_order__priority__very_low
+msgid "Very Low"
+msgstr "Muy Baja"

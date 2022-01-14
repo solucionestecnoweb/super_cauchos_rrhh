@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_sales_merchandise_in_transit" model="ir.actions.act_window">
+        <field name="name">Reporte de Mercancía en Tránsito</field>
+        <field name="res_model">wizard.merchandise.transit</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="purchase_imports_extend.wizard_merchandise_transit_view_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem name="Reporte de Mercancía en Tránsito" parent="sale.menu_sale_report" id="sales_merchandise_in_transit.wizard_sales_merchandise_transit" sequence="15" action="action_sales_merchandise_in_transit"/>
+</odoo>

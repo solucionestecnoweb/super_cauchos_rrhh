@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- purchase.order.imports.importations tree view -->
+    <record id="purchase_order_imports_importations_view_tree" model="ir.ui.view">
+        <field name="name">purchase.order.imports.importations.view.tree</field>
+        <field name="model">purchase.order.imports.importations</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <!-- Add your fields here -->
+                <field name="name"/>
+                <field name="importation_brand"/>
+                <field name="prof"/>
+                <field name="importation_type"/>
+                <field name="f_prof"/>
+                <field name="invoice_id"/>
+                <field name="container" sum="Total Container"/>
+                <field name="bl_date"/>
+                <field name="transc"/>
+                <field name="accumulated"/>
+                <field name="eta"/>
+                <field name="transit" sum="Total Transit"/>
+                <field name="nac" sum="Total NAC"/>
+                <field name="total" sum="Total"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- purchase.order.imports.importations search view -->
+    <record id="purchase_order_imports_importations_view_search" model="ir.ui.view">
+        <field name="name">purchase.order.imports.importations.view.search</field>
+        <field name="model">purchase.order.imports.importations</field>
+        <field name="arch" type="xml">
+            <search>
+                <!-- Add your fields here -->
+                <field name="name"/>
+                <field name="importation_brand"/>
+                <field name="prof"/>
+                <field name="importation_type"/>
+                <field name="invoice_id"/>
+            </search>
+        </field>
+    </record>
+
+</odoo>

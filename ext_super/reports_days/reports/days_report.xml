@@ -1,0 +1,191 @@
+<odoo>
+
+    <record id="paperformat_horizontal" model="report.paperformat">
+        <field name="name">Horizontal predeterminado</field>
+        <field name="orientation">Landscape</field>
+    </record>
+
+    <report
+            id="action_days_report"
+            model="days.report"
+            string="Reporte_días"
+            report_type="qweb-pdf"
+            name="reports_days.days_report"
+            file="reports_days.days_report"
+            menu="True"
+            paperformat="paperformat_horizontal"
+            />
+
+        <template id="external_layout_days_report">
+
+            <div class="header">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-4">
+                            <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)" style="max-height: 100px; max-width: 150px; margin-top:22px;"/>
+                        </div>
+                        <div class="col-4 text-center"><br/>
+                            <b style="font-size:20px;">Cobranzas</b><br/>
+                            <b style="font-size:12px;"><t t-esc="o.company_id.name"/> <t t-esc="o.company_id.vat"/></b><br/>
+                            <small style="font-size:12px;">Desde: <t t-esc="o.date_from.strftime('%d/%m/%y')"/> Hasta: <t t-esc="o.date_to.strftime('%d/%m/%y')"/></small><br/>
+                        </div>
+                        <div class="col-4 text-center"><br/>
+                            <b style="font-size:12px;">Página <span class="page" style="font-size:12px;"/> / <span class="topage" style="font-size:12px;"/></b><br/>
+                            <b style="font-size:12px;" t-field="o.date_now"></b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article o_report_layout_standard">
+                <t t-raw="0"/>
+            </div>
+
+            <div class="footer">
+                <div class="text-center" style="border-top: 1px solid black;">
+                    
+                </div>
+            </div>
+        </template>
+
+        <template id="days_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="reports_days.external_layout_days_report">
+                        
+                        <div class="page">
+                            <br/><br/>
+                            <table class="">
+                                <colgroup>
+                                    <col span="1" style="width: 10%;"/>
+                                    <col span="1" style="width: 10%;"/>
+                                    <col span="1" style="width: 10%;"/>
+                                    <col span="1" style="width: 5%;"/>
+                                    <col span="1" style="width: 5%;"/>
+                                    <col span="1" style="width: 5%;"/>
+                                    <col span="1" style="width: 5%;"/>
+                                    <col span="1" style="width: 10%;"/>
+                                    <col span="1" style="width: 10%;"/>
+                                    <col span="1" style="width: 10%;"/>
+                                    <col span="1" style="width: 10%;"/>
+                                    <col span="1" style="width: 10%;"/>
+                                </colgroup>
+                                <thead>
+                                    <tr style="background-color: #cacaca">
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">F Vencimiento</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">F Vence/H</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Fecha de Pago</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Días Prom</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Días Prom/H</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Días C</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Nro Pago</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Doc. Afect</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Cliente</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Monto en Bs</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Tasa</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Monto en $</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                    
+                                <t t-set="days_gen" t-value="0"/>
+                                <t t-set="slack_gen" t-value="0"/>
+                                <t t-set="street_days_gen" t-value="0"/>
+                                <t t-set="total_bs_gen" t-value="0"/>
+                                <t t-set="total_usd_gen" t-value="0"/>
+
+                                <tbody>
+
+                                    <t t-foreach="o.get_lines()" t-as="item">
+
+                                        <t t-set="currency_bs_id" t-value="item.currency_bs_id"/>
+                                        <t t-set="currency_usd_id" t-value="item.currency_usd_id"/>
+                                
+                                        <tr>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                <span style="font-size:12px;"><t t-esc="item.invoice_date_due.strftime('%d/%m/%y')"/></span>
+                                            </td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                <span style="font-size:12px;"><t t-esc="item.date_due_slack.strftime('%d/%m/%y')"/></span>
+                                            </td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                <span style="font-size:12px;"><t t-esc="item.payment_date.strftime('%d/%m/%y')"/></span>
+                                            </td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                <span style="font-size:12px;"><t t-esc="item.days"/></span>
+                                            </td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                <span style="font-size:12px;"><t t-esc="item.slack"/></span>
+                                            </td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                <span style="font-size:12px;"><t t-esc="item.street_days"/></span>
+                                            </td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                <span style="font-size:12px;"><t t-esc="item.invoice_payment_ref"/></span>
+                                            </td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                <span style="font-size:12px;"><t t-esc="item.name"/></span>
+                                            </td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                <span style="font-size:12px;"><t t-esc="item.invoice_partner_display_name"/></span>
+                                            </td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-right">
+                                                <span style="font-size:12px;"><t t-esc="item.amount_total" t-options='{"widget": "monetary", "display_currency": currency_bs_id}'/></span>
+                                            </td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                <span style="font-size:12px;"><t t-esc="item.rate" t-options='{"widget": "monetary", "display_currency": currency_bs_id}'/></span>
+                                            </td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-right">
+                                                <span style="font-size:12px;"><t t-esc="item.amount_currency" t-options='{"widget": "monetary", "display_currency": currency_usd_id}'/></span>
+                                            </td>                                        
+                                        </tr>
+
+                                        <t t-set="days_gen" t-value="days_gen + item.days"/>
+                                        <t t-set="slack_gen" t-value="slack_gen + item.slack"/>
+                                        <t t-set="street_days_gen" t-value="street_days_gen + item.street_days"/>
+                                        <t t-set="total_bs_gen" t-value="total_bs_gen + item.amount_total"/>
+                                        <t t-set="total_usd_gen" t-value="total_usd_gen + item.amount_currency"/>
+
+                                    </t>
+                                    <tr>
+                                        <td colspan="3" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center"><b style="font-size:12px;">Totales...</b></td>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center"><span style="font-size:12px;"><t t-esc="days_gen"/></span></td>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center"><span style="font-size:12px;"><t t-esc="slack_gen"/></span></td>                                        
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center"><span style="font-size:12px;"><t t-esc="street_days_gen"/></span></td>
+                                        <td colspan="3" class="text-right" style="border-bottom: 1px solid #cacaca;"></td>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-right"><span style="font-size:12px;"><t t-esc="total_bs_gen" t-options='{"widget": "monetary", "display_currency": o.currency_bs_id}'/></span></td>
+                                        <td class="text-right" style="border-bottom: 1px solid #cacaca;"></td>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-right"><span style="font-size:12px;"><t t-esc="total_usd_gen" t-options='{"widget": "monetary", "display_currency": o.currency_usd_id}'/></span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <br/><br/>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+</odoo>

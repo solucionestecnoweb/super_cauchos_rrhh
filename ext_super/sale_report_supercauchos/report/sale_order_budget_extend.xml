@@ -1,0 +1,213 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="0">
+        <!-- Add you code here -->
+        <report 
+            id="action_sale_order_budget_extend" 
+            model="sale.order" 
+            string="Presupuestos de Ventas" 
+            report_type="qweb-pdf"
+            name="sale_report_supercauchos.sale_order_budget_extend" 
+            file="sale_report_supercauchos.sale_order_budget_extend" 
+            menu="True" 
+            />
+
+        <template id="external_layout_sale_order_budget_extend">
+            <div class="header">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-5">
+                            <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)" style="max-height: 100px; max-width: 200px;"/><br/>
+                            <b style="font-size:12px;">Señores: <t t-esc="o.partner_id.name"/></b><br/>
+                            <b style="font-size:12px;">R.I.F: <t t-esc="o.rif"/></b><br/>
+                            <b style="font-size:12px;">Dirección: <t t-esc="o.partner_id.city"/> <t t-esc="o.partner_id.state_id.name"/></b><br/>
+                            <b style="font-size:12px;">Teléfono: <t t-esc="o.partner_id.phone"/></b><br/>
+                            <b style="font-size:12px;">Vendedor: <t t-esc="o.seller_id.name"/></b><br/>
+                            <b style="font-size:12px;">Teléfono: <t t-esc="o.seller_id.phone"/></b><br/>
+                        </div>
+                        <div class="col-2">
+                        </div>
+                        <div class="col-5 text-center">
+                            <span style="font-size:12px;"><t t-esc="o._date_now_purchase().strftime('%d de %B de %Y %r')"/></span><br/>
+                            <span style="font-size:12px;">Nro. Cotización: <t t-esc="o.name"/></span><br/>
+                            <span style="font-size:12px;">Usuario Solicitante: <t t-esc="o.env.user.name"/></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article o_report_layout_standard">
+                <t t-raw="0"/>
+            </div>
+
+            <div class="footer">
+                <div class="text-center">
+                    <span style="font-size:12px;">CALLE LOS MANGOS Y CALLE BOLIVAR EDIF. LOS MELONES PISO P.B. LOCAL 5 SECTOR CENTRO SAN RAFAEL DE ONOTO EDO PORTUGUESA / AV CIRCUNVALACION SUR, CENTRO EMPRESARIAL LOS LLANOS LOCAL NRO 4, ACARIGUA EDO PORTUGUESA. TELF.: 0255-6643286</span>
+                </div>
+            </div>
+        </template>
+
+        <template id="sale_order_budget_extend">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="sale_report_supercauchos.external_layout_sale_order_budget_extend">
+                        <div class="page">
+                            <br/><br/><br/><br/><br/>
+                            <table>
+                                <!-- Cantidad de columnas -->
+                                <colgroup>
+                                    <col span="1" style="width: 11%;"/>
+                                    <col span="1" style="width: 11%;"/>
+                                    <col span="1" style="width: 11%;"/>
+                                    <col span="1" style="width: 11%;"/>
+                                    <col span="1" style="width: 11%;"/>
+                                    <col span="1" style="width: 11%;"/>
+                                    <col span="1" style="width: 11%;"/>
+                                    <col span="1" style="width: 12%;"/>
+                                    <col span="1" style="width: 11%;"/>
+                                </colgroup>
+                                <!-- Fin cantidad de columnas -->
+
+                                <!-- Cabeceras -->
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Cant.</th>
+                                        <th colspan="3" class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Descripción</th>
+                                        <th class="text-center" style="border-right: 3px solid white; border-bottom: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Costo Unitario</th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">IVA</th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Descuento</th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Total</th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">FillerT</th>
+                                    </tr>
+                                </thead>
+                                <!-- Fin cabeceras -->
+                                
+                                <!-- Variables totales -->
+                                <t t-set="subtotal" t-value="0"/>
+                                <t t-set="net_amount" t-value="0"/>
+                                <t t-set="iva" t-value="0"/>
+                                <!-- Fin variables totales -->
+                                
+                                <tbody>
+                                    <!-- Lineas -->
+                                    <t t-foreach="o.order_line" t-as="item">
+                                        <t t-if="item.display_type == 'line_section'">
+                                            <tr>
+                                                <td name="td_section_line" colspan="99">
+                                                    <span t-field="item.name"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-elif="item.display_type == 'line_note'">
+                                            <tr>
+                                                <td name="td_note_line" colspan="99">
+                                                    <span t-field="item.name"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-else="">
+                                            <tr>
+                                                <td class="text-right">
+                                                    <span style="font-size:12px;"><t t-esc="item.product_uom_qty" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                                <td colspan="3" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.product_id.name"/></span>
+                                                </td>
+                                                <td class="text-right">
+                                                    <span style="font-size:12px;"><t t-esc="item.price_unit" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span style="font-size:12px;">
+                                                        <t t-foreach="item.tax_id" t-as="line">
+                                                            <t t-esc="line.name"/> 
+                                                        </t>
+                                                    </span>
+                                                </td>
+                                                <td class="text-right">
+                                                    <span style="font-size:12px;"><t t-esc="item.discount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                                <td class="text-right">
+                                                    <span style="font-size:12px;"><t t-esc="item.price_total" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></span>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.product_id.filler * item.product_uom_qty" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                            </tr>
+                                            <t t-set="amount" t-value="item.price_unit * item.product_uom_qty"/>
+                                            <t t-if="item.tax_id">
+                                                <t t-set="iva" t-value="iva + ((item.tax_id.amount * amount) / 100)"/>
+                                            </t>
+                                            <t t-set="subtotal" t-value="subtotal + amount"/>
+                                            <t t-set="net_amount" t-value="net_amount + item.price_subtotal"/>
+                                        </t>
+                                    </t>
+                                    <!-- Fin lineas -->
+
+                                    <!-- Totales -->
+                                    <tr>
+                                        <td colspan="6"></td>
+                                        <td class="text-right">
+                                            <b style="font-size:12px;">Subtotal</b>
+                                        </td>
+                                        <td class="text-right">
+                                            <span style="font-size:12px;"><t t-esc="o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6"></td>
+                                        <td class="text-right">
+                                            <b style="font-size:12px;">IVA</b>
+                                        </td>
+                                        <td class="text-right">
+                                            <span style="font-size:12px;"><t t-esc="o.amount_tax" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6"></td>
+                                        <td class="text-right">
+                                            <b style="font-size:12px;">Total</b>
+                                        </td>
+                                        <td class="text-right">
+                                            <span style="font-size:12px;"><t t-esc="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></span>
+                                        </td>
+                                    </tr>
+                                    <!-- Fin totales -->
+                                </tbody>     
+                            </table>
+                            <br/><br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <span style="font-size:14px;">Condiciones: </span><br/>
+                                        <span style="font-size:12px;">-Condiciones de pago: <t t-esc="o.payment_condition_id.name"/></span><br/>
+                                        <span style="font-size:12px;">-Debido a la alta rotación de los neumáticos por favor indicar la aprobación de los Cauchos para bloquear.</span><br/>
+                                        <span style="font-size:12px;">-Descuento aplicado</span><br/>
+                                        <span style="font-size:12px;">-Precios se mantienen si Venezuela mantiene sin pago de aranceles de importación</span><br/>
+                                        <span style="font-size:12px;">-Fecha de llegada <t t-if="o.arrive_date" t-esc="o.arrive_date.strftime('%d/%m/%Y')"/></span><br/>
+                                        <span style="font-size:12px;">-Medida completa</span><br/>
+                                    </div>
+                                    <div class="col-4">
+                                        <span style="font-size:12px;"><t t-esc="o.note"/></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <t t-foreach="o._get_boss_signature()" t-as="item">
+                                            <img t-if="item.firma" t-att-src="'data:image/png;base64,%s' % to_text(item.firma)" style="max-height: 100px; max-width: 200px;"/><br/>
+                                            <b style="font-size:12px;"><t t-esc="item.name"/></b><br/>
+                                            <span style="font-size:12px;">Vice-presidente <br/><t t-esc="item.partner_id.phone"/></span>
+                                        </t>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

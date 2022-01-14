@@ -1,0 +1,18 @@
+<odoo>
+  <data>
+
+     <record id="mailing_contact_inerhit" model="ir.ui.view">
+        <field name="name">rmailing.contact.inerhit</field>
+        <field name="model">mailing.contact</field>
+        <field name="inherit_id" ref="mass_mailing.view_mail_mass_mailing_contact_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='message_bounce']" position="after">
+                <field name="fecha_nacimiento" string="Fecha de Nacimiento" invisible='0'/>
+                <field name="email_aux" />
+            </xpath>
+           
+        </field>
+    </record>     	 
+
+  </data>
+</odoo>

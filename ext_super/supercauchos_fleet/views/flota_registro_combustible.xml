@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+        <!-- Add you code here -->
+        
+        <record model="ir.ui.view" id="fleet_vehicle_log_fuel_form">
+            <field name="name">fleet.vehicle.log.fuel.form</field>
+            <field name="model">fleet.vehicle.log.fuel</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_log_fuel_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='vehicle_id']" position="after">
+                    <field name="fuel_type"/>
+                </xpath>
+                <xpath expr="//field[@name='liter']" position="replace">
+                    <field name="cistern_lts"/>
+                </xpath>
+                <xpath expr="//field[@name='price_per_liter']" position="replace">
+                    <field name="vehicle_consume"/>
+                </xpath>
+                <xpath expr="//field[@name='amount']" position="replace">
+                    <field name="cistern_lts_ava"/>
+                </xpath>
+                <xpath expr="//field[@name='vendor_id']" position="after">
+                    <field name="lts_cistern"/>
+                    <field name="price_per_liter"/>
+                    <field name="amount"/>                    
+                </xpath>
+
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="fleet_vehicle_log_fuel_tree">
+            <field name="name">fleet.vehicle.log.fuel.tree</field>
+            <field name="model">fleet.vehicle.log.fuel</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_log_fuel_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='vehicle_id']" position="after">
+                    <field name="fuel_type"/>
+                </xpath>
+                <xpath expr="//field[@name='liter']" position="replace">
+                    <field name="liter" invisible="1"/>
+                    <field name="cistern_lts"/>
+                </xpath>
+                <xpath expr="//field[@name='price_per_liter']" position="replace">
+                    <field name="vehicle_consume"/>
+                    <field name="price_per_liter"/>
+                </xpath>
+                <xpath expr="//field[@name='amount']" position="replace">
+                    <field name="cistern_lts_ava"/>
+                    <field name="lts_cistern"/>
+                    <field name="amount"/>                    
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

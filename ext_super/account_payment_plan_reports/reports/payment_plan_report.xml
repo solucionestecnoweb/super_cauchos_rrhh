@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="paperformat_horizontal" model="report.paperformat">
+        <field name="name">Horizontal predeterminado</field>
+        <field name="orientation">Landscape</field>
+    </record>
+
+    <report 
+            id="action_payment_plan_report" 
+            model="wizard.payment.plan" 
+            string="payment_plan_report" 
+            report_type="qweb-pdf"
+            name="account_payment_plan_reports.payment_plan_report" 
+            file="account_payment_plan_reports.payment_plan_report" 
+            paperformat="paperformat_horizontal"
+            />
+
+        <template id="external_layout_payment_plan_report">
+            <div class="header">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-4 text-center">
+                            <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)" style="max-height: 100px; max-width: 200px;"/><br/>
+                        </div>
+                        <div class="col-4 text-center"><br/>
+                            <b style="font-size:20px;">Payment Planning</b><br/>
+                            <small style="font-size:12px;">From: <t t-esc="o.date_from.strftime('%d/%m/%y')"/> To: <t t-esc="o.date_to.strftime('%d/%m/%y')"/></small><br/>
+                        </div>
+                        <div class="col-4 text-right">
+                            <b style="font-size:12px;">Page <span class="page" style="font-size:12px;"/> / <span class="topage" style="font-size:12px;"/></b><br/>
+                            <b style="font-size:12px;" t-field="o.date_now"></b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article o_report_layout_standard">
+                <t t-raw="0"/>
+            </div>
+
+            <div class="footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-4 text-center">
+                            <span style="font-size: 12px;">Made By: <t t-esc="o.env.user.name"/></span>
+                        </div>
+                        <div class="col-4">
+                        </div>
+                        <div class="col-4 text-center">
+                            <span style="font-size: 12px;">Reviewed By: </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template id="payment_plan_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="account_payment_plan_reports.external_layout_payment_plan_report">
+                        <div class="page">
+                            <table style="width: 100%;">
+                                <!-- Cantidad de columnas -->
+                                <colgroup>
+                                    <col span="1" style="width: 5%;"/>
+                                    <col span="1" style="width: 7%;"/>
+                                    <col span="1" style="width: 7%;"/>
+                                    <col span="1" style="width: 8%;"/>
+                                    <col span="1" style="width: 10%;"/>
+                                    <col span="1" style="width: 7%;"/>
+                                    <col span="1" style="width: 8%;"/>
+                                    <col span="1" style="width: 8%;"/>
+                                    <col span="1" style="width: 8%;"/>
+                                    <col span="1" style="width: 8%;"/>
+                                    <col span="1" style="width: 8%;"/>
+                                    <col span="1" style="width: 8%;"/>
+                                    <col span="1" style="width: 8%;"/>
+                                </colgroup>
+                                <!-- Fin cantidad de columnas -->
+                                
+                                <!-- Variables totales -->
+                                <t t-set="t_transfer" t-value="0"/>
+                                <t t-set="t_cancel_usd" t-value="0"/>
+                                <t t-set="t_cancel_bs" t-value="0"/>
+                                <!-- Fin variables totales -->
+
+                                <thead>
+                                    <tr style="background-color: #cacaca">
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; font-size:14px;">Item</th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; font-size:14px;">Doc Date</th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; font-size:14px;">Purchase Num</th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; font-size:14px;">Supplier</th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; font-size:14px;">Specs</th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; font-size:14px;">Base</th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; font-size:14px;">Exempt</th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; font-size:14px;">IVA</th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; font-size:14px;">Total</th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; font-size:14px;">Currency Transf. $</th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; font-size:14px;">Amount to Cancel $</th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; font-size:14px;">Paid / Observation</th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; font-size:14px;">Amount to Cancel Bs.</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <!-- Lineas -->
+                                    <t t-set="counter" t-value="0"/>
+                                    <t t-foreach="o._get_data()" t-as="item">
+                                        
+                                        <t t-set="rate" t-value="o.env['res.currency.rate'].search([('name', '=', item.date)]).sell_rate"/>
+                                        <t t-if="rate == False">
+                                            <t t-set="rate" t-value="1"/>
+                                        </t>    
+
+                                        <t t-set="counter" t-value="counter + 1"/>
+                                        <t t-foreach="item.move_id.invoice_line_ids" t-as="line">
+                                            <tr>
+                                                <td class="text-center" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:12px;"><t t-esc="counter"/></td>
+                                                <td class="text-center" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:12px;"><t t-if="item.date" t-esc="item.date.strftime('%d/%m/%y')"/></td>
+                                                <td class="text-center" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:12px;"><t t-esc="item.move_id.name"/></td>
+                                                <td class="text-center" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:12px;"><t t-esc="item.partner_id.name"/></td>
+                                                <td class="text-center" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:12px;"><t t-esc="line.name"/></td>
+                                                <td class="text-right" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:12px; padding-right: 3px;"><t t-esc="line.price_unit" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></td>
+                                                <t t-set="tax" t-value="0"/>
+                                                <t t-if="line.tax_ids">
+                                                    <t t-foreach="line.tax_ids" t-as="taxes">
+                                                        <t t-set="tax" t-value="(line.price_unit * taxes.amount) / 100"/>
+                                                        <t t-if="taxes.aliquot == 'exempt'">
+                                                            <td class="text-right" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:12px; padding-right: 3px;"><t t-esc="tax" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></td>
+                                                            <td class="text-right" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:12px; padding-right: 3px;"></td>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <td class="text-right" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:12px; padding-right: 3px;"></td>
+                                                            <td class="text-right" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:12px; padding-right: 3px;"><t t-esc="tax" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></td>
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                                <t t-else="">
+                                                    <td class="text-right" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:12px; padding-right: 3px;"></td>
+                                                    <td class="text-right" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:12px; padding-right: 3px;"></td>
+                                                </t>
+                                                <td class="text-right" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:12px; padding-right: 3px;"><t t-esc="(line.price_unit * line.quantity) + tax" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></td>
+                                                <t t-if="item.move_id.payment_condition_id not in ('contado', 'Contado', 'CONTADO') and item.move_id.payment_condition_id">
+                                                    <t t-if="item.move_id.currency_id.name == 'Bs.'">
+                                                        <td class="text-right" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:12px; padding-right: 3px;"><t t-esc="((line.price_unit * line.quantity) + tax) / rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></td>
+                                                        <t t-set="t_transfer" t-value="t_transfer + (((line.price_unit * line.quantity) + tax) / rate)"/>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <td class="text-right" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:12px; padding-right: 3px;"><t t-esc="(line.price_unit * line.quantity) + tax" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></td>
+                                                        <t t-set="t_transfer" t-value="t_transfer + ((line.price_unit * line.quantity) + tax)"/>
+                                                    </t>
+                                                </t>
+                                                <t t-else="">
+                                                    <td class="text-right" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:12px; padding-right: 3px;"></td>
+                                                </t>
+                                                <t t-if="item.move_id.currency_id.name == 'Bs.'">
+                                                    <td class="text-right" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:12px; padding-right: 3px;"><t t-esc="((line.price_unit * line.quantity) + tax) / rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></td>
+                                                    <td class="text-center" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:12px;"><t t-esc="item.move_id.narration"/></td>
+                                                    <td class="text-right" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:12px; padding-right: 3px;"><t t-esc="(line.price_unit * line.quantity) + tax" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></td>
+                                                    <t t-set="t_cancel_bs" t-value="t_cancel_bs + ((line.price_unit * line.quantity) + tax)"/>
+                                                    <t t-set="t_cancel_usd" t-value="t_cancel_usd + (((line.price_unit * line.quantity) + tax) / rate)"/>                                        
+                                                </t>
+                                                <t t-else="">
+                                                    <td class="text-right" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:12px; padding-right: 3px;"><t t-esc="(line.price_unit * line.quantity) + tax" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></td>
+                                                    <td class="text-center" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:12px;"><t t-esc="item.move_id.narration"/></td>
+                                                    <td class="text-right" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:12px; padding-right: 3px;"><t t-esc="((line.price_unit * line.quantity) + tax) * rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></td>
+                                                    <t t-set="t_cancel_usd" t-value="t_cancel_usd + ((line.price_unit * line.quantity) + tax)"/>
+                                                    <t t-set="t_cancel_bs" t-value="t_cancel_bs + (((line.price_unit * line.quantity) + tax) * rate)"/>                                        
+                                                </t>
+                                            </tr>
+                                        </t>
+
+                                    </t>
+                                    <!-- Fin lineas -->
+                                    <!-- Totales -->
+                                    <tr>
+                                        <td colspan="9" style="display: table-cell; vertical-align: middle; font-size:14px;"></td>
+                                        <td class="text-right" style="border-left: 1px solid #cacaca; border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:14px; padding-right: 3px;"><t t-esc="t_transfer" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></td>
+                                        <td class="text-right" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:14px; padding-right: 3px;"><t t-esc="t_cancel_usd" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></td>
+                                        <td class="text-right" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:14px;"></td>
+                                        <td class="text-right" style="border-right: 1px solid #cacaca; border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:14px; padding-right: 3px;"><t t-esc="t_cancel_bs" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></td>
+                                    </tr>
+                                    <tr>
+                                        <td rowspan="2" colspan="3" style="display: table-cell; vertical-align: middle; font-size:14px;"></td>
+                                        <td class="text-center" colspan="2" rowspan="2" style="border-right: 1px solid #cacaca; border-left: 1px solid #cacaca; border-bottom: 1px solid #cacaca; border-top: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:14px;">Total Payment <t t-esc="o.company_id.name"/></td>
+                                        <td class="text-center" style="border-bottom: 1px solid #cacaca; border-top: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:14px;">$</td>
+                                        <td class="text-right" colspan="2" style="border-right: 1px solid #cacaca; border-bottom: 1px solid #cacaca; border-top: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:14px; padding-right: 3px;"><t t-esc="t_cancel_usd + t_transfer" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center" style="border-bottom: 1px solid #cacaca; border-top: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:14px;">Bs.</td>
+                                        <td class="text-right" colspan="2" style="border-right: 1px solid #cacaca; border-bottom: 1px solid #cacaca; border-top: 1px solid #cacaca; display: table-cell; vertical-align: middle; font-size:14px; padding-right: 3px;"><t t-esc="t_cancel_bs" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></td>
+                                    </tr>
+                                    <!-- Fin Totales -->
+                                </tbody>     
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+</odoo>

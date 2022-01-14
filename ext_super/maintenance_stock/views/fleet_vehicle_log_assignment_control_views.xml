@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="fleet_vehicle_log_assignment_control_tree">
+            <field name="name">fleet.vehicle.log.assignment.control.tree</field>
+            <field name="model">fleet.vehicle.log.assignment.control</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="vehicle_id"/>
+                    <field name="driver_id"/>
+                    <field name="date_ini"/>
+                    <field name="date_end"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="fleet_vehicle_log_assignment_control_form">
+            <field name="name">fleet.vehicle.log.assignment.control.form</field>
+            <field name="model">fleet.vehicle.log.assignment.control</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="status_draft" type="object" string="Borrador" attrs="{'invisible': [('status', 'in', ('draft','done'))]}"/>
+                        <button name="status_confirmed" type="object" string="Confirmar" attrs="{'invisible': [('status', '!=', 'draft')]}"/>
+                        <button name="status_done" type="object" string="Realizado" attrs="{'invisible': [('status', '!=', 'confirmed')]}"/>
+                        <button name="status_cancel" type="object" string="Cancelar" attrs="{'invisible': [('status', '!=', 'confirmed')]}"/>
+                        <field name="status" widget="statusbar" statusbar_visible="draft,confirmed,done,cancel"/>
+                    </header>
+                    <sheet>
+                        <h1>
+                            <field name="name" readonly="1" attrs="{'invisible': [('status', '!=', 'done'), ('id', '=', False)]}"/>
+                        </h1>
+                        <group>
+                            <group>
+                                <field name="vehicle_id" required="1"/>
+                                <field name="date_ini" required="1"/>
+                            </group>
+                            <group>
+                                <field name="driver_id" required="1"/>
+                                <field name="date_end" required="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="stock_picking" string="Ordenes de Entrega">
+                                <field name="stock_picking_ids" domain="[('status', 'in', ('waiting', 'confirmed', 'assigned'))]" attrs="{'readonly': [('status', '=', 'done')]}"/>
+                            </page>
+                            <page name="vehicle_odometer" string="Odómetro del Vehículo">
+                                <field name="vehicle_odometer_ids"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="fleet_vehicle_log_assignment_control_calendar">
+            <field name="name">fleet.vehicle.log.assignment.control.calendar</field>
+            <field name="model">fleet.vehicle.log.assignment.control</field>
+            <field name="arch" type="xml">
+                <calendar string="Asignaciones" date_start="date_ini" date_stop="date_end" date_delay="duration" event_open_popup="true" color="vehicle_id" mode="month" quick_add="false">
+                    <field name="vehicle_id"/>
+                    <field name="driver_id"/>
+                </calendar>
+            </field>
+        </record>
+
+        <!-- fleet.vehicle.log.assignment.control search view -->
+        <record id="fleet_vehicle_log_assignment_control_view_search" model="ir.ui.view">
+            <field name="name">fleet.vehicle.log.assignment.control.view.search</field>
+            <field name="model">fleet.vehicle.log.assignment.control</field>
+            <field name="arch" type="xml">
+                <search string="Búsqueda de Asignaciones de Flota">
+                    <!-- Add your fields here -->
+                    <filter string="Confirmados" name="confirmed" domain="[('status', '=', 'confirmed')]"/>
+                    <filter string="Realizados" name="done" domain="[('status', '=', 'done')]"/>
+                    <field name="name"/>
+                    <field name="vehicle_id"/>
+                    <field name="driver_id"/>
+                    <field name="date_ini"/>
+                    <field name="date_end"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="fleet_vehicle_log_assignment_control_action" model="ir.actions.act_window">
+            <field name="name">Asignaciones de Flota</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">fleet.vehicle.log.assignment.control</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="search_view_id" ref="maintenance_stock.fleet_vehicle_log_assignment_control_view_search"/>
+            <field name="context">{"search_default_confirmed":1, "search_default_done":1}</field>
+        </record>
+
+        <menuitem
+                name="Asignaciones"
+                id="muenu_fleet_vehicle_log_assignment_control"
+                sequence="12"
+                parent="fleet.menu_root"
+                action="fleet_vehicle_log_assignment_control_action"
+        />
+    </data>
+</odoo>

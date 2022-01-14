@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="0">
+        <!-- Add you code here -->
+        <!-- purchase.pay.order inherit form view -->
+        <record id="purchase_pay_order_view_form_approvals_extend" model="ir.ui.view">
+            <field name="name">purchase.pay.order.inherit.view.form</field>
+            <field name="model">purchase.pay.order</field>
+            <field name="inherit_id" ref="purchase_conditions_payment.purchase_pay_order_form_view"/>
+            <field name="arch" type="xml">
+                <!-- Add your xpath here -->
+                <xpath expr="//button[@name='reset_draft']" position="before">
+                    <button string="Approval Request" name="approvals_request_payment" type="object" class="oe_highlight" states="draft"/>
+
+                </xpath>
+                <xpath expr="//field[@name='order_id']" position="after">
+                    <field name="is_approved" string="Solicitud aprobada" readonly="1"/>
+                    <field name="is_rejected" string="Solicitud rechazada" readonly="1"/>
+                    <field name="approver_id" required="1"/>
+                </xpath>
+                 <xpath expr="//button[@name='action_confirmed']" position="attributes">
+                     <attribute name="attrs">{'invisible': [('is_approved', '=', False)]}</attribute>
+                 </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

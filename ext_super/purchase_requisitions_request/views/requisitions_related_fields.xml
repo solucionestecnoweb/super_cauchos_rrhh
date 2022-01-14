@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- purchase.order inherit form view -->
+    <record id="purchase_order_form_requisition_extend" model="ir.ui.view">
+        <field name="name">purchase.order.inherit.view.form</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='planning']" position="inside">
+                <field name="requisition_id" domain="[('state', 'in', ('confirmed','receive'))]"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

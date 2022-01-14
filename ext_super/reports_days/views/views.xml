@@ -1,0 +1,75 @@
+<odoo>
+    <record id="view_tree_days" model="ir.ui.view">
+        <field name="name">view.tree.days</field>
+        <field name="model">account.move</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="invoice_date" optional="show"/>
+                <field name="name" optional="show"/>
+                <field name= "invoice_date_due" optional="show"/>
+                <field name="invoice_payment_ref" optional="show"/>
+                <field name="invoice_partner_display_name" optional="show"/>
+                <field name= "type_name" optional="show"/>
+                <field name= "agent_id" optional="show"/>
+                <field name= "team_id" optional="show"/>
+                <field name= "payment_date" string="Fecha de Pago" optional="show"/>
+                <field name= "days" optional="show"/>
+                <field name= "amount_total" string="Monto en Bs" sum="Total en Bs" optional="show"/>
+                <field name= "currency_bs_id" string="Currency" optional="show"/>
+                <field name= "rate" optional="show"/>
+                <field name= "amount_currency" string="Monto en $" sum="Total en $" optional="show"/>
+                <field name= "currency_usd_id" string="Moneda" optional="show"/>
+                <field name= "invoice_payment_state" optional="show"/>
+                <field name="state" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="type_days_name_action" model="ir.actions.act_window">
+        <field name="name">Reporte de Promedio de Días</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.move</field>
+        <field name="domain">[('type', '=', 'out_invoice')]</field>
+        <field name="view_id" ref="reports_days.view_tree_days"/>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem id="menu_reports" name="Reporte" parent="account.menu_finance_reports" sequence="2"/>
+
+        <record id="view_tree_street" model="ir.ui.view">
+        <field name="name">view.tree.street</field>
+        <field name="model">account.move</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" optional="show"/>
+                <field name="ref" optional="show"/>
+                <field name= "type_name" optional="show"/>
+                <field name="invoice_date" optional="show"/>
+                <field name="invoice_partner_display_name" optional="show"/>
+                <field name= "agent_id" optional="show"/>
+                <field name= "team_id" optional="show"/>
+                <field name= "invoice_date_due" optional="show"/>
+                <field name= "amount_total" string="Monto en Bs" sum="Total en Bs" optional="show"/>
+                <field name= "currency_bs_id" string="Moneda" optional="show"/>
+                <field name= "rate" optional="show"/>
+                <field name= "amount_currency" string="Monto en $" sum="Total en $" optional="show"/>
+                <field name= "currency_usd_id" string="Moneda" optional="show"/>
+                <field name= "invoice_payment_state" optional="show"/>
+                <field name= "payment_date" string="Fecha de Pago" optional="show"/>
+                <field name= "street_days" optional="show"/>
+                <field name="state" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="type_street_name_action" model="ir.actions.act_window">
+        <field name="name">Reporte de Días Calle</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.move</field>
+        <field name="domain">[('type', '=', 'out_invoice')]</field>
+        <field name="view_id" ref="reports_days.view_tree_street"/>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem id="menu_reports" name="Reporte" parent="account.menu_finance_reports" sequence="2"/>
+</odoo>

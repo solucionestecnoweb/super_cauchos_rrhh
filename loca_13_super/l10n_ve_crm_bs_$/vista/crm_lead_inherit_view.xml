@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="crm_lead_view_form_inherit" model="ir.ui.view">
+        <field name="name">crm.lead.view_form.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_currency']" position="replace">
+                    <field name="company_currency_secundaria" invisible="1"/>               
+            </xpath>
+            <xpath expr="//field[@name='planned_revenue']" position="replace">
+                <field name="planned_revenue" class="oe_inline" widget='monetary' options="{'currency_field': 'company_currency_secundaria'}"/>
+            </xpath>
+
+            <xpath expr="//field[@name='team_id']" position="after">
+                <field name="meta_facturacion" string="Meta de Facturación" class="oe_inline" widget='monetary' options="{'currency_field': 'company_currency_secundaria'}"/>
+                <field name="plazo_meta" />
+                <field name="fecha_cierre_plazo" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="crm_case_tree_view_oppor_inherit" model="ir.ui.view">
+        <field name="name">crm.case.tree.view.oppor.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='planned_revenue']" position="replace">
+                <field name="planned_revenue" string="Ingreso Estimado ($)" sum="Expected Revenues" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="crm_case_kanban_view_leads_inherit" model="ir.ui.view">
+        <field name="name">crm.lead.kanban.lead.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+        <field name="arch" type="xml">
+            <xpath expr="//kanban[1]/templates[1]/t[1]/div[1]/div[2]/div[3]/t[1]/field[@name='planned_revenue']" position="attributes">
+                <attribute name="options"/>
+                <attribute name="widget">monetary</attribute>
+                <attribute name="currency_field">company_currency_secundaria</attribute>
+            </xpath>
+
+            <!--xpath expr="//kanban[1]/templates[1]/t[1]/div[1]/div[2]/div[3]/t[1]/field[@name='planned_revenue']" position="replace">
+                <field name="planned_revenue" widget='monetary' options="{'currency_field': 'company_currency_secundaria'}" />
+            </xpath-->
+        </field>
+    </record>
+
+    <record id="crm_opportunity_view_dashboard_inherit" model="ir.ui.view">
+            <field name="name">crm.lead.view.dashboard.inherit</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_enterprise.crm_opportunity_view_dashboard"/>
+            <!--field name="mode">primary</field-->
+            <field name="arch" type="xml">
+                <xpath expr="//formula[@name='prorated_revenue']" position="replace">
+                    <formula name="prorated_revenue" string="Ingresos prorrateados ($)" value="record.prorated_revenue_aggregate"/>
+                </xpath>
+                <xpath expr="//formula[@name='deal_size']" position="replace">
+                    <formula name="deal_size" string="Tamaño Promedio de los Acuerdos ($)" value="record.expected_revenue_aggregate / record.opportunities"/>
+                </xpath>
+                <xpath expr="//aggregate[@name='expected_revenue_aggregate']" position="replace">
+                    <aggregate name="expected_revenue_aggregate" field="planned_revenue" string="Ingreso Estimados ($)"/>
+                </xpath>
+            </field>
+    </record>
+
+    <record id="crm_team_view_form_inherit" model="ir.ui.view">
+        <field name="name">crm.team.view.form.inherit</field>
+        <field name="model">crm.team</field>
+        <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoiced_target']" position="after">
+                <field name="company_currency_secundaria" invisible="1"/>
+                <field name="plazo_meta" />
+                <!--field name="fecha_cierre_plazo" string="Fecha de plazo" readonly="1"/-->
+            </xpath>
+            <xpath expr="//field[@name='invoiced_target']" position="replace">
+                <field name="invoiced_target" class="oe_inline" widget='monetary' options="{'currency_field': 'company_currency_secundaria'}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

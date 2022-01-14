@@ -1,0 +1,311 @@
+<odoo>
+    <report
+        id="action_extension_retencion_iva"
+        model="wizard.resumen.iva"
+        string="Reporte Resumen IVA"
+        report_type="qweb-pdf"
+        name="extension_retencion_iva.extension_retencion_iva_report"
+        file="extension_retencion_iva.extension_retencion_iva_report"
+        menu="True"
+        paperformat="l10n_ve_resumen_retenciones.paperformat_resumen_iva"
+        />
+
+
+    <template id="external_layout_extension_retencion_iva">
+
+        <div class="header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-4 text center">
+                        <b style="font-size:20px;"><t t-esc="o.company_id.name"/></b><br/>
+                        <small style="font-size:12px;">R.I.F. <t t-esc="o.company_id.vat"/></small><br/>
+                        <!-- <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)" style="max-height: 100px; max-width: 150px; margin-top:22px;"/><br/> -->
+                    </div>
+                    <div class="col-4 text-center">
+                        <b style="font-size:14px;">Resumen Retenciones de IVA Proveedores y/o Resumen Retenciones de IVA Clientes</b><br/>
+                        <small style="font-size:12px;">Periodo del <t t-esc="o.date_from.strftime('%d/%m/%y')"/> al <t t-esc="o.date_to.strftime('%d/%m/%y')"/></small><br/>
+                    </div>
+                    <div class="col-4 text-right">
+                        <b style="font-size:12px;">Página <span class="page" style="font-size:12px;"/> de <span class="topage" style="font-size:12px;"/></b><br/>
+                        <b style="font-size:12px; text-align:center;" t-field="o.date_now"></b><br/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="article o_report_layout_standard">
+            <t t-raw="0"/>
+        </div>
+
+        <div class="footer">
+        </div>
+    </template>
+
+    <template id="extension_retencion_iva_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="extension_retencion_iva.external_layout_extension_retencion_iva">
+                    <div class="page">
+                        <table width="100%"  class="table table-condensed ">
+                            <thead class="table table-bordered">
+                            <tr>
+                                <td>
+                                Opr.Nro
+                                </td>
+                                <td>
+                                Fecha de la Factura
+                                </td>
+                                <td>
+                                Rif
+                                </td>
+                                <td>
+                                Nombre o Razón Social
+                                </td>
+                                <td>
+                                Número de Documento
+                                </td>
+                                <td>
+                                Número de Control
+                                </td>
+                                <td>
+                                Tipo de Documento
+                                </td>
+                                <td>
+                                Número de Factura Afectada
+                                </td>
+                                <td>
+                                Total Compras<br/>
+                                incluyendo <br/>
+                                el IVA
+                                </td>
+                                <td>
+                                Compras sin 
+                                <br/>derecho a 
+                                <br/>Credito Fiscal
+                                </td>
+                                <td>
+                                Base Imponible
+                                </td>
+                                <td>
+                                Alicuota Reducida
+                                </td>
+                                <td>
+                                Impuesto <br/>IVA
+                                </td>
+                                <td>
+                                Alicuota General
+                                </td>
+                                <td>
+                                Base Imponible
+                                </td>
+                                <td>
+                                Alicuota General<br/>+Adicional
+                                </td>
+                                <td>
+                                Impuesto <br/>IVA
+                                </td>
+                                <td>
+                                IVA Retenido
+                                </td>
+                                <td>
+                                Número de <br/>Comprobante
+                                </td>
+                                <td>
+                                Fecha del <br/>Comprobante
+                                </td>
+                            </tr>
+                            </thead>
+
+                            <t t-set="pos" t-value="0" />
+                            <t t-set="acum_purchase" t-value="0"/>
+                            <t t-set="acum_exento" t-value="0"/>
+                            <t t-set="acum_b_reducida" t-value="0"/>
+                            <t t-set="acum_reducida" t-value="0"/>
+                            <t t-set="acum_b_combinada" t-value="0"/>
+                            <t t-set="acum_combinada" t-value="0"/>
+                            <t t-set="acum_iva_ret" t-value="0"/>
+
+                            <tbody class="table table-bordered">
+                                <t t-foreach="o.line.sorted(key=lambda x: (x.retenido_date,x.invoice_id.id),reverse=False)" t-as="line" >
+                                    <tr>
+                                        <td>
+                                            <t t-set="pos" t-value="pos+1" />
+                                            <t t-esc="pos"/>
+                                        </td>
+                                        <td>
+                                        <t t-esc="line.formato_fecha2(line.invoice_id.invoice_date)"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.rif2(line.partner.id)"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.partner.name"/>
+                                        </td>
+                                        <t t-if="line.tipo_doc == '01' ">
+                                            <td>
+                                                <t t-esc="line.invoice_number"/>
+                                            </td>
+                                        </t>
+                                        <t t-else="">
+                                            <td></td>
+                                        </t>
+                                        <td>
+                                            <t t-esc="line.invoice_ctrl_number"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.tipo_doc"/>-Reg
+                                        </td>
+                                        <t t-if="line.tipo_doc == '02' or  line.tipo_doc == '03' ">
+                                            <td><t t-esc="line.ref"/></td>
+                                        </t>
+                                        <t t-else="">
+                                            <td></td>
+                                        </t>
+                                        <td>
+                                            <div align="right">
+                                                <t t-esc="line.float_format(line.sale_total)"/>
+                                                <t t-set="acum_purchase" t-value="acum_purchase + line.sale_total"/>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div align="right">
+                                                <t t-esc="line.float_format(line.total_exento)"/>
+                                                <t t-set="acum_exento" t-value="acum_exento + line.total_exento"/>
+                                            </div>
+                                        </td>
+                                        <!-- valores de alicuota reducida -->
+                                        <td>
+                                            <div align="right">
+                                                <t t-esc="line.float_format(line.base_reducida)"/>
+                                                <t t-set="acum_b_reducida" t-value="acum_b_reducida + line.base_reducida"/>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div align="right">
+                                                <t t-if="line.base_reducida!=0">
+                                                8%
+                                                </t>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div align="right">
+                                                <t t-esc="line.float_format(line.alicuota_reducida)"/>
+                                                <t t-set="acum_reducida" t-value="acum_reducida + line.alicuota_reducida"/>
+                                            </div>
+                                        </td>
+                                        <!-- valores de alicuota general + adicional-->
+                                        <td>
+                                            <div align="right">
+                                                <t t-if="line.base_general!=0">
+                                                16%
+                                                </t>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div align="right">
+                                                <t t-esc="line.float_format(line.base_general + line.base_adicional)"/>
+                                                <t t-set="acum_b_combinada" t-value="acum_b_combinada+(line.base_general + line.base_adicional)"/>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div align="right">
+                                                <t t-if="line.base_adicional!=0">
+                                                31%
+                                                </t>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div align="right">
+                                                <t t-esc="line.float_format(line.alicuota_general + line.alicuota_adicional)"/>
+                                                <t t-set="acum_combinada" t-value="acum_combinada + (line.alicuota_general + line.alicuota_adicional)"/>
+                                            </div>
+                                        </td>
+                                        <!-- FIN valores de alicuota general + adicional-->
+                                        <td>
+                                            <div align="right">
+                                                <t t-esc="line.float_format(line.iva_retenido)"/>
+                                                <t t-set="acum_iva_ret" t-value="acum_iva_ret+line.iva_retenido"/>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div align="right">
+                                                <t t-esc="line.retenido"/>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <t t-if="line.vat_ret_id.state == 'posted' ">
+                                                <t t-esc="line.formato_fecha2(line.retenido_date)"/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <tr>
+                                    <td colspan="8">
+                                        <div align="right">
+                                            <span style="font-size: 20px; color: #0406b3;">
+                                            Totales
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div align="right">
+                                            <t t-esc="o.float_format2(acum_purchase)"/>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div align="right">
+                                            <t t-esc="o.float_format2(acum_exento)"/>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div align="right">
+                                            <t t-esc="o.float_format2(acum_b_reducida)"/>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div align="right">
+                                            ----
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div align="right">
+                                            <t t-esc="o.float_format2(acum_reducida)"/>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div align="right">
+                                            ----
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div align="right">
+                                            <t t-esc="o.float_format2(acum_b_combinada)"/>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div align="right">
+                                            ----
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div align="right">
+                                            <t t-esc="o.float_format2(acum_combinada)"/>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div align="right">
+                                            <t t-esc="o.float_format2(acum_iva_ret)"/>
+                                        </div>
+                                    </td>
+                                    <td colspan="2">
+                                    
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div> 
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

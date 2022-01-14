@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="0">
+        <!-- Add you code here -->
+
+        <!-- purchase.order.imports.shipping tree view -->
+        <record id="imports_shipping_information_view_tree" model="ir.ui.view">
+            <field name="name">purchase.order.imports.shipping.view.tree</field>
+            <field name="model">purchase.order.imports.shipping</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <!-- Add your fields here -->
+                    <field name="policy"/>
+                    <field name="price_type"/>
+                    <field name="freight_type"/>
+                    <field name="expedient_import_number"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- purchase.order.imports.shipping form view -->
+        <record id="imports_shipping_information_view_form" model="ir.ui.view">
+            <field name="name">purchase.order.imports.shipping.view.form</field>
+            <field name="model">purchase.order.imports.shipping</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group string="General Information">
+                                <field name="policy"/>
+                                <field name="price_type"/>
+                                <field name="freight_type"/>
+                                <field name="expedient_import_number"/>
+                            </group>
+                            <group string="Arrival Information">
+                                <field name="arrival_date"/>
+                                <field name="harbor"/>
+                                <field name="proforma_number"/>
+                                <field name="reference"/>
+                                <field name="doc_reception"/>
+                                <field name="cus_hou_remitance"/>
+                                <field name="dua"/>
+                                <field name="currency_id"/>
+                            </group>
+                            <group string="Shipping Information">
+                                <field name="shipping_number"/>
+                                <field name="shipping_date"/>
+                                <field name="arrival_shipping_date"/>
+                                <field name="country_id"/>
+                                <field name="shipping_city"/>
+                            </group>
+                            <group string="Vessel Information">
+                                <field name="vessel_name"/>
+                                <field name="vessel_containers"/>
+                                <field name="origin_vessel"/>
+                                <field name="transfer_vessel"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- purchase.order.imports.shipping search view -->
+        <record id="purchase_order_imports_shipping_view_search" model="ir.ui.view">
+            <field name="name">purchase.order.imports.shipping.view.search</field>
+            <field name="model">purchase.order.imports.shipping</field>
+            <field name="arch" type="xml">
+                <search string="Shipping Information Search">
+                    <!-- Add your fields here -->
+                    <field name="policy"/>
+                    <field name="price_type"/>
+                    <field name="freight_type"/>
+                    <field name="expedient_import_number"/>
+                </search>
+            </field>
+        </record>
+
+    </data>
+</odoo>

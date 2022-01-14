@@ -1,0 +1,38 @@
+<odoo>
+
+    <record id="view_move_form" model="ir.ui.view">
+        <field name="name">account.move.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='other_info']" position="before">
+                <page name="commissions_agents" string="Comisión" >
+                    <group>
+                        <group>
+                            <field name="base_efectiva" />
+                            <field name="dias_efectivo"/>
+                        </group>
+                        <group>
+                            <field name="fecha_efectiva" />
+                            <button name="calcular_comision" string="Calcular" class="oe_highlight" type="object" attrs="{'invisible': [('type', '!=', 'out_invoice')]}"/>
+
+                        </group>
+                    </group>
+                </page>                
+            </xpath>
+        </field>
+    </record>
+    <record id="account_move_tree" model="ir.ui.view">
+        <field name="name">account.move.tree</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_invoice_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="before">
+                <field name="base_efectiva" optional="show" />
+                <field name="dias_efectivo" optional="show" />
+                <field name="fecha_efectiva" optional="show" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

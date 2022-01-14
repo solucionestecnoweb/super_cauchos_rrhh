@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="registro_equipo" model="ir.actions.act_window">
+        <field name="name">Registro de Equipo</field>
+        <field name="res_model">maintenance.equipment</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="maintenance.hr_equipment_view_tree"></field>
+    </record>
+
+    <record id="registro_flota_lista" model="ir.actions.act_window">
+        <field name="name">Registro Lista de flota</field>
+        <field name="res_model">fleet.vehicle</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="fleet.fleet_vehicle_view_tree"></field>
+    </record>
+
+    <menuitem
+        id="equipos2"
+        parent = "maintenance.menu_equipment_form"
+        name = "Equipos"
+        sequence='1'
+        action="registro_equipo"
+        />
+        
+    <menuitem
+        id="vehiculos"
+        parent = "maintenance.menu_equipment_form"
+        name = "Vehiculos"
+        sequence='2'
+        action="registro_flota_lista"
+        />
+
+    
+
+    <!--menuitem
+        id="equipo2"
+        parent="maintenance.menu_maintenance_title"
+        name="Equipos2"
+        sequence="4"
+        />
+
+    <menuitem
+        id="vehiculos"
+        parent = "equipo2"
+        name = "Vehiculo"
+        sequence='1'
+        />
+
+    <menuitem
+        id="menu_2"
+        parent = "vehiculos"
+        name = "menu2"
+        sequence='2'
+        action="registro_flota_lista"
+        /-->
+
+   
+</odoo>

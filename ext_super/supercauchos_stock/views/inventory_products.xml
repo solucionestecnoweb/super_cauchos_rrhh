@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+        <!-- Add you code here -->
+        
+        <record model="ir.ui.view" id="product_adds_template_form">
+            <field name="name">product.template.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='type']" position="before">
+                    <field name="modelo"/>
+                    <field name="brand_id"/>
+                    <field name="filler"/>
+                    <field name="group_id"/>
+                    <field name="tarps"/>
+                    <field name="rin"/>
+                </xpath>
+                <xpath expr="//field[@name='type']" position="after">
+                    <field name="type_cauchos"/>
+                </xpath>
+                <xpath expr="//field[@name='barcode']" position="after">
+                    <field name="qty_hq"/>
+                    <field name="deote"/>
+                </xpath>
+                <xpath expr="//field[@name='uom_po_id']" position="after">
+                    <field name="service_in"/>
+                    <field name="load_speed"/>
+                    <field name="physical_count"/>
+                    <field name="medidas"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="product_adds_product_form">
+            <field name="name">product.product.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='type']" position="before">
+                    <field name="modelo"/>
+                    <field name="brand_id"/>
+                    <field name="filler"/>
+                    <field name="group_id"/>
+                    <field name="tarps"/>
+                    <field name="rin"/>
+                </xpath>
+                <xpath expr="//field[@name='type']" position="after">
+                    <field name="type_cauchos"/>
+                </xpath>
+                <xpath expr="//field[@name='barcode']" position="after">
+                    <field name="qty_hq"/>
+                    <field name="service_in"/>
+                    <field name="load_speed"/>
+                    <field name="physical_count"/>
+                    <field name="stock_inicial" invisible="1"/>
+                    <field name="no_despachado" invisible="1"/>
+                    <field name="medidas"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="stock_picking_filler_form">
+            <field name="name">stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="filler_per"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="0">
+        <!-- Add you code here -->
+        <record id="wizard_out_invoice" model="ir.ui.view">
+            <field name="name">Past Due Accounts Receivable Wizard</field>
+            <field name="model">wizard.out.invoice</field>
+            <field name="arch" type="xml">
+                <form string="Past Due Accounts Receivable Report">
+                    <field invisible="1" name="state"/>
+                    <div states="choose">
+                        <group >
+                            <group >
+                                <field name="date_from" required="1"/>
+                                <field name="partner_ids" widget="many2many_tags" domain="[('customer_rank' ,'>', 0)]"/>
+                            </group>
+                            <group >
+                                <field name="date_to" required="1"/>
+                            </group>
+                        </group>
+                    </div>
+                    <div states="get">
+                        <group>
+                            <field name="name" colspan="4" invisible="1"/>
+                            <field name="report" filename="name" colspan="4"/>
+                        </group>
+                    </div>
+                    <footer states="choose">
+                        <button name="generate_xls_report" string="Export XLS" type="object" class="oe_highlight" />
+                        <button name="print_pdf" string="Export PDF" type="object" class="oe_highlight" />
+                        <button special="cancel" string="Cancel" class="oe_highlight" />
+                    </footer>
+                    <footer states="get">
+                        <button special="cancel" string="Cancel" class="oe_highlight" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_out_invoice" model="ir.actions.act_window">
+            <field name="name">Past Due Accounts Receivable Report</field>
+            <field name="res_model">wizard.out.invoice</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_out_invoice"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem   name="Past Due Accounts Receivable Report" 
+                    parent="admin_account_receivable_menu" 
+                    id="out_invoice_menu" 
+                    action="action_out_invoice"
+                    sequence="5"
+                    />
+    </data>
+</odoo>

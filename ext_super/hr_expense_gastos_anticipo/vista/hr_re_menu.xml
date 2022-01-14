@@ -1,0 +1,54 @@
+<odoo>
+    <data>
+
+    	<record id="hr_gastos_v2_menu" model="ir.actions.act_window">
+	        <field name="name">Registro de Gastos</field>
+	        <field name="res_model">hr.expense</field>
+	        <field name="view_mode">tree,form</field>
+	        <!--field name="view_id" ref="view_expenses_tree"></field-->
+    	</record>
+
+    	<record id="hr_gastos_informe_v2_menu" model="ir.actions.act_window">
+	        <field name="name">Informe de Gastos</field>
+	        <field name="res_model">hr.expense.sheet</field>
+	        <field name="view_mode">tree,form</field>
+	        <!--field name="view_id" ref="view_expenses_tree"></field-->
+    	</record>
+
+    	<menuitem name="Registrar Pagos de Empleados"
+            id="main_pago_employee"
+            parent = "hr_expense_gastos_anticipo.menu_viatico"
+            sequence='3'
+            action="hr_expense_gastos_anticipo.caja_pago_employee"
+           />
+
+    	<menuitem
+        id="menu_anticipo_empleado"
+        name="Registro de Anticipos" 
+        parent="hr_expense_gastos_anticipo.menu_viatico"
+        action="hr_solicitud_anticipo_menu"
+        sequence="1"/>
+
+    	<menuitem
+        id="menu_gastos_v2"
+        name="Gastos del Empleado" 
+        parent="hr_expense_gastos_anticipo.menu_viatico"
+        action="hr_gastos_v2_menu"
+        sequence="2"/>
+
+        <menuitem
+        id="menu_informe_gastos_v2"
+        name="Informes de Gastos" 
+        parent="hr_expense_gastos_anticipo.menu_viatico"
+        action="hr_gastos_informe_v2_menu"
+        sequence="2"/>
+
+        <menuitem
+        	id="menu_viatico"
+        	name="Viaticos"
+        	parent="hr_expense.menu_hr_expense_root"
+        	sequence="-1"
+        	/>
+
+    </data>
+</odoo>

@@ -1,0 +1,919 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data >
+        <!-- Invoice Agroruedas -->        
+        <report 
+            id="action_account_move_invoice_extend_agroruedas" 
+            model="account.move" 
+            string="Factura Forma Libre/ME" 
+            report_type="qweb-pdf"
+            paperformat="account_move_extend_fields_reports.paperformat_agroruedas"
+            name="account_move_extend_fields_reports.account_move_invoice_extend" 
+            file="account_move_extend_fields_reports.account_move_invoice_extend" 
+            menu="False" 
+            />
+
+        <template id="external_layout_account_move_extend">
+            <div class="header">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-4">
+                            <b style="font-size:12px;">Factura: <t t-esc="o.name"/></b><br/>
+                            <b style="font-size:12px;">Emisión: <t t-esc="o.invoice_date"/></b><br/>
+                            <t t-if="o.invoice_payment_term_id">
+                                <b style="font-size:12px;">Vencimiento: <t t-esc="o.invoice_payment_term_id.name"/></b><br/>
+                            </t>
+                            <t t-else="">
+                                <b style="font-size:12px;">Vencimiento: <t t-esc="o.invoice_date_due"/></b><br/>
+                            </t>
+                            <b style="font-size:12px;">Vendedor: <t t-esc="o.seller_id.name"/></b><br/>
+                            <b style="font-size:12px;">Cond. Pago: <t t-esc="o.payment_condition"/></b><br/>
+                        </div>
+                        <div class="col-3">
+                        </div>
+                        <div class="col-5">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-6 text-right">
+                                    <b style="font-size:12px;">Nombre y Apellido o Razón Social</b><br/>
+                                    <b style="font-size:12px;">C.I. / R.I.F</b><br/>
+                                    <b style="font-size:12px;">Domicilio Fiscal</b>
+                                    </div>
+                                    <div class="col-6 text-right">
+                                        <span style="font-size:12px;"><t t-esc="o.partner_id.name"/></span><br/><br/>
+                                        <span style="font-size:12px;"><t t-esc="o.partner_id.vat"/></span><br/>
+                                        <span style="font-size:12px;"><t t-esc="o.partner_id.street"/> <t t-esc="o.partner_id.city"/> <t t-esc="o.partner_id.state_id.name"/></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article o_report_layout_standard">
+                <t t-raw="0"/>
+            </div>
+
+            <div class="footer">
+                <div class="text-center border border-dark" style="border-top: 1px solid black;">
+                    
+                </div>
+            </div>
+        </template>
+
+        <template id="account_move_invoice_extend_agroruedas">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="account_move_extend_fields_reports.external_layout_account_move_extend">
+                        <div class="page">
+                            <br/><br/>
+                            <table>
+                                <!-- Cantidad de columnas -->
+                                <t t-if="o.currency_id.id != 3">
+                                    <colgroup>
+                                        <col span="1" style="width: 20%;"/>
+                                        <col span="1" style="width: 30%;"/>
+                                        <col span="1" style="width: 10%;"/>
+                                        <col span="1" style="width: 20%;"/>
+                                        <col span="1" style="width: 20%;"/>
+                                    </colgroup>
+                                </t>
+                                <t t-else="">
+                                    <colgroup>
+                                        <col span="1" style="width: 13%;"/>
+                                        <col span="1" style="width: 40%;"/>
+                                        <col span="1" style="width: 8%;"/>
+                                        <col span="1" style="width: 13%;"/>
+                                        <col span="1" style="width: 13%;"/>
+                                        <col span="1" style="width: 13%;"/>
+                                    </colgroup>                                    
+                                </t>
+                                <!-- Fin cantidad de columnas -->
+
+                                <!-- Tipo de moneda -->
+                                <t t-if="o.currency_id.id == 1">
+                                    <thead>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Código</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Descripción</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Cant.</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Precio Unit.</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Total €</th>
+                                    </thead>
+                                </t>
+                                <t t-elif="o.currency_id.id == 2">
+                                    <thead>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Código</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Descripción</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Cant.</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Precio Unit.</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Total $</th>
+                                    </thead>
+                                </t>
+                                <t t-else="">
+                                    <thead>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Código</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Descripción</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Cant.</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Alíc.</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Precio Unit.</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Total Bs</th>
+                                    </thead>
+                                </t>
+                                <!-- Fin tipo de moneda -->
+                                
+                                <!-- Variables totales -->
+                                <t t-set="subtotal" t-value="0"/>
+                                <t t-set="discount" t-value="0"/>
+                                <t t-set="net_amount" t-value="0"/>
+                                <t t-set="iva_exempt" t-value="0"/>
+                                <t t-set="iva_8" t-value="0"/>
+                                <t t-set="iva_16" t-value="0"/>
+                                <t t-set="iva_24" t-value="0"/>
+                                <!-- Fin variables totales -->
+
+                                <t t-if="o.currency_id.id == 3">
+                                    <tbody>
+                                        <!-- Lineas -->
+                                        <t t-foreach="o.invoice_line_ids" t-as="item">
+                                            <tr>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="item.product_id.default_code"/></span>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="item.name"/></span>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="item.quantity"/></span>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span>
+                                                        <t t-foreach="item.tax_ids" t-as="line">
+                                                            <t t-esc="line.name"/> 
+                                                        </t>
+                                                    </span>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="item.price_unit"/></span>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="item.price_unit * item.quantity"/></span>
+                                                </td>
+                                            </tr>
+                                            <t t-set="amount" t-value="item.price_unit * item.quantity"/>
+                                            <t t-if="item.discount > 0">
+                                                <t t-set="discount" t-value="discount + ((item.discount * amount) / 100)"/>
+                                            </t>
+                                            <t t-set="subtotal" t-value="subtotal + amount"/>
+                                            <t t-set="net_amount" t-value="net_amount + item.price_subtotal"/>
+                                        </t>
+                                        <!-- Fin lineas -->
+
+                                        <!-- Totales -->
+                                        <tr>
+                                            <td colspan="4"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Subtotal</b>
+                                            </td>
+                                            <td class="text-center border border-dark">
+                                                <span><t t-esc="subtotal"/></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Descuentos</b>
+                                            </td>
+                                            <td class="text-center border border-dark">
+                                                <span><t t-esc="discount"/></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Monto Neto</b>
+                                            </td>
+                                            <td class="text-center border border-dark">
+                                                <span><t t-esc="net_amount"/></span>
+                                            </td>
+                                        </tr>
+
+                                        <t t-foreach="o.alicuota_line_ids" t-as="item">
+                                            <t t-set="iva_exempt" t-value="iva_exempt + item.total_exento"/>
+                                            <t t-set="iva_8" t-value="iva_8 + item.alicuota_reducida"/>
+                                            <t t-set="iva_16" t-value=" iva_16 + item.alicuota_general"/>
+                                            <t t-set="iva_24" t-value="iva_24 + item.alicuota_adicional"/>
+                                        </t>
+                                        <t t-if="iva_exempt > 0">
+                                            <tr>
+                                                <td colspan="4"></td>
+                                                <td class="text-center border border-dark">
+                                                    <b>Total IVA Excento</b>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="iva_exempt"/></span>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-if="iva_8 > 0">
+                                            <tr>
+                                                <td colspan="4"></td>
+                                                <td class="text-center border border-dark">
+                                                    <b>Total IVA Reducido</b>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="iva_8"/></span>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-if="iva_16 > 0">
+                                            <tr>
+                                                <td colspan="4"></td>
+                                                <td class="text-center border border-dark">
+                                                    <b>Total IVA General</b>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="iva_16"/></span>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-if="iva_24 > 0">
+                                            <tr>
+                                                <td colspan="4"></td>
+                                                <td class="text-center border border-dark">
+                                                    <b>Total IVA Adicional</b>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="iva_24"/></span>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <tr>
+                                            <td colspan="4"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Total a Pagar</b>
+                                            </td>
+                                            <td class="text-center border border-dark">
+                                                <span><t t-esc="net_amount + iva_exempt + iva_8 + iva_16 + iva_24"/></span>
+                                            </td>
+                                        </tr>
+                                        <!-- Fin totales -->
+                                    </tbody>     
+                                </t>
+                                <t t-else="">
+                                    <tbody>
+                                        <!-- Lineas -->
+                                        <t t-foreach="o.invoice_line_ids" t-as="item">
+                                            <tr>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="item.product_id.default_code"/></span>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="item.name"/></span>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="item.quantity"/></span>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="item.price_unit"/></span>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="item.price_subtotal"/></span>
+                                                </td>
+                                            </tr>
+                                            <t t-set="amount" t-value="item.price_unit * item.quantity"/>
+                                            <t t-if="item.discount > 0">
+                                                <t t-set="discount" t-value="discount + ((item.discount * amount) / 100)"/>
+                                            </t>
+                                            <t t-set="subtotal" t-value="subtotal + amount"/>
+                                            <t t-set="net_amount" t-value="net_amount + item.price_subtotal"/>
+                                        </t>
+                                        <!-- Fin lineas -->
+
+                                        <!-- Totales -->
+                                        <tr>
+                                            <td colspan="3"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Subtotal</b>
+                                            </td>
+                                            <td class="text-center border border-dark">
+                                                <span><t t-esc="subtotal"/></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Descuentos</b>
+                                            </td>
+                                            <td class="text-center border border-dark">
+                                                <span><t t-esc="discount"/></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Monto Neto</b>
+                                            </td>
+                                            <td class="text-center border border-dark">
+                                                <span><t t-esc="net_amount"/></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Total a Pagar</b>
+                                            </td>
+                                            <td class="text-center border border-dark">
+                                                <span><t t-esc="net_amount"/></span>
+                                            </td>
+                                        </tr>
+                                        <!-- Fin totales -->
+                                    </tbody>
+                                </t>
+
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+
+        <!-- Invoice Supercauchos -->        
+        <report 
+            id="action_account_move_invoice_extend_supercauchos" 
+            model="account.move" 
+            string="Factura Forma Libre/ME" 
+            report_type="qweb-pdf"
+            paperformat="account_move_extend_fields_reports.paperformat_supercauchos"
+            name="account_move_extend_fields_reports.account_move_invoice_extend" 
+            file="account_move_extend_fields_reports.account_move_invoice_extend" 
+            menu="False" 
+            />
+
+        <template id="account_move_invoice_extend_supercauchos">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="account_move_extend_fields_reports.external_layout_account_move_extend">
+                        <div class="page">
+                            <br/><br/>
+                            <table>
+                                <!-- Cantidad de columnas -->
+                                <t t-if="o.currency_id.id != 3">
+                                    <colgroup>
+                                        <col span="1" style="width: 20%;"/>
+                                        <col span="1" style="width: 30%;"/>
+                                        <col span="1" style="width: 10%;"/>
+                                        <col span="1" style="width: 20%;"/>
+                                        <col span="1" style="width: 20%;"/>
+                                    </colgroup>
+                                </t>
+                                <t t-else="">
+                                    <colgroup>
+                                        <col span="1" style="width: 13%;"/>
+                                        <col span="1" style="width: 40%;"/>
+                                        <col span="1" style="width: 8%;"/>
+                                        <col span="1" style="width: 13%;"/>
+                                        <col span="1" style="width: 13%;"/>
+                                        <col span="1" style="width: 13%;"/>
+                                    </colgroup>                                    
+                                </t>
+                                <!-- Fin cantidad de columnas -->
+
+                                <!-- Tipo de moneda -->
+                                <t t-if="o.currency_id.id == 1">
+                                    <thead>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Código</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Descripción</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Cant.</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Precio Unit.</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Total €</th>
+                                    </thead>
+                                </t>
+                                <t t-elif="o.currency_id.id == 2">
+                                    <thead>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Código</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Descripción</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Cant.</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Precio Unit.</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Total $</th>
+                                    </thead>
+                                </t>
+                                <t t-else="">
+                                    <thead>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Código</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Descripción</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Cant.</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Alíc.</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Precio Unit.</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Total Bs</th>
+                                    </thead>
+                                </t>
+                                <!-- Fin tipo de moneda -->
+                                
+                                <!-- Variables totales -->
+                                <t t-set="subtotal" t-value="0"/>
+                                <t t-set="discount" t-value="0"/>
+                                <t t-set="net_amount" t-value="0"/>
+                                <t t-set="iva_exempt" t-value="0"/>
+                                <t t-set="iva_8" t-value="0"/>
+                                <t t-set="iva_16" t-value="0"/>
+                                <t t-set="iva_24" t-value="0"/>
+                                <!-- Fin variables totales -->
+
+                                <t t-if="o.currency_id.id == 3">
+                                    <tbody>
+                                        <!-- Lineas -->
+                                        <t t-foreach="o.invoice_line_ids" t-as="item">
+                                            <tr>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="item.product_id.default_code"/></span>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="item.name"/></span>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="item.quantity"/></span>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span>
+                                                        <t t-foreach="item.tax_ids" t-as="line">
+                                                            <t t-esc="line.name"/> 
+                                                        </t>
+                                                    </span>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="item.price_unit"/></span>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="item.price_unit * item.quantity"/></span>
+                                                </td>
+                                            </tr>
+                                            <t t-set="amount" t-value="item.price_unit * item.quantity"/>
+                                            <t t-if="item.discount > 0">
+                                                <t t-set="discount" t-value="discount + ((item.discount * amount) / 100)"/>
+                                            </t>
+                                            <t t-set="subtotal" t-value="subtotal + amount"/>
+                                            <t t-set="net_amount" t-value="net_amount + item.price_subtotal"/>
+                                        </t>
+                                        <!-- Fin lineas -->
+
+                                        <!-- Totales -->
+                                        <tr>
+                                            <td colspan="4"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Subtotal</b>
+                                            </td>
+                                            <td class="text-center border border-dark">
+                                                <span><t t-esc="subtotal"/></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Descuentos</b>
+                                            </td>
+                                            <td class="text-center border border-dark">
+                                                <span><t t-esc="discount"/></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Monto Neto</b>
+                                            </td>
+                                            <td class="text-center border border-dark">
+                                                <span><t t-esc="net_amount"/></span>
+                                            </td>
+                                        </tr>
+
+                                        <t t-foreach="o.alicuota_line_ids" t-as="item">
+                                            <t t-set="iva_exempt" t-value="iva_exempt + item.total_exento"/>
+                                            <t t-set="iva_8" t-value="iva_8 + item.alicuota_reducida"/>
+                                            <t t-set="iva_16" t-value=" iva_16 + item.alicuota_general"/>
+                                            <t t-set="iva_24" t-value="iva_24 + item.alicuota_adicional"/>
+                                        </t>
+                                        <t t-if="iva_exempt > 0">
+                                            <tr>
+                                                <td colspan="4"></td>
+                                                <td class="text-center border border-dark">
+                                                    <b>Total IVA Excento</b>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="iva_exempt"/></span>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-if="iva_8 > 0">
+                                            <tr>
+                                                <td colspan="4"></td>
+                                                <td class="text-center border border-dark">
+                                                    <b>Total IVA Reducido</b>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="iva_8"/></span>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-if="iva_16 > 0">
+                                            <tr>
+                                                <td colspan="4"></td>
+                                                <td class="text-center border border-dark">
+                                                    <b>Total IVA General</b>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="iva_16"/></span>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-if="iva_24 > 0">
+                                            <tr>
+                                                <td colspan="4"></td>
+                                                <td class="text-center border border-dark">
+                                                    <b>Total IVA Adicional</b>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="iva_24"/></span>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <tr>
+                                            <td colspan="4"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Total a Pagar</b>
+                                            </td>
+                                            <td class="text-center border border-dark">
+                                                <span><t t-esc="net_amount + iva_exempt + iva_8 + iva_16 + iva_24"/></span>
+                                            </td>
+                                        </tr>
+                                        <!-- Fin totales -->
+                                    </tbody>     
+                                </t>
+                                <t t-else="">
+                                    <tbody>
+                                        <!-- Lineas -->
+                                        <t t-foreach="o.invoice_line_ids" t-as="item">
+                                            <tr>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="item.product_id.default_code"/></span>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="item.name"/></span>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="item.quantity"/></span>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="item.price_unit"/></span>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="item.price_subtotal"/></span>
+                                                </td>
+                                            </tr>
+                                            <t t-set="amount" t-value="item.price_unit * item.quantity"/>
+                                            <t t-if="item.discount > 0">
+                                                <t t-set="discount" t-value="discount + ((item.discount * amount) / 100)"/>
+                                            </t>
+                                            <t t-set="subtotal" t-value="subtotal + amount"/>
+                                            <t t-set="net_amount" t-value="net_amount + item.price_subtotal"/>
+                                        </t>
+                                        <!-- Fin lineas -->
+
+                                        <!-- Totales -->
+                                        <tr>
+                                            <td colspan="3"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Subtotal</b>
+                                            </td>
+                                            <td class="text-center border border-dark">
+                                                <span><t t-esc="subtotal"/></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Descuentos</b>
+                                            </td>
+                                            <td class="text-center border border-dark">
+                                                <span><t t-esc="discount"/></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Monto Neto</b>
+                                            </td>
+                                            <td class="text-center border border-dark">
+                                                <span><t t-esc="net_amount"/></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Total a Pagar</b>
+                                            </td>
+                                            <td class="text-center border border-dark">
+                                                <span><t t-esc="net_amount"/></span>
+                                            </td>
+                                        </tr>
+                                        <!-- Fin totales -->
+                                    </tbody>
+                                </t>
+
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+
+        <!-- Invoice Multirepuestos -->        
+        <report 
+            id="action_account_move_invoice_extend_multirepuestos" 
+            model="account.move" 
+            string="Factura Forma Libre/ME" 
+            report_type="qweb-pdf"
+            paperformat="account_move_extend_fields_reports.paperformat_multirepuestos"
+            name="account_move_extend_fields_reports.account_move_invoice_extend" 
+            file="account_move_extend_fields_reports.account_move_invoice_extend" 
+            menu="False" 
+            />
+
+        <template id="account_move_invoice_extend_multirepuestos">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="account_move_extend_fields_reports.external_layout_account_move_extend">
+                        <div class="page">
+                            <br/><br/>
+                            <table>
+                                <!-- Cantidad de columnas -->
+                                <t t-if="o.currency_id.id != 3">
+                                    <colgroup>
+                                        <col span="1" style="width: 20%;"/>
+                                        <col span="1" style="width: 30%;"/>
+                                        <col span="1" style="width: 10%;"/>
+                                        <col span="1" style="width: 20%;"/>
+                                        <col span="1" style="width: 20%;"/>
+                                    </colgroup>
+                                </t>
+                                <t t-else="">
+                                    <colgroup>
+                                        <col span="1" style="width: 13%;"/>
+                                        <col span="1" style="width: 40%;"/>
+                                        <col span="1" style="width: 8%;"/>
+                                        <col span="1" style="width: 13%;"/>
+                                        <col span="1" style="width: 13%;"/>
+                                        <col span="1" style="width: 13%;"/>
+                                    </colgroup>                                    
+                                </t>
+                                <!-- Fin cantidad de columnas -->
+
+                                <!-- Tipo de moneda -->
+                                <t t-if="o.currency_id.id == 1">
+                                    <thead>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Código</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Descripción</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Cant.</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Precio Unit.</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Total €</th>
+                                    </thead>
+                                </t>
+                                <t t-elif="o.currency_id.id == 2">
+                                    <thead>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Código</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Descripción</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Cant.</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Precio Unit.</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Total $</th>
+                                    </thead>
+                                </t>
+                                <t t-else="">
+                                    <thead>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Código</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Descripción</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Cant.</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Alíc.</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Precio Unit.</th>
+                                        <th class="text-center border border-dark" style="background-color: #cacaca;">Total Bs</th>
+                                    </thead>
+                                </t>
+                                <!-- Fin tipo de moneda -->
+                                
+                                <!-- Variables totales -->
+                                <t t-set="subtotal" t-value="0"/>
+                                <t t-set="discount" t-value="0"/>
+                                <t t-set="net_amount" t-value="0"/>
+                                <t t-set="iva_exempt" t-value="0"/>
+                                <t t-set="iva_8" t-value="0"/>
+                                <t t-set="iva_16" t-value="0"/>
+                                <t t-set="iva_24" t-value="0"/>
+                                <!-- Fin variables totales -->
+
+                                <t t-if="o.currency_id.id == 3">
+                                    <tbody>
+                                        <!-- Lineas -->
+                                        <t t-foreach="o.invoice_line_ids" t-as="item">
+                                            <tr>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="item.product_id.default_code"/></span>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="item.name"/></span>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="item.quantity"/></span>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span>
+                                                        <t t-foreach="item.tax_ids" t-as="line">
+                                                            <t t-esc="line.name"/> 
+                                                        </t>
+                                                    </span>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="item.price_unit"/></span>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="item.price_unit * item.quantity"/></span>
+                                                </td>
+                                            </tr>
+                                            <t t-set="amount" t-value="item.price_unit * item.quantity"/>
+                                            <t t-if="item.discount > 0">
+                                                <t t-set="discount" t-value="discount + ((item.discount * amount) / 100)"/>
+                                            </t>
+                                            <t t-set="subtotal" t-value="subtotal + amount"/>
+                                            <t t-set="net_amount" t-value="net_amount + item.price_subtotal"/>
+                                        </t>
+                                        <!-- Fin lineas -->
+
+                                        <!-- Totales -->
+                                        <tr>
+                                            <td colspan="4"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Subtotal</b>
+                                            </td>
+                                            <td class="text-center border border-dark">
+                                                <span><t t-esc="subtotal"/></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Descuentos</b>
+                                            </td>
+                                            <td class="text-center border border-dark">
+                                                <span><t t-esc="discount"/></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Monto Neto</b>
+                                            </td>
+                                            <td class="text-center border border-dark">
+                                                <span><t t-esc="net_amount"/></span>
+                                            </td>
+                                        </tr>
+
+                                        <t t-foreach="o.alicuota_line_ids" t-as="item">
+                                            <t t-set="iva_exempt" t-value="iva_exempt + item.total_exento"/>
+                                            <t t-set="iva_8" t-value="iva_8 + item.alicuota_reducida"/>
+                                            <t t-set="iva_16" t-value=" iva_16 + item.alicuota_general"/>
+                                            <t t-set="iva_24" t-value="iva_24 + item.alicuota_adicional"/>
+                                        </t>
+                                        <t t-if="iva_exempt > 0">
+                                            <tr>
+                                                <td colspan="4"></td>
+                                                <td class="text-center border border-dark">
+                                                    <b>Total IVA Excento</b>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="iva_exempt"/></span>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-if="iva_8 > 0">
+                                            <tr>
+                                                <td colspan="4"></td>
+                                                <td class="text-center border border-dark">
+                                                    <b>Total IVA Reducido</b>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="iva_8"/></span>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-if="iva_16 > 0">
+                                            <tr>
+                                                <td colspan="4"></td>
+                                                <td class="text-center border border-dark">
+                                                    <b>Total IVA General</b>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="iva_16"/></span>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-if="iva_24 > 0">
+                                            <tr>
+                                                <td colspan="4"></td>
+                                                <td class="text-center border border-dark">
+                                                    <b>Total IVA Adicional</b>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="iva_24"/></span>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <tr>
+                                            <td colspan="4"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Total a Pagar</b>
+                                            </td>
+                                            <td class="text-center border border-dark">
+                                                <span><t t-esc="net_amount + iva_exempt + iva_8 + iva_16 + iva_24"/></span>
+                                            </td>
+                                        </tr>
+                                        <!-- Fin totales -->
+                                    </tbody>     
+                                </t>
+                                <t t-else="">
+                                    <tbody>
+                                        <!-- Lineas -->
+                                        <t t-foreach="o.invoice_line_ids" t-as="item">
+                                            <tr>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="item.product_id.default_code"/></span>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="item.name"/></span>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="item.quantity"/></span>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="item.price_unit"/></span>
+                                                </td>
+                                                <td class="text-center border border-dark">
+                                                    <span><t t-esc="item.price_subtotal"/></span>
+                                                </td>
+                                            </tr>
+                                            <t t-set="amount" t-value="item.price_unit * item.quantity"/>
+                                            <t t-if="item.discount > 0">
+                                                <t t-set="discount" t-value="discount + ((item.discount * amount) / 100)"/>
+                                            </t>
+                                            <t t-set="subtotal" t-value="subtotal + amount"/>
+                                            <t t-set="net_amount" t-value="net_amount + item.price_subtotal"/>
+                                        </t>
+                                        <!-- Fin lineas -->
+
+                                        <!-- Totales -->
+                                        <tr>
+                                            <td colspan="3"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Subtotal</b>
+                                            </td>
+                                            <td class="text-center border border-dark">
+                                                <span><t t-esc="subtotal"/></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Descuentos</b>
+                                            </td>
+                                            <td class="text-center border border-dark">
+                                                <span><t t-esc="discount"/></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Monto Neto</b>
+                                            </td>
+                                            <td class="text-center border border-dark">
+                                                <span><t t-esc="net_amount"/></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3"></td>
+                                            <td class="text-center border border-dark">
+                                                <b>Total a Pagar</b>
+                                            </td>
+                                            <td class="text-center border border-dark">
+                                                <span><t t-esc="net_amount"/></span>
+                                            </td>
+                                        </tr>
+                                        <!-- Fin totales -->
+                                    </tbody>
+                                </t>
+
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

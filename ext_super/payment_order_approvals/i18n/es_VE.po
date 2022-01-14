@@ -1,0 +1,99 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* payment_order_approvals
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-06-29 12:17+0000\n"
+"PO-Revision-Date: 2021-06-29 12:17+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: payment_order_approvals
+#: model:ir.model,name:payment_order_approvals.model_approval_category
+msgid "Approval Category"
+msgstr "Categoría de Aprobación"
+
+#. module: payment_order_approvals
+#: model:ir.model,name:payment_order_approvals.model_approval_request
+#: model_terms:ir.ui.view,arch_db:payment_order_approvals.purchase_pay_order_view_form_approvals_extend
+msgid "Approval Request"
+msgstr "Solicitud de Aprobación"
+
+#. module: payment_order_approvals
+#: model:ir.model.fields,field_description:payment_order_approvals.field_purchase_pay_order__approver_id
+msgid "Approver"
+msgstr "Aprobador"
+
+#. module: payment_order_approvals
+#: code:addons/extra-addons/oasis/payment_order_approvals/models/payment_order.py:0
+#: code:addons/payment_order_approvals/models/payment_order.py:0
+#, python-format
+msgid ""
+"Cannot confirm until an approval request is approved for this payment order."
+msgstr ""
+"No se puede confirmar hasta que se apruebe una solicitud de aprobación para "
+"esta orden de pago"
+
+#. module: payment_order_approvals
+#: model:ir.model.fields,field_description:payment_order_approvals.field_purchase_pay_order__is_approved
+msgid "Is Approved"
+msgstr "¿Está Aprovado?"
+
+#. module: payment_order_approvals
+#: model:ir.model.fields.selection,name:payment_order_approvals.selection__approval_category__has_payment_order__no
+msgid "None"
+msgstr "Ninguno"
+
+#. module: payment_order_approvals
+#: model:ir.model.fields.selection,name:payment_order_approvals.selection__approval_category__has_payment_order__optional
+msgid "Optional"
+msgstr "Opcional"
+
+#. module: payment_order_approvals
+#: model:ir.model.fields,field_description:payment_order_approvals.field_approval_category__has_payment_order
+#: model:ir.model.fields,field_description:payment_order_approvals.field_approval_request__has_payment_order
+#: model:ir.model.fields,field_description:payment_order_approvals.field_approval_request__payment_order_id
+msgid "Payment Order"
+msgstr "Orden de Pago"
+
+#. module: payment_order_approvals
+#: model:ir.model.fields.selection,name:payment_order_approvals.selection__approval_category__has_payment_order__required
+msgid "Required"
+msgstr "Requerido"
+
+#. module: payment_order_approvals
+#: code:addons/extra-addons/oasis/payment_order_approvals/models/payment_order.py:0
+#: code:addons/payment_order_approvals/models/payment_order.py:0
+#, python-format
+msgid "There is an approval request approved for this payment order."
+msgstr "Hay una solicitud de aprobación aprobada para esta orden de pago."
+
+#. module: payment_order_approvals
+#: code:addons/extra-addons/oasis/payment_order_approvals/models/payment_order.py:0
+#: code:addons/payment_order_approvals/models/payment_order.py:0
+#, python-format
+msgid "There is an approval request ongoing for this payment order."
+msgstr "Hay una solicitud de aprobación en curso para esta orden de pago."
+
+#. module: payment_order_approvals
+#: code:addons/extra-addons/oasis/payment_order_approvals/models/payment_order.py:0
+#: code:addons/payment_order_approvals/models/payment_order.py:0
+#, python-format
+msgid ""
+"There is no approval category for this type record. Go to "
+"Approvals/Config/Approval type."
+msgstr ""
+"No hay una categoría para este tipo de registro. Vaya a "
+"Aprobaciones/Configuración/Tipos de aprobación"
+
+#. module: payment_order_approvals
+#: model:ir.model,name:payment_order_approvals.model_purchase_pay_order
+msgid "purchase.pay.order"
+msgstr ""

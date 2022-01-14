@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="wizard_price_list_accounting" model="ir.ui.view">
+			<field name="name">Asistente para Reporte de Lista de Precios</field>
+			<field name="model">stock.wizard.price.list</field>
+			<field name="arch" type="xml">
+				<form>
+					<field invisible="1" name="state"/>
+					<div states="choose">
+						<group >
+							<group >
+								<field name="pricelist_id" widget="many2many_tags" required="1"/>
+								<field name="show_qty"/>
+								<field name="show_qty_av"/>
+								<field name="show_bs"/>
+							</group>
+							<group >
+								<field name="warehouse_id" domain="[('usage', '=', 'internal')]" widget="many2many_tags"/>
+								<field name="company_ids" widget="many2many_tags"/>
+								<field name="show_filler"/>
+								<field name="show_cost"/>
+							</group>
+						</group>
+						<notebook>
+							<page name="categorias" string="Categorías">
+								<field name="category_id" domain="[('sequence_report', '>=', 1)]"/>
+							</page>
+						</notebook>
+					</div>
+					<div states="get">
+						<group>
+							<field name="name" colspan="4" invisible="1"/>
+							<field name="report" filename="name" colspan="4"/>
+						</group>
+					</div>
+					<footer states="choose">
+						<!-- <button name="generate_xls_report" string="Export XLS" type="object" class="oe_highlight" /> -->
+						<button name="print_inventario" string="Exportar PDF" type="object" class="oe_highlight" />
+						<button special="cancel" string="Cancelar" class="oe_highlight" />
+					</footer>
+					<footer states="get">
+						<button special="cancel" string="Cancelar" class="oe_highlight" />
+					</footer>
+				</form>
+			</field>
+		</record>
+		<record id="action_stock_price_list_accounting" model="ir.actions.act_window">
+			<field name="name">Reporte de Lista de Precios</field>
+			<field name="res_model">stock.wizard.price.list</field>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="wizard_price_list_accounting"/>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem name="Reporte de Lista de Precios"
+				  parent="account.account_reports_management_menu" 
+				  id="product_list_prices_multi_currency.stock_wizard_price_list_accounting" 
+				  action="action_stock_price_list_accounting"
+				  />
+	</data>
+</odoo>

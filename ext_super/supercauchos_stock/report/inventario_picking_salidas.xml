@@ -1,0 +1,234 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+        <!-- Add you code here -->
+        
+        <report
+            id="action_inventario_picking_salidas"
+            model="stock.wizard.picking"
+            string="Reporte de Ordenes de Entrega"
+            report_type="qweb-pdf"
+            name="supercauchos_stock.inventario_picking_salidas"
+            file="supercauchos_stock.inventario_picking_salidas"
+            menu="True"
+            />
+
+        <template id="external_layout_inventario_picking_salidas">
+
+            <div class="header">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="col-xs-3">
+                                <img t-if="res_company.logo" t-att-src="'data:image/png;base64,%s' % to_text(res_company.logo)" style="max-height: 100px; max-width: 150px; margin-top:22px;"/>
+                            </div>
+                            <div class="col-xs-9 text-right" style="margin-top:22px;" name="moto"/>
+                        </div>
+                        <div t-if="res_company.logo or res_company.report_header" class="row zero_min_height">
+                            <div class="col-xs-12">
+                                <div style="border-bottom: 1px solid black;"/>
+                            </div>
+                        </div>
+                        <div class="col-4 text-center"><br/>
+                            <b style="font-size:20px;">Ordenes de Salida</b><br/>
+                            <small style="font-size:12px;">Desde: <t t-esc="o.date_from.strftime('%d/%m/%y')"/> Hasta: <t t-esc="o.date_to.strftime('%d/%m/%y')"/></small><br/>
+                            <small style="font-size:12px;">Deposito: <t t-esc="o.warehouse.name"/></small>
+                        </div>
+                        <div class="col-4 text-right">
+                            <b style="font-size:12px;">Pagina <span class="page" style="font-size:12px;"/> / <span class="topage" style="font-size:12px;"/></b><br/>
+                            <b style="font-size:12px;" t-field="o.date_now"></b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article o_report_layout_standard">
+                <t t-raw="0"/>
+            </div>
+
+            <div class="footer">
+                <div class="text-center" style="border-top: 1px solid black;">
+                    
+                </div>
+            </div>
+        </template>
+
+        <template id="inventario_picking_salidas">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="supercauchos_stock.external_layout_inventario_picking_salidas">
+                        
+                        <div class="page">
+                            <br/><br/>
+                            <table class="">
+                                <colgroup>
+                                    <col span="1" style="width: 18%;"/>
+                                    <col span="1" style="width: 18%;"/>
+                                    <col span="1" style="width: 7%;"/>
+                                    <col span="1" style="width: 7%;"/>
+                                    <col span="1" style="width: 20%;"/>
+                                    <col span="1" style="width: 9%;"/>
+                                    <col span="1" style="width: 7%;"/>
+                                    <col span="1" style="width: 7%;"/>
+                                    <col span="1" style="width: 7%;"/>
+                                </colgroup>
+                                <thead>
+                                    <tr style="background-color: #cacaca">
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Cliente</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Vendedor</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Fecha Doc</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">N° Doc</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Producto</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Estado</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Cant. Vend</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Filler</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">FillerT</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="busqueda" t-value="o._get_pickings()"/>
+                                    <t t-set="total_c" t-value="0"/>
+                                    <t t-set="total_f" t-value="0"/>
+
+                                    <t t-foreach="busqueda" t-as="item">
+                                        <t t-if="len(item.move_ids_without_package) > 1">
+                                            <t t-foreach="item.move_ids_without_package" t-as="line">
+                                                <tr>
+                                                    <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                        <span style="font-size:12px;"><t t-esc="item.partner_id.name"/></span>
+                                                    </td>
+                                                    <t t-set="busqueda2" t-value="o._get_seller(item.id)"/>
+                                                    <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                        <span style="font-size:12px;"><t t-esc="busqueda2.user_id.name"/></span>
+                                                    </td>
+                                                    <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                        <span style="font-size:12px;"><t t-esc="item.scheduled_date.strftime('%d/%m/%y')"/></span>
+                                                    </td>
+                                                    <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                        <span style="font-size:12px;"><t t-esc="item.origin"/></span>
+                                                    </td>
+                                                    <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                        <span style="font-size:12px;"><t t-esc="line.product_id.name"/></span>
+                                                    </td>
+                                                    <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                        <t t-if="item.state == 'draft'">
+                                                            <span style="font-size:12px;">Borrador</span>
+                                                        </t>
+                                                        <t t-elif="item.state == 'waiting'">
+                                                            <span style="font-size:12px;">Esperando otra operación</span>
+                                                        </t>
+                                                        <t t-elif="item.state == 'confirmed'">
+                                                            <span style="font-size:12px;">En espera</span>
+                                                        </t>
+                                                        <t t-elif="item.state == 'assigned'">
+                                                            <span style="font-size:12px;">Preparado</span>
+                                                        </t>
+                                                        <t t-elif="item.state == 'done'">
+                                                            <span style="font-size:12px;">Realizado</span>
+                                                        </t>
+                                                        <t t-elif="item.state == 'cancel'">
+                                                            <span style="font-size:12px;">Cancelada</span>
+                                                        </t>
+                                                    </td>
+                                                    <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                        <span style="font-size:12px;"><t t-esc="line.quantity_done"/></span>
+                                                    </td>
+                                                    <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                        <span style="font-size:12px;"><t t-esc="round(line.product_id.filler, 3)"/></span>
+                                                    </td>
+                                                    <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                        <span style="font-size:12px;"><t t-esc="round(line.product_id.filler * line.quantity_done, 3)"/></span>
+                                                    </td>
+                                                </tr>
+                                                <t t-set="total_c" t-value="total_c + line.quantity_done"/>
+                                                <t t-set="total_f" t-value="total_f + (line.product_id.filler * line.quantity_done)"/>
+                                            </t>
+                                        </t>
+                                        <t t-else="">
+                                            <tr>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.partner_id.name"/></span>
+                                                </td>
+                                                <t t-set="busqueda2" t-value="o.env['sale.order'].search([('picking_ids','=',item.id)])"/>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="busqueda2.user_id.name"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.scheduled_date.strftime('%d/%m/%y')"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="busqueda2.name"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.move_ids_without_package.product_id.name"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <t t-if="item.state == 'draft'">
+                                                        <span style="font-size:12px;">Borrador</span>
+                                                    </t>
+                                                    <t t-elif="item.state == 'waiting'">
+                                                        <span style="font-size:12px;">Esperando otra operación</span>
+                                                    </t>
+                                                    <t t-elif="item.state == 'confirmed'">
+                                                        <span style="font-size:12px;">En espera</span>
+                                                    </t>
+                                                    <t t-elif="item.state == 'assigned'">
+                                                        <span style="font-size:12px;">Preparado</span>
+                                                    </t>
+                                                    <t t-elif="item.state == 'done'">
+                                                        <span style="font-size:12px;">Realizado</span>
+                                                    </t>
+                                                    <t t-elif="item.state == 'cancel'">
+                                                        <span style="font-size:12px;">Cancelada</span>
+                                                    </t>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.move_ids_without_package.quantity_done"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="round(item.move_ids_without_package.product_id.filler, 3)"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="round(item.move_ids_without_package.product_id.filler * item.move_ids_without_package.quantity_done, 3)"/></span>
+                                                </td>
+                                            </tr>
+                                            <t t-set="total_c" t-value="total_c + item.move_ids_without_package.quantity_done"/>
+                                            <t t-set="total_f" t-value="total_f + (item.move_ids_without_package.product_id.filler * item.move_ids_without_package.quantity_done)"/>
+                                        </t>
+                                    </t>
+                                        <tr>
+                                            <td colspan="5" class="text-right" style="border-bottom: 1px solid #cacaca;"></td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center"><b style="font-size:12px;">Sub Total Zona...</b></td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center"><span style="font-size:12px;"><t t-esc="round(total_c, 3)"/></span></td>
+                                            <td class="text-right" style="border-bottom: 1px solid #cacaca;"></td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center"><span style="font-size:12px;"><t t-esc="round(total_f, 3)"/></span></td>
+                                        </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

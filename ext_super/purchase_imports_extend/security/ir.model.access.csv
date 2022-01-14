@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+acces_purchase_order_imports_aduana,purchase.order.imports.aduana,model_purchase_order_imports_aduana,base.group_user,1,1,1,1
+acces_purchase_order_imports_aduana_payment,purchase.order.imports.aduana.payment,model_purchase_order_imports_aduana_payment,base.group_user,1,1,1,1
+acces_purchase_order_imports_payment,purchase.order.imports.payment,model_purchase_order_imports_payment,base.group_user,1,1,1,1
+acces_purchase_order_imports_containers,purchase.order.imports.containers,model_purchase_order_imports_containers,base.group_user,1,1,1,1
+acces_purchase_order_imports_importations,purchase.order.imports.importations,model_purchase_order_imports_importations,base.group_user,1,1,1,1
+acces_temp_merchandise_transit,temp.merchandise.transit,model_temp_merchandise_transit,base.group_user,1,1,1,1

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <report
+            id="action_prorrateo_iva_reporte"
+            model="prorrateo.iva"
+            string="Prorrateo de IVA"
+            report_type="qweb-pdf"
+            name="prorrateo_iva_reporte.prorrateo_iva_reporte"
+            file="prorrateo_iva_reporte.prorrateo_iva_reporte"
+            menu="True"
+            />
+
+        <template id="external_layout_prorrateo_iva_reporte">
+
+            <div class="header">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-3">
+                            <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)" style="max-height: 100px; max-width: 150px; margin-top:22px;"/>
+                        </div>
+                        <div class="col-6 text-center"><br/>
+                            <b style="font-size:20px;"><t t-esc="o.company_id.name"/></b><br/>
+                            <span style="font-size:14px;">R.I.F. <t t-esc="o.company_id.vat"/></span><br/>
+                            <b style="font-size:20px;">Prorrateo de IVA</b><br/>
+                            <small style="font-size:12px;">Desde: <t t-esc="o.date_from.strftime('%d/%m/%y')"/> Hasta: <t t-esc="o.date_to.strftime('%d/%m/%y')"/></small><br/>
+                        </div>
+                        <div class="col-3 text-right">
+                            <b style="font-size:12px;">Página <span class="page" style="font-size:12px;"/> de <span class="topage" style="font-size:12px;"/></b><br/>
+                            <b style="font-size:12px;" t-field="o.date_now"></b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article o_report_layout_standard">
+                <t t-raw="0"/>
+            </div>
+
+            <div class="footer">
+            </div>
+        </template>
+
+        <template id="prorrateo_iva_reporte">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="prorrateo_iva_reporte.external_layout_prorrateo_iva_reporte">
+                        
+                        <div class="page">
+                            <br/><br/>
+                            <table style="width: 100%;">
+                                <colgroup>
+                                    <col span="1" style="width: 23%;"/>
+                                    <col span="1" style="width: 15%;"/>
+                                    <col span="1" style="width: 17%;"/>
+                                    <col span="1" style="width: 15%;"/>
+                                    <col span="1" style="width: 15%;"/>
+                                    <col span="1" style="width: 15%;"/>
+                                </colgroup>
+                                <thead>
+                                    <tr style="background-color: #cacaca">
+                                        <th rowspan="2" class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Cliente</span>
+                                        </th>
+                                        <th rowspan="2" class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Nro de Factura</span>
+                                        </th>
+                                        <th rowspan="2" class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Cuenta</span>
+                                        </th>
+                                        <th rowspan="2" class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Crédito Fiscal</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Deducible</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">No Deducible</span>
+                                        </th>
+                                    </tr>
+                                    <tr style="background-color: #cacaca">
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">%</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">%</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+
+                                    <!-- Totals -->
+                                    <t t-set="total_credito" t-value="0"/>
+                                    <t t-set="total_deducible" t-value="0"/>
+                                    <t t-set="total_no_deducible" t-value="0"/>
+                                    <!-- Totals -->
+
+                                <tbody>
+
+                                    <t t-foreach="o.invoice_ids." t-as="item">
+                                        <tr>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                <span style="font-size:12px;"><t t-esc="item.cliente"/></span>
+                                            </td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                <span style="font-size:12px;"><t t-esc="item.n_factura"/></span>
+                                            </td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                <span style="font-size:12px;"><t t-esc="item.cuenta"/></span>
+                                            </td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right">
+                                                <span style="font-size:12px;"><t t-esc="item.credito_fiscal" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span>
+                                            </td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right">
+                                                <span style="font-size:12px;"><t t-esc="item.deducible" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span>
+                                            </td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right">
+                                                <span style="font-size:12px;"><t t-esc="item.no_deducible" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span>
+                                            </td>
+                                        </tr>
+
+                                        <t t-set="total_credito" t-value="total_credito + item.credito_fiscal"/>
+                                        <t t-set="total_deducible" t-value="total_deducible + item.deducible"/>
+                                        <t t-set="total_no_deducible" t-value="total_no_deducible + item.no_deducible"/>
+                                        
+                                    </t>
+                                        <tr>
+                                            <td colspan="2" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center"><b style="font-size:12px;">Total General</b></td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center"><b style="font-size:12px;"></b></td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="total_credito" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="total_deducible" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="total_no_deducible" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+</odoo>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="seq_maintenance_petition" model="ir.sequence">
+            <field name="name">Código de Peticion</field>
+            <field name="code">maintenance.petition</field>
+            <field name="prefix"></field>
+            <field name="suffix"></field>
+            <field name="padding">10</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</openerp>

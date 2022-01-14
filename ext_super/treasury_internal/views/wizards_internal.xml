@@ -1,0 +1,111 @@
+<odoo>
+
+    <data noupdate="0">
+        <record id="wizard_internal" model="ir.ui.view">
+            <field name="name">Asistente de Transferencias Internas</field>
+            <field name="model">internal.transfers</field>
+            <field name="arch" type="xml">
+                <form string="Transferencias Internas">
+                    <header>
+                        <button name="validate" string="Validar"  states="draft"     type="object"  class="oe_highlight" />
+                        <button name="terminar" string="Terminar" states="confirmed" type="object"  class="oe_highlight" />
+                        <button name="cancel"   string="Cancelar" states="confirmed" type="object"  class="oe_highlight" />
+                        <field  name="state" widget="statusbar"  statusbar_visible="draft,confirmed,done,cancel" />
+
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/><br/>
+                            </h1>
+                        </div>
+
+                        <group string="Información de Pago" name="data">
+                            <group>
+                                <field name="amount" required="1" attrs="{'readonly': [('state', 'in', ('cancel','confirmed' ,'done'))]}"/>
+                                <field name="currency_id" attrs="{'readonly': [('state', 'in', ('cancel','confirmed' ,'done'))]}" />
+                                <field name="communication" required="1" attrs="{'readonly': [('state', 'in', ('cancel','confirmed' ,'done'))]}"/>
+                                <field name="rate" required="1" attrs="{'readonly': [('state', 'in', ('cancel','confirmed' ,'done'))]}"/>
+                                
+                            </group>
+                            <group>
+                                <field name="out_payment_date" required="1" attrs="{'readonly': [('state', 'in', ('cancel','confirmed' ,'done'))]}"/>
+                                <field name="in_payment_date" required="0" attrs="{'readonly': [('state', 'in', ('cancel' ,'done'))]}"/>
+                                <field name="payment_concept" required="1" attrs="{'readonly': [('state', 'in', ('cancel','confirmed' ,'done'))]}"/>
+                                <field name="partner_type" invisible="1"   attrs="{'readonly': [('state', 'in', ('cancel','confirmed' ,'done'))]}" />
+
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Compañía que Envía Dinero" name="sending">
+                                <field name="out_payment_type" invisible="1" attrs="{'readonly': [('state', 'in', ('cancel','confirmed' ,'done'))]}"/>
+                                <field name="out_company_id" string="Compañía que envía" required="1" attrs="{'readonly': [('state', 'in', ('cancel','confirmed' ,'done'))]}"/>
+                                <field name="out_journal_id" string="Diario de envío" widget="selection" required="1" attrs="{'readonly': [('state', 'in', ('cancel','confirmed' ,'done'))]}" domain="[('type', '=', 'bank'),('currency_id','=',currency_id) ,('company_id', '=', out_company_id)]"/>
+                                <field name="out_destination_account_id" string="Cuenta Transitoria" required="1" attrs="{'readonly': [('state', 'in', ('cancel','confirmed' ,'done'))]}" domain="[('company_id', '=', out_company_id)]" />
+                                <!-- <field name="out_payment_method_id" widget="selection" required="1" domain="[('payment_type', '=', out_payment_type)]"/> -->
+                                <!-- <field name="out_destination_account_id" required="1" domain="[('company_id', '=', out_company_id)]"/> -->
+                            </group>
+                            <group string="Compañía que Recibe Dinero" name="receiving">
+                                <field name="in_payment_type" invisible="1" attrs="{'readonly': [('state', 'in', ('cancel','confirmed' ,'done'))]}"/>
+                                <field name="in_company_id" groups="base.group_multi_company" string="Receiving Company" required="1" attrs="{'readonly': [('state', 'in', ('cancel','confirmed' ,'done'))]}"/>
+                                <field name="in_journal_id" string="Receiving Journal" widget="selection" required="1" attrs="{'readonly': [('state', 'in', ('cancel','confirmed' ,'done'))]}" domain="[('type', '=', 'bank'),('currency_id','=',currency_id), ('company_id', '=', in_company_id)]"/>
+                                <field name="in_destination_account_id" string="Cuenta Transitoria" domain="[('company_id', '=', in_company_id)]"   attrs="{'readonly': [('state', 'in', ('cancel','confirmed' ,'done'))]}"/>
+
+                                <!-- <field name="in_payment_method_id" widget="selection" required="1" domain="[('payment_type', '=', in_payment_type)]"/> -->
+                                <!-- <field name="in_destination_account_id" required="1" domain="[('company_id', '=', in_company_id)]"/> -->
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="move_in" string="Asiento origen">
+                                <group>
+                                    <field name="move_transient_id" readonly="1"/>
+                                    <!-- <field name="move_transient_line_id" readonly="1"/> -->
+                                </group>
+                            </page>
+                            <page name="move_out" string="Asiento destino">
+                                <group>
+                                    <field name="move_id" readonly="1"/>
+                                    <!-- <field name="move_line_id" readonly="1"/> -->
+                                </group>
+                            </page>
+                        </notebook>
+                        
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="wizard_internal_tree" model="ir.ui.view">
+            <field name="name">Asistente de Transferencias Internas</field>
+            <field name="model">internal.transfers</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="name"/>
+                    <field name="out_company_id" string="Compañía que envía" />
+                    <field name="in_company_id"  string="Receiving Company" />
+                    <field name="amount"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_internal" model="ir.actions.act_window">
+            <field name="name">Transferencia entre Compañías</field>
+            <field name="res_model">internal.transfers</field>
+            <field name="view_mode">form,tree</field>
+            <field name="view_id" ref="wizard_internal_tree"/>
+            <!-- <field name="target">new</field> -->
+        </record>
+        
+        <menuitem   name="Transferencias Internas" 
+                    parent="administration_module.admin_treasury_menu"
+                    id="internal_menu" 
+                    action="treasury_internal.action_internal"
+                    sequence="3"
+                    />
+    </data>
+
+</odoo>

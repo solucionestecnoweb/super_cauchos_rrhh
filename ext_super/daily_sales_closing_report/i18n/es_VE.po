@@ -1,0 +1,372 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* daily_sales_closing_report
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-07-05 20:47+0000\n"
+"PO-Revision-Date: 2021-07-05 20:47+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: daily_sales_closing_report
+#: code:addons/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
+#: code:addons/extra-addons/oasis/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
+#: model_terms:ir.ui.view,arch_db:daily_sales_closing_report.daily_sales_closing_report
+#, python-format
+msgid "$ Amount"
+msgstr "Monto $"
+
+#. module: daily_sales_closing_report
+#: model_terms:ir.ui.view,arch_db:daily_sales_closing_report.external_layout_daily_sales_closing_report
+msgid ""
+"<b style=\"font-size:12px;\">Page <span class=\"page\" style=\"font-"
+"size:12px;\"/> / <span class=\"topage\" style=\"font-size:12px;\"/></b><br/>"
+msgstr ""
+"<b style=\"font-size:12px;\">Página <span class=\"page\" style=\"font-"
+"size:12px;\"/> / <span class=\"topage\" style=\"font-size:12px;\"/></b><br/>"
+
+#. module: daily_sales_closing_report
+#: model_terms:ir.ui.view,arch_db:daily_sales_closing_report.daily_sales_closing_report
+msgid "<b style=\"font-size:12px;\">Totals...</b>"
+msgstr "<b style=\"font-size:12px;\">Totales...</b>"
+
+#. module: daily_sales_closing_report
+#: model_terms:ir.ui.view,arch_db:daily_sales_closing_report.daily_sales_closing_report
+msgid "<b>Cash Bs./$</b>"
+msgstr "<b>Efectivo Bs./$</b>"
+
+#. module: daily_sales_closing_report
+#: model_terms:ir.ui.view,arch_db:daily_sales_closing_report.daily_sales_closing_report
+msgid "<b>Credit Bs./$</b>"
+msgstr "<b>Crédito Bs./$</b>"
+
+#. module: daily_sales_closing_report
+#: model_terms:ir.ui.view,arch_db:daily_sales_closing_report.daily_sales_closing_report
+msgid "<b>Total Bs.</b>"
+msgstr ""
+
+#. module: daily_sales_closing_report
+#: model_terms:ir.ui.view,arch_db:daily_sales_closing_report.external_layout_daily_sales_closing_report
+msgid ""
+"<br/>\n"
+"                            <b style=\"font-size:20px;\">Sales Transactions</b><br/>"
+msgstr ""
+"<br/>\n"
+"                            <b style=\"font-size:20px;\">Transacciones de Ventas</b><br/>"
+
+#. module: daily_sales_closing_report
+#: model_terms:ir.ui.view,arch_db:daily_sales_closing_report.daily_sales_closing_report
+msgid "<span style=\"font-size:14px;\">Amount</span>"
+msgstr "<span style=\"font-size:14px;\">Monto</span>"
+
+#. module: daily_sales_closing_report
+#: model_terms:ir.ui.view,arch_db:daily_sales_closing_report.daily_sales_closing_report
+msgid "<span style=\"font-size:14px;\">Currency</span>"
+msgstr "<span style=\"font-size:14px;\">Moneda</span>"
+
+#. module: daily_sales_closing_report
+#: model_terms:ir.ui.view,arch_db:daily_sales_closing_report.daily_sales_closing_report
+msgid "<span style=\"font-size:14px;\">Customer</span>"
+msgstr "<span style=\"font-size:14px;\">Cliente</span>"
+
+#. module: daily_sales_closing_report
+#: model_terms:ir.ui.view,arch_db:daily_sales_closing_report.daily_sales_closing_report
+msgid "<span style=\"font-size:14px;\">Date</span>"
+msgstr "<span style=\"font-size:14px;\">Fecha</span>"
+
+#. module: daily_sales_closing_report
+#: model_terms:ir.ui.view,arch_db:daily_sales_closing_report.daily_sales_closing_report
+msgid "<span style=\"font-size:14px;\">Invoice Num</span>"
+msgstr "<span style=\"font-size:14px;\">N° de Factura</span>"
+
+#. module: daily_sales_closing_report
+#: model_terms:ir.ui.view,arch_db:daily_sales_closing_report.daily_sales_closing_report
+msgid "<span style=\"font-size:14px;\">Payment Condition</span>"
+msgstr "<span style=\"font-size:14px;\">Condición de Pago</span>"
+
+#. module: daily_sales_closing_report
+#: model_terms:ir.ui.view,arch_db:daily_sales_closing_report.daily_sales_closing_report
+msgid "<span style=\"font-size:14px;\">Rate</span>"
+msgstr "<span style=\"font-size:14px;\">Tasa</span>"
+
+#. module: daily_sales_closing_report
+#: model_terms:ir.ui.view,arch_db:daily_sales_closing_report.daily_sales_closing_report
+msgid "<span style=\"font-size:14px;\">Total $ Operation</span>"
+msgstr "<span style=\"font-size:14px;\">Total Operación $</span>"
+
+#. module: daily_sales_closing_report
+#: model_terms:ir.ui.view,arch_db:daily_sales_closing_report.daily_sales_closing_report
+msgid "<span style=\"font-size:14px;\">Total Bs. Operation</span>"
+msgstr "<span style=\"font-size:14px;\">Total Operación Bs.</span>"
+
+#. module: daily_sales_closing_report
+#: code:addons/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
+#: code:addons/extra-addons/oasis/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
+#: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales__amount
+#, python-format
+msgid "Amount"
+msgstr "Importe"
+
+#. module: daily_sales_closing_report
+#: code:addons/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
+#: code:addons/extra-addons/oasis/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
+#: model_terms:ir.ui.view,arch_db:daily_sales_closing_report.daily_sales_closing_report
+#, python-format
+msgid "Bs. Amount"
+msgstr "Monto Bs."
+
+#. module: daily_sales_closing_report
+#: model_terms:ir.ui.view,arch_db:daily_sales_closing_report.wizard_daily_sales_report
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: daily_sales_closing_report
+#: code:addons/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
+#: code:addons/extra-addons/oasis/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
+#, python-format
+msgid "Cash Bs./$"
+msgstr "Efectivo Bs./$"
+
+#. module: daily_sales_closing_report
+#: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales_report__company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: daily_sales_closing_report
+#: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales__create_uid
+#: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales_report__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: daily_sales_closing_report
+#: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales__create_date
+#: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales_report__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: daily_sales_closing_report
+#: code:addons/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
+#: code:addons/extra-addons/oasis/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
+#, python-format
+msgid "Credit Bs./$"
+msgstr "Crédito Bs./$"
+
+#. module: daily_sales_closing_report
+#: code:addons/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
+#: code:addons/extra-addons/oasis/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
+#: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales__currency_id
+#, python-format
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: daily_sales_closing_report
+#: code:addons/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
+#: code:addons/extra-addons/oasis/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
+#: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales__partner_id
+#, python-format
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: daily_sales_closing_report
+#: code:addons/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
+#: code:addons/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
+#: code:addons/extra-addons/oasis/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
+#: code:addons/extra-addons/oasis/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
+#: model:ir.actions.act_window,name:daily_sales_closing_report.daily_sales_action
+#, python-format
+msgid "Daily Sales Closing Report"
+msgstr "Reporte de Cierre de Ventas Diario"
+
+#. module: daily_sales_closing_report
+#: code:addons/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
+#: code:addons/extra-addons/oasis/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
+#, python-format
+msgid "Daily Sales Closing Report "
+msgstr "Reporte de Cierre de Ventas Diario "
+
+#. module: daily_sales_closing_report
+#: model:ir.actions.act_window,name:daily_sales_closing_report.action_daily_sales_report
+#: model:ir.ui.menu,name:daily_sales_closing_report.daily_sales_report_menu
+#: model_terms:ir.ui.view,arch_db:daily_sales_closing_report.wizard_daily_sales_report
+msgid "Daily sales closing report"
+msgstr "Reporte de cierre de ventas diario"
+
+#. module: daily_sales_closing_report
+#: code:addons/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
+#: code:addons/extra-addons/oasis/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
+#, python-format
+msgid "Date"
+msgstr "Fecha"
+
+#. module: daily_sales_closing_report
+#: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales_report__date_from
+msgid "Date From"
+msgstr "Desde"
+
+#. module: daily_sales_closing_report
+#: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales_report__date_now
+msgid "Date Now"
+msgstr "Fecha Ahora"
+
+#. module: daily_sales_closing_report
+#: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales_report__date_to
+msgid "Date To"
+msgstr "Hasta"
+
+#. module: daily_sales_closing_report
+#: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales__display_name
+#: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales_report__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: daily_sales_closing_report
+#: model_terms:ir.ui.view,arch_db:daily_sales_closing_report.wizard_daily_sales_report
+msgid "Export PDF"
+msgstr "Exportar a PDF"
+
+#. module: daily_sales_closing_report
+#: model_terms:ir.ui.view,arch_db:daily_sales_closing_report.wizard_daily_sales_report
+msgid "Export XLS"
+msgstr "Exportar a Excel"
+
+#. module: daily_sales_closing_report
+#: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales_report__name
+msgid "File Name"
+msgstr "Nombre del Archivo"
+
+#. module: daily_sales_closing_report
+#: model_terms:ir.ui.view,arch_db:daily_sales_closing_report.external_layout_daily_sales_closing_report
+msgid "From:"
+msgstr "Desde:"
+
+#. module: daily_sales_closing_report
+#: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales__id
+#: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales_report__id
+msgid "ID"
+msgstr ""
+
+#. module: daily_sales_closing_report
+#: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales__name
+msgid "Invoice Date"
+msgstr "Fecha de Factura"
+
+#. module: daily_sales_closing_report
+#: code:addons/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
+#: code:addons/extra-addons/oasis/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
+#, python-format
+msgid "Invoice Num"
+msgstr "N° de Factura"
+
+#. module: daily_sales_closing_report
+#: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales__invoice_num
+msgid "Invoice Number"
+msgstr "Número de Factura"
+
+#. module: daily_sales_closing_report
+#: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales____last_update
+#: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales_report____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: daily_sales_closing_report
+#: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales__write_uid
+#: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales_report__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: daily_sales_closing_report
+#: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales__write_date
+#: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales_report__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: daily_sales_closing_report
+#: code:addons/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
+#: code:addons/extra-addons/oasis/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
+#: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales__payment_condition_id
+#, python-format
+msgid "Payment Condition"
+msgstr "Condición de Pago"
+
+#. module: daily_sales_closing_report
+#: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales_report__report
+msgid "Prepared file"
+msgstr "Archivo preparado"
+
+#. module: daily_sales_closing_report
+#: code:addons/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
+#: code:addons/extra-addons/oasis/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
+#: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales__currency_rate
+#, python-format
+msgid "Rate"
+msgstr "Tasa"
+
+#. module: daily_sales_closing_report
+#: model_terms:ir.ui.view,arch_db:daily_sales_closing_report.wizard_daily_sales_report
+msgid "Show Daily Sales"
+msgstr "Mostrar Ventas Diarias"
+
+#. module: daily_sales_closing_report
+#: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales_report__state
+msgid "State"
+msgstr "Estado"
+
+#. module: daily_sales_closing_report
+#: model_terms:ir.ui.view,arch_db:daily_sales_closing_report.external_layout_daily_sales_closing_report
+msgid "To:"
+msgstr "Hasta"
+
+#. module: daily_sales_closing_report
+#: code:addons/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
+#: code:addons/extra-addons/oasis/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
+#: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales__total_usd
+#, python-format
+msgid "Total $ Operation"
+msgstr "Total Operación $"
+
+#. module: daily_sales_closing_report
+#: code:addons/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
+#: code:addons/extra-addons/oasis/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
+#, python-format
+msgid "Total Bs."
+msgstr ""
+
+#. module: daily_sales_closing_report
+#: code:addons/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
+#: code:addons/extra-addons/oasis/daily_sales_closing_report/wizards/wizard_daily_sales_closing_report.py:0
+#: model:ir.model.fields,field_description:daily_sales_closing_report.field_daily_sales__total_bs
+#, python-format
+msgid "Total Bs. Operation"
+msgstr "Total Operación Bs."
+
+#. module: daily_sales_closing_report
+#: model:ir.model.fields.selection,name:daily_sales_closing_report.selection__daily_sales_report__state__choose
+msgid "choose"
+msgstr ""
+
+#. module: daily_sales_closing_report
+#: model:ir.actions.report,name:daily_sales_closing_report.action_daily_sales_closing_report
+msgid "daily sales closing report"
+msgstr "reporte de cierre de ventas diario"
+
+#. module: daily_sales_closing_report
+#: model:ir.model,name:daily_sales_closing_report.model_daily_sales
+msgid "daily.sales"
+msgstr ""
+
+#. module: daily_sales_closing_report
+#: model:ir.model,name:daily_sales_closing_report.model_daily_sales_report
+msgid "daily.sales.report"
+msgstr ""
+
+#. module: daily_sales_closing_report
+#: model:ir.model.fields.selection,name:daily_sales_closing_report.selection__daily_sales_report__state__get
+msgid "get"
+msgstr ""

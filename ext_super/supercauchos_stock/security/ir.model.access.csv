@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+acces_product_brand,product.brand,model_product_brand,base.group_user,1,1,1,1
+acces_product_group,product.group,model_product_group,base.group_user,1,1,1,1
+acces_stock_wizard_picking,stock.wizard.picking,model_stock_wizard_picking,base.group_user,1,1,1,1
+acces_stock_wizard_toma_fisica,stock.wizard.toma.fisica,model_stock_wizard_toma_fisica,base.group_user,1,1,1,1

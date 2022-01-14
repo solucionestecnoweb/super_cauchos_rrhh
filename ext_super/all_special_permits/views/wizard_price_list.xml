@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+        <record model="ir.ui.menu" id="product_list_prices_multi_currency.stock_wizard_price_list">
+            <field name="groups_id" eval="[(6, 0,[ref('all_special_permits.list_price_product_sale_group')])]"/>
+        </record>
+    </data>
+</odoo>

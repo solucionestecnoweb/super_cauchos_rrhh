@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="0">
+        <!-- Add you code here -->
+
+        <!-- purchase.order.importations.containers tree view -->
+        <record id="purchase_order_importations_containers_view_tree" model="ir.ui.view">
+            <field name="name">purchase.order.importations.containers.view.tree</field>
+            <field name="model">purchase.order.importations.containers</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <!-- Add your fields here -->
+                    <field name="nbl_container"/>
+                    <field name="invoice_number"/>
+                    <field name="container_type"/>
+                    <field name="container_brand"/>
+                    <field name="cont"/>
+                    <field name="tires"/>
+                    <field name="agency"/>
+                    <field name="shipping_company"/>
+                    <field name="eta_ven"/>
+                    <field name="harbor"/>
+                    <field name="warehouse"/>
+                    <field name="status_w"/>
+                    <field name="vessel"/>
+                    <field name="status_v"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- purchase.order.importations.containers form view -->
+        <record id="purchase_order_importations_containers_view_form" model="ir.ui.view">
+            <field name="name">purchase.order.importations.containers.view.form</field>
+            <field name="model">purchase.order.importations.containers</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group string="Containers Data">
+                            <group>
+                                <field name="nbl_container"/>
+                                <field name="invoice_number"/>
+                                <field name="container_type"/>
+                                <field name="container_brand"/>
+                                <field name="tires"/>
+                                <field name="warehouse"/>
+                                <field name="status_w"/>
+                            </group>
+                            <group>
+                                <field name="cont"/>
+                                <field name="agency"/>
+                                <field name="shipping_company"/>
+                                <field name="eta_ven"/>
+                                <field name="harbor"/>
+                                <field name="vessel"/>
+                                <field name="status_v"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- purchase.order.importations.containers search view -->
+        <record id="purchase_order_importations_containers_view_search" model="ir.ui.view">
+            <field name="name">purchase.order.importations.containers.view.search</field>
+            <field name="model">purchase.order.importations.containers</field>
+            <field name="arch" type="xml">
+                <search string="Container Arrival Schedule Search">
+                    <!-- Add your fields here -->
+                    <field name="nbl_container"/>
+                    <field name="invoice_number"/>
+                    <field name="agency"/>
+                    <field name="shipping_company"/>
+                    <field name="harbor"/>
+                    <field name="warehouse"/>
+                    <field name="vessel"/>
+                </search>
+            </field>
+        </record>
+
+    </data>
+</odoo>

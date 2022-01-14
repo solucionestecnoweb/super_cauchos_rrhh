@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="0">
+        <!-- Add you code here -->
+        <!-- account.payment inherit form view -->
+        <record id="view_account_payment_form_approvals_extend" model="ir.ui.view">
+            <field name="name">account.payment.inherit.view.form</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+                <!-- Add your xpath here -->
+                <xpath expr="//field[@name='state']" position="before">
+                    <button string="Request Approval" name="approvals_request_conciliation" type="object" class="oe_highlight" states="draft"/>
+                    <field name="is_approved" invisible="1"/>
+                </xpath>
+                <xpath expr="//button[@name='action_draft']" position="before">
+                    <button name="approved_post" class="oe_highlight" states="to_approve" string="Confirm" type="object"/>
+                </xpath>
+            </field>
+        </record>
+        <!-- account.payment.method inherit form view -->
+        <record id="view_account_payment_method_form_approvals_extend" model="ir.ui.view">
+            <field name="name">account.payment.method.inherit.view.form</field>
+            <field name="model">account.payment.method</field>
+            <field name="inherit_id" ref="l10n_ve_check_printing.modo_pagos_view_form"/>
+            <field name="arch" type="xml">
+                <!-- Add your xpath here -->
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="aprobacion_requerida" widget="boolean_toggle"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

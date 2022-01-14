@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+        <!-- Add you code here -->
+
+        <!-- Add vehicle type to vehicle view -->
+        <record model="ir.ui.view" id="fleet_vehicle_form">
+            <field name="name">fleet.vehicle.form</field>
+            <field name="model">fleet.vehicle</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='tag_ids']" position="after">
+                    <br/>
+                    <label for="type_vehicle" class="oe_edit_only"/>
+                    <h3>
+                        <field name="type_vehicle"/>
+                    </h3>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Add maintenance to fleet -->
+        <menuitem   name="Peticiones de Mantenimiento" 
+                    id="supercauchos_fleet.servicios_internos_vehiculos"
+                    sequence="20"
+                    parent="fleet.fleet_vehicles"
+                    action="maintenance.hr_equipment_request_action"
+                    />
+
+        <!-- maintenance.request inherit form view -->
+        <record id="hr_equipment_request_view_form_extend" model="ir.ui.view">
+            <field name="name">maintenance.request.inherit.view.form</field>
+            <field name="model">maintenance.request</field>
+            <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form"/>
+            <field name="arch" type="xml">
+                <!-- Add your xpath here -->
+                <xpath expr="//field[@name='equipment_id']" position="attributes">
+                    <attribute name="widget">radio</attribute>
+                </xpath>
+                <xpath expr="//field[@name='equipment_id']" position="after">
+                    <field name="vehicle_id"/>
+                    <field name="driver_id"/>
+                    <field name="license_plate"/>
+                    <field name="mileage"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

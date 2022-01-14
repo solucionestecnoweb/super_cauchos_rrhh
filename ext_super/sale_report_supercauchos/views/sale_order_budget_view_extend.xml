@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="0">
+        <!-- Add you code here -->
+        <!-- sale.order inherit form view -->
+        <record id="sale_order_view_order_form_extend" model="ir.ui.view">
+            <field name="name">sale.order.inherit.view.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <!-- Add your xpath here -->
+                <xpath expr="//field[@name='estimated_date']" position="after">
+                    <field name="arrive_date"/>
+                    <!--field name="rate"/-->
+                </xpath>
+                <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                    <field name="payment_condition_id" required="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

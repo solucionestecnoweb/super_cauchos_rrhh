@@ -1,0 +1,614 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <report 
+            id="action_account_payment_extend" 
+            model="account.payment" 
+            string="Recibo" 
+            report_type="qweb-pdf"
+            paperformat="account_move_extend_fields_reports.paperformat_receipt"
+            name="account_move_extend_fields_reports.account_payment_extend" 
+            file="account_move_extend_fields_reports.account_payment_extend" 
+            />
+
+        <template id="external_layout_account_payment_extend">
+            <div class="header">
+                <!-- <t t-if="o.anticipo">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-5 text-center">
+                                <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)" style="max-height: 100px; max-width: 200px;"/><br/>
+                            </div>
+                            <div class="col-3">
+                            </div>
+                            <div class="col-4 text-center">
+                                <b style="font-size:12px;">Fecha: <t t-esc="o.current_date_format(o.payment_date)"/></b><br/>
+                                <b style="font-size:12px;">Recibo N° <t t-esc="o.name"/></b><br/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <span style="font-size:12px;">Hemos entregado a: <t t-esc="o.partner_id.name"/></span><br/>
+                                <span style="font-size:12px;">La cantidad de: <t t-esc="o.get_literal_amount(o.amount)"/></span><br/>
+                                <span style="font-size:12px;">Por concepto de: <t t-esc="o.payment_concept"/></span><br/>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+                <t t-else="">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-5 text-center">
+                                <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)" style="max-height: 100px; max-width: 200px;"/><br/>
+                                <span style="font-size:12px;">Cliente </span><b style="font-size:12px;"><t t-esc="o.partner_id.name"/></b><br/>
+                                <span style="font-size:12px;">Dirección <t t-esc="o.partner_id.city"/> <span style="font-size:12px;" t-if="o.partner_id.state_id.name">Estado</span> <t t-esc="o.partner_id.state_id.name"/></span><br/>
+                            </div>
+                            <div class="col-3">
+                            </div>
+                            <div class="col-4 text-center">
+                                <b style="font-size:12px;">Recibo de Caja N° <t t-esc="o.name"/></b><br/>
+                                <b style="font-size:12px;">Fecha: <t t-esc="o.current_date_format(o.payment_date)"/></b><br/><br/><br/>
+                                <span style="font-size:12px;">R.I.F </span><b style="font-size:12px;"><t t-esc="o.partner_id.vat"/></b><br/>
+                                <span style="font-size:12px;">Vendedor: <t t-esc="o.seller_id.name"/></span>
+                            </div>
+                        </div>
+                    </div>
+                </t> -->
+            </div>
+
+            <div class="article o_report_layout_standard">
+                <t t-raw="0"/>
+            </div>
+
+            <div class="footer">
+                <!-- <t t-if="o.anticipo">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-3 text-center">
+                            </div>
+                            <div class="col-5 text-center">
+                                <span style="font-size:12px;">Recibido por: </span><br/>
+                            </div>
+                            <div class="col-4 text-center">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-2">
+                                        </div>
+                                        <div class="col-10 border-top border-dark text-center">
+                                            <span style="font-size:12px;">Firma conforme</span><br/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+                <t t-else="">
+                    <div class=" border border-dark" style="border-top: 1px solid black;">
+                        <t t-if="o.payment_notes">
+                            <b style="font-size:12px;">Notas </b>
+                            <span style="font-size:12px;"><t t-esc="o.payment_notes"/><br/><br/></span>
+                        </t>
+                        <t t-else="">
+                            <b style="font-size:12px;">Notas</b><br/><br/><br/>
+                        </t>
+                    </div>
+                </t> -->
+            </div>
+        </template>
+
+        <template id="account_payment_extend">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="account_move_extend_fields_reports.external_layout_account_payment_extend">
+                        <t t-if="o.partner_type == 'supplier'">
+                            <div class="page">
+                                <div class="container">
+                                    <!-- Primera impresión -->
+                                    <div class="container" style="height: 650px;">
+                                        <div>
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-5 text-center">
+                                                        <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)" style="max-height: 100px; max-width: 200px;"/><br/>
+                                                    </div>
+                                                    <div class="col-3">
+                                                    </div>
+                                                    <div class="col-4 text-center">
+                                                        <b style="font-size:12px;">Fecha: <t t-esc="o.current_date_format(o.payment_date)"/></b><br/>
+                                                        <b style="font-size:12px;">Recibo N° <t t-esc="o.name"/></b><br/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <span style="font-size:12px;">Hemos entregado a: <t t-esc="o.partner_id.name"/></span><br/>
+                                                        <span style="font-size:12px;">La cantidad de: <t t-esc="o.get_literal_amount(o.amount)"/></span><br/>
+                                                        <span style="font-size:12px;">Por concepto de: <t t-esc="o.payment_concept"/></span><br/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="margin-top: 10px;">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-4 text-right">
+                                                        <b style="font-size:12px;">Total Egreso</b><br/>
+                                                    </div>
+                                                    <div class="col-4">
+                                                    <b class="border-bottom border-dark" style="font-size:12px;"><t t-esc="o.amount * (-1)" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></b> <br/>
+                                                    <b style="font-size:12px;"><t t-esc="o.amount * (-1)" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></b>
+                                                    </div>
+                                                    <div class="col-4">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br/><br/>
+                                            <table style="width: 100%;">
+                                                <!-- Cantidad de columnas -->
+                                                <colgroup>
+                                                    <col span="1" style="width: 20%;"/>
+                                                    <col span="1" style="width: 40%;"/>
+                                                    <col span="1" style="width: 20%;"/>
+                                                    <col span="1" style="width: 20%;"/>
+                                                </colgroup>
+                                                <!-- Fin cantidad de columnas -->
+                                                
+                                                <!-- Variables totales -->
+                                                <t t-set="monto_fact" t-value="0"/>
+                                                <t t-set="monto_ant" t-value="0"/>
+                                                <t t-set="saldo_pend" t-value="0"/>
+                                                <t t-set="total_debit" t-value="0"/>
+                                                <t t-set="total_credit" t-value="0"/>
+                                                <!-- Fin variables totales -->
+
+                                                <thead>
+                                                    <th class="text-center border border-dark" style="background-color: #cacaca; font-size:12px;">Cuenta</th>
+                                                    <th class="text-center border border-dark" style="background-color: #cacaca; font-size:12px;">Descripción</th>
+                                                    <th class="text-center border border-dark" style="background-color: #cacaca; font-size:12px;">Débitos</th>
+                                                    <th class="text-center border border-dark" style="background-color: #cacaca; font-size:12px;">Créditos</th>
+                                                </thead>
+
+                                                <tbody>
+                                                    <!-- Lineas -->
+                                                    <t t-foreach="o.move_line_ids" t-as="item">
+                                                        <tr>
+                                                            <td class="text-center" style="font-size:12px;"><t t-esc="item.account_id.name"/></td>
+                                                            <td class="text-center" style="font-size:12px;"><t t-esc="item.name"/></td>
+                                                            <td class="text-right" style="font-size:12px; padding-right: 3px;"><t t-esc="item.debit" t-options='{"widget": "float", "decimal_precision": "o.currency_id"}'/></td>
+                                                            <td class="text-right" style="font-size:12px; padding-right: 3px;"><t t-esc="item.credit" t-options='{"widget": "float", "decimal_precision": "o.currency_id"}'/></td>
+                                                        </tr>
+                                                        <t t-set="total_debit" t-value="total_debit + item.debit"/>
+                                                        <t t-set="total_credit" t-value="total_credit + item.credit"/>
+                                                    </t>
+                                                    <!-- Fin lineas -->
+                                                    <!-- Totales -->
+                                                    <tr>
+                                                        <td class="text-right" style="font-size:12px;">Totales...</td>
+                                                        <td style="font-size:12px;"></td>
+                                                        <td class="text-right" style="font-size:12px; padding-right: 3px;"><t t-esc="total_debit" t-options='{"widget": "float", "decimal_precision": "o.currency_id"}'/></td>
+                                                        <td class="text-right" style="font-size:12px; padding-right: 3px;"><t t-esc="total_credit" t-options='{"widget": "float", "decimal_precision": "o.currency_id"}'/></td>
+                                                    </tr>
+                                                    <!-- Fin Totales -->
+                                                </tbody>     
+                                            </table>
+                                        </div>
+                                        <div style="margin-top: 60px;">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-3 text-center">
+                                                    </div>
+                                                    <div class="col-5 text-center">
+                                                        <span style="font-size:12px;">Realizado por: <t t-esc="o.create_uid.name"/></span><br/>
+                                                    </div>
+                                                    <div class="col-4 text-center">
+                                                        <div class="container">
+                                                            <div class="row">
+                                                                <div class="col-2">
+                                                                </div>
+                                                                <div class="col-10 border-top border-dark text-center">
+                                                                    <span style="font-size:12px;">Firma conforme</span><br/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Segunda impresión -->
+                                    <div class="container">
+                                        <div>
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-5 text-center">
+                                                        <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)" style="max-height: 100px; max-width: 200px;"/><br/>
+                                                    </div>
+                                                    <div class="col-3">
+                                                    </div>
+                                                    <div class="col-4 text-center">
+                                                        <b style="font-size:12px;">Fecha: <t t-esc="o.current_date_format(o.payment_date)"/></b><br/>
+                                                        <b style="font-size:12px;">Recibo N° <t t-esc="o.name"/></b><br/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <span style="font-size:12px;">Hemos entregado a: <t t-esc="o.partner_id.name"/></span><br/>
+                                                        <span style="font-size:12px;">La cantidad de: <t t-esc="o.get_literal_amount(o.amount)"/></span><br/>
+                                                        <span style="font-size:12px;">Por concepto de: <t t-esc="o.payment_concept"/></span><br/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="margin-top: 10px;">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-4 text-right">
+                                                        <b style="font-size:12px;">Total Egreso</b><br/>
+                                                    </div>
+                                                    <div class="col-4">
+                                                    <b class="border-bottom border-dark" style="font-size:12px;"><t t-esc="o.amount * (-1)" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></b> <br/>
+                                                    <b style="font-size:12px;"><t t-esc="o.amount * (-1)" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></b>
+                                                    </div>
+                                                    <div class="col-4">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br/><br/>
+                                            <table style="width: 100%;">
+                                                <!-- Cantidad de columnas -->
+                                                <colgroup>
+                                                    <col span="1" style="width: 20%;"/>
+                                                    <col span="1" style="width: 40%;"/>
+                                                    <col span="1" style="width: 20%;"/>
+                                                    <col span="1" style="width: 20%;"/>
+                                                </colgroup>
+                                                <!-- Fin cantidad de columnas -->
+                                                
+                                                <!-- Variables totales -->
+                                                <t t-set="monto_fact" t-value="0"/>
+                                                <t t-set="monto_ant" t-value="0"/>
+                                                <t t-set="saldo_pend" t-value="0"/>
+                                                <t t-set="total_debit" t-value="0"/>
+                                                <t t-set="total_credit" t-value="0"/>
+                                                <!-- Fin variables totales -->
+
+                                                <thead>
+                                                    <th class="text-center border border-dark" style="background-color: #cacaca; font-size:12px;">Cuenta</th>
+                                                    <th class="text-center border border-dark" style="background-color: #cacaca; font-size:12px;">Descripción</th>
+                                                    <th class="text-center border border-dark" style="background-color: #cacaca; font-size:12px;">Débitos</th>
+                                                    <th class="text-center border border-dark" style="background-color: #cacaca; font-size:12px;">Créditos</th>
+                                                </thead>
+
+                                                <tbody>
+                                                    <!-- Lineas -->
+                                                    <t t-foreach="o.move_line_ids" t-as="item">
+                                                        <tr>
+                                                            <td class="text-center" style="font-size:12px;"><t t-esc="item.account_id.name"/></td>
+                                                            <td class="text-center" style="font-size:12px;"><t t-esc="item.name"/></td>
+                                                            <td class="text-right" style="font-size:12px; padding-right: 3px;"><t t-esc="item.debit" t-options='{"widget": "float", "decimal_precision": "o.currency_id"}'/></td>
+                                                            <td class="text-right" style="font-size:12px; padding-right: 3px;"><t t-esc="item.credit" t-options='{"widget": "float", "decimal_precision": "o.currency_id"}'/></td>
+                                                        </tr>
+                                                        <t t-set="total_debit" t-value="total_debit + item.debit"/>
+                                                        <t t-set="total_credit" t-value="total_credit + item.credit"/>
+                                                    </t>
+                                                    <!-- Fin lineas -->
+                                                    <!-- Totales -->
+                                                    <tr>
+                                                        <td class="text-right" style="font-size:12px;">Totales...</td>
+                                                        <td style="font-size:12px;"></td>
+                                                        <td class="text-right" style="font-size:12px; padding-right: 3px;"><t t-esc="total_debit" t-options='{"widget": "float", "decimal_precision": "o.currency_id"}'/></td>
+                                                        <td class="text-right" style="font-size:12px; padding-right: 3px;"><t t-esc="total_credit" t-options='{"widget": "float", "decimal_precision": "o.currency_id"}'/></td>
+                                                    </tr>
+                                                    <!-- Fin Totales -->
+                                                </tbody>     
+                                            </table>
+                                        </div>
+                                        <div style="margin-top: 60px;">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-3 text-center">
+                                                    </div>
+                                                    <div class="col-5 text-center">
+                                                        <span style="font-size:12px;">Realizado por: <t t-esc="o.create_uid.name"/></span><br/>
+                                                    </div>
+                                                    <div class="col-4 text-center">
+                                                        <div class="container">
+                                                            <div class="row">
+                                                                <div class="col-2">
+                                                                </div>
+                                                                <div class="col-10 border-top border-dark text-center">
+                                                                    <span style="font-size:12px;">Firma conforme</span><br/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </t>
+                        <t t-else="">
+                            <div class="page">
+                                <div class="container">
+                                    <!-- Primera impresión -->
+                                    <div class="container" style="height: 650px;">
+                                        <div>
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-5 text-center">
+                                                        <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)" style="max-height: 100px; max-width: 200px;"/><br/>
+                                                        <span style="font-size:12px;">Cliente </span><b style="font-size:12px;"><t t-esc="o.partner_id.name"/></b><br/>
+                                                        <span style="font-size:12px;">R.I.F </span><b style="font-size:12px;"><t t-esc="o.partner_id.doc_type.upper() + o.partner_id.vat"/></b><br/>
+                                                        <span style="font-size:12px;">Dirección <t t-esc="o.partner_id.city"/> <span style="font-size:12px;" t-if="o.partner_id.state_id.name">Estado</span> <t t-esc="o.partner_id.state_id.name"/></span><br/>
+                                                    </div>
+                                                    <div class="col-3">
+                                                    </div>
+                                                    <div class="col-4 text-center">
+                                                        <b style="font-size:12px;">Recibo de Caja N° <t t-esc="o.name"/></b><br/>
+                                                        <b style="font-size:12px;">Fecha: <t t-esc="o.current_date_format(o.payment_date)"/></b><br/><br/><br/>
+                                                        <span style="font-size:12px;">Vendedor: <t t-esc="o.seller_id.name"/></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-4 text-center">
+                                                        <b style="font-size:12px;">Hemos recibido el pago/abono a:</b><br/>
+                                                        <span style="font-size:12px;" t-if="o.invoice_ids"><t t-esc="o.invoice_ids[0].name"/></span><br/>
+                                                    </div>
+                                                    <div class="col-4">
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <br/><span style="font-size:12px;">Tasa: <t t-esc="o.rate" t-options='{"widget": "float", "decimal_precision": "o.currency_id"}'/></span><br/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br/><br/>
+                                            <table style="width: 100%;">
+                                                <!-- Cantidad de columnas -->
+                                                <colgroup>
+                                                    <col span="1" style="width: 20%;"/>
+                                                    <col span="1" style="width: 20%;"/>
+                                                    <col span="1" style="width: 20%;"/>
+                                                    <col span="1" style="width: 20%;"/>
+                                                    <col span="1" style="width: 20%;"/>
+                                                </colgroup>
+                                                <!-- Fin cantidad de columnas -->
+                                                
+                                                <!-- Variables totales -->
+                                                <t t-set="monto_fact" t-value="0"/>
+                                                <t t-set="monto_ant" t-value="0"/>
+                                                <t t-set="saldo_pend" t-value="0"/>
+                                                <!-- Fin variables totales -->
+
+                                                <thead>
+                                                    <th colspan="2" class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">A traves de</th>
+                                                    <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Documento</th>
+                                                    <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Monto Pago $</th>
+                                                    <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Monto Pago Bs</th>
+                                                </thead>
+
+                                                <tbody>
+                                                    <!-- Lineas -->
+                                                    <t t-if="rate == 0">
+                                                        <t t-set="rate" t-value="1"/>
+                                                    </t>
+                                                    <tr class="border-top border-bottom border-dark">
+                                                        <td class="text-center">
+                                                            <span style="font-size:12px;"><t t-esc="o.journal_id.name"/></span>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <span style="font-size:12px;"><t t-esc="o.communication"/></span>
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <span style="font-size:12px; padding-right: 3px;" t-if="o.invoice_ids"><t t-esc="o.invoice_ids[0].name"/></span>
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <span style="font-size:12px; padding-right: 3px;" t-if="o.currency_id.name == 'USD'"><t t-esc="o.amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                            <span style="font-size:12px; padding-right: 3px;" t-else=""><t t-esc="o.amount / o.rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <span style="font-size:12px; padding-right: 3px;" t-if="o.currency_id.id == 3"><t t-esc="o.amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                            <span style="font-size:12px; padding-right: 3px;" t-else=""><t t-esc="o.amount * o.rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="3" class="text-right">
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <span style="font-size:12px; padding-right: 3px;" t-if="o.currency_id.name == 'USD'"><t t-esc="o.amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                            <span style="font-size:12px; padding-right: 3px;" t-else=""><t t-esc="o.amount / o.rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <span style="font-size:12px; padding-right: 3px;" t-if="o.currency_id.id == 3"><t t-esc="o.amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                            <span style="font-size:12px; padding-right: 3px;" t-else=""><t t-esc="o.amount * o.rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                        </td>
+                                                    </tr>
+                                                    <!-- Fin lineas -->
+                                                </tbody>     
+                                            </table>
+                                            <br/>
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-4 text-center">
+                                                        <b style="font-size:12px;">Monto Facturado: </b><span style="font-size:12px;">
+                                                        <t t-if="o.invoice_ids" t-esc="o.invoice_ids[0].amount_total" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/>
+                                                        <t t-else="" t-esc="0 + 0" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/>
+                                                        </span><br/>
+                                                        <b style="font-size:12px;">Monto Anticipo: </b><span style="font-size:12px;">
+                                                        <t t-if="o.anticipo" t-esc="o.amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/>
+                                                        <t t-else="" t-esc="0 + 0" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/>
+                                                        </span><br/>
+                                                    </div>
+                                                    <div class="col-4">
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <b style="font-size:12px;">Saldo Pendiente: </b><span style="font-size:12px;"><t t-esc="o.payment_difference" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span><br/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class=" border border-dark" style="border-top: 1px solid black;">
+                                                <t t-if="o.payment_notes">
+                                                    <b style="font-size:12px;">Notas </b>
+                                                    <span style="font-size:12px;"><t t-esc="o.payment_notes"/><br/><br/></span>
+                                                </t>
+                                                <t t-else="">
+                                                    <b style="font-size:12px;">Notas</b><br/><br/><br/>
+                                                </t>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Segunda impresión -->
+                                    <div class="container">
+                                        <div>
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-5 text-center">
+                                                        <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)" style="max-height: 100px; max-width: 200px;"/><br/>
+                                                        <span style="font-size:12px;">Cliente </span><b style="font-size:12px;"><t t-esc="o.partner_id.name"/></b><br/>
+                                                        <span style="font-size:12px;">R.I.F </span><b style="font-size:12px;"><t t-esc="o.partner_id.doc_type.upper() + o.partner_id.vat"/></b><br/>
+                                                        <span style="font-size:12px;">Dirección <t t-esc="o.partner_id.city"/> <span style="font-size:12px;" t-if="o.partner_id.state_id.name">Estado</span> <t t-esc="o.partner_id.state_id.name"/></span><br/>
+                                                    </div>
+                                                    <div class="col-3">
+                                                    </div>
+                                                    <div class="col-4 text-center">
+                                                        <b style="font-size:12px;">Recibo de Caja N° <t t-esc="o.name"/></b><br/>
+                                                        <b style="font-size:12px;">Fecha: <t t-esc="o.current_date_format(o.payment_date)"/></b><br/><br/><br/>
+                                                        <span style="font-size:12px;">Vendedor: <t t-esc="o.seller_id.name"/></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-4 text-center">
+                                                        <b style="font-size:12px;">Hemos recibido el pago/abono a:</b><br/>
+                                                        <span style="font-size:12px;" t-if="o.invoice_ids"><t t-esc="o.invoice_ids[0].name"/></span><br/>
+                                                    </div>
+                                                    <div class="col-4">
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <br/><span style="font-size:12px;">Tasa: <t t-esc="o.rate" t-options='{"widget": "float", "decimal_precision": "o.currency_id"}'/></span><br/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br/><br/>
+                                            <table style="width: 100%;">
+                                                <!-- Cantidad de columnas -->
+                                                <colgroup>
+                                                    <col span="1" style="width: 20%;"/>
+                                                    <col span="1" style="width: 20%;"/>
+                                                    <col span="1" style="width: 20%;"/>
+                                                    <col span="1" style="width: 20%;"/>
+                                                    <col span="1" style="width: 20%;"/>
+                                                </colgroup>
+                                                <!-- Fin cantidad de columnas -->
+                                                
+                                                <!-- Variables totales -->
+                                                <t t-set="monto_fact" t-value="0"/>
+                                                <t t-set="monto_ant" t-value="0"/>
+                                                <t t-set="saldo_pend" t-value="0"/>
+                                                <!-- Fin variables totales -->
+
+                                                <thead>
+                                                    <th colspan="2" class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">A traves de</th>
+                                                    <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Documento</th>
+                                                    <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Monto Pago $</th>
+                                                    <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Monto Pago Bs</th>
+                                                </thead>
+
+                                                <tbody>
+                                                    <!-- Lineas -->
+                                                    <t t-if="rate == 0">
+                                                        <t t-set="rate" t-value="1"/>
+                                                    </t>
+                                                    <tr class="border-top border-bottom border-dark">
+                                                        <td class="text-center">
+                                                            <span style="font-size:12px;"><t t-esc="o.journal_id.name"/></span>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <span style="font-size:12px;"><t t-esc="o.communication"/></span>
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <span style="font-size:12px; padding-right: 3px;" t-if="o.invoice_ids"><t t-esc="o.invoice_ids[0].name"/></span>
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <span style="font-size:12px; padding-right: 3px;" t-if="o.currency_id.name == 'USD'"><t t-esc="o.amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                            <span style="font-size:12px; padding-right: 3px;" t-else=""><t t-esc="o.amount / o.rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <span style="font-size:12px; padding-right: 3px;" t-if="o.currency_id.id == 3"><t t-esc="o.amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                            <span style="font-size:12px; padding-right: 3px;" t-else=""><t t-esc="o.amount * o.rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="3" class="text-right">
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <span style="font-size:12px; padding-right: 3px;" t-if="o.currency_id.name == 'USD'"><t t-esc="o.amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                            <span style="font-size:12px; padding-right: 3px;" t-else=""><t t-esc="o.amount / o.rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <span style="font-size:12px; padding-right: 3px;" t-if="o.currency_id.id == 3"><t t-esc="o.amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                            <span style="font-size:12px; padding-right: 3px;" t-else=""><t t-esc="o.amount * o.rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                        </td>
+                                                    </tr>
+                                                    <!-- Fin lineas -->
+                                                </tbody>     
+                                            </table>
+                                            <br/>
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-4 text-center">
+                                                        <b style="font-size:12px;">Monto Facturado: </b><span style="font-size:12px;">
+                                                        <t t-if="o.invoice_ids" t-esc="o.invoice_ids[0].amount_total" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/>
+                                                        <t t-else="" t-esc="0 + 0" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/>
+                                                        </span><br/>
+                                                        <b style="font-size:12px;">Monto Anticipo: </b><span style="font-size:12px;">
+                                                        <t t-if="o.anticipo" t-esc="o.amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/>
+                                                        <t t-else="" t-esc="0 + 0" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/>
+                                                        </span><br/>
+                                                    </div>
+                                                    <div class="col-4">
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <b style="font-size:12px;">Saldo Pendiente: </b><span style="font-size:12px;"><t t-esc="o.payment_difference" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span><br/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class=" border border-dark" style="border-top: 1px solid black;">
+                                                <t t-if="o.payment_notes">
+                                                    <b style="font-size:12px;">Notas </b>
+                                                    <span style="font-size:12px;"><t t-esc="o.payment_notes"/><br/><br/></span>
+                                                </t>
+                                                <t t-else="">
+                                                    <b style="font-size:12px;">Notas</b><br/><br/><br/>
+                                                </t>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+</odoo>

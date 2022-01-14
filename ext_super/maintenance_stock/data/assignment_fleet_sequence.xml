@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+         <record id="seq_assignment_fleet" model="ir.sequence">
+            <field name="name">Asignaciones de Flota</field>
+            <field name="code">assignment.fleet.sequence</field>
+            <field name="implementation">standard</field>
+            <field name="prefix">AV/</field>
+            <field name="padding">8</field>
+            <field name="active" eval="1"/>
+            <field name="number_increment">1</field>
+            <field name="number_next_actual">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

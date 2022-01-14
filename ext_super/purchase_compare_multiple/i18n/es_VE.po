@@ -1,0 +1,253 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* purchase_compare_multiple
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-05-06 16:34+0000\n"
+"PO-Revision-Date: 2021-05-06 16:34+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: purchase_compare_multiple
+#: model_terms:ir.ui.view,arch_db:purchase_compare_multiple.external_layout_compared_prices_list
+msgid ""
+"<b style=\"font-size:12px;\">Page <span class=\"page\" style=\"font-"
+"size:12px;\"/> / <span class=\"topage\" style=\"font-size:12px;\"/></b><br/>"
+msgstr ""
+"<b style=\"font-size:12px;\">Página <span class=\"page\" style=\"font-"
+"size:12px;\"/> / <span class=\"topage\" style=\"font-size:12px;\"/></b><br/>"
+
+#. module: purchase_compare_multiple
+#: model_terms:ir.ui.view,arch_db:purchase_compare_multiple.external_layout_compared_prices_list
+msgid ""
+"<br/>\n"
+"                            <b style=\"font-size:20px;\">Prices Comparison</b><br/>"
+msgstr ""
+"<br/>\n"
+"                            <b style=\"font-size:20px;\">Comparación de Precios</b><br/>"
+
+#. module: purchase_compare_multiple
+#: model_terms:ir.ui.view,arch_db:purchase_compare_multiple.compared_prices_list
+msgid "<span style=\"font-size:14px;\">Description</span>"
+msgstr "<span style=\"font-size:14px;\">Descripción</span>"
+
+#. module: purchase_compare_multiple
+#: model_terms:ir.ui.view,arch_db:purchase_compare_multiple.compared_prices_list
+msgid "<span style=\"font-size:14px;\">Price</span>"
+msgstr "<span style=\"font-size:14px;\">Precio</span>"
+
+#. module: purchase_compare_multiple
+#: model_terms:ir.ui.view,arch_db:purchase_compare_multiple.compared_prices_list
+msgid "<span style=\"font-size:14px;\">Providers</span>"
+msgstr "<span style=\"font-size:14px;\">Proveedores</span>"
+
+#. module: purchase_compare_multiple
+#: model_terms:ir.ui.view,arch_db:purchase_compare_multiple.compared_prices_list
+msgid "<span style=\"font-size:14px;\">Quantity</span>"
+msgstr "<span style=\"font-size:14px;\">Cantidad</span>"
+
+#. module: purchase_compare_multiple
+#: model_terms:ir.ui.view,arch_db:purchase_compare_multiple.compared_prices_list
+msgid "<span style=\"font-size:14px;\">Unit of Measure</span>"
+msgstr "<span style=\"font-size:14px;\">Unidad de Medida</span>"
+
+#. module: purchase_compare_multiple
+#: model:ir.actions.act_window,name:purchase_compare_multiple.purchase_compare_multiple_action
+#: model:ir.ui.menu,name:purchase_compare_multiple.purchase_compare_multiple_menu
+msgid "Budget Comparision"
+msgstr "Comparación de Presupuestos"
+
+#. module: purchase_compare_multiple
+#: model:ir.model.fields.selection,name:purchase_compare_multiple.selection__purchase_compare_multiple__state__cancel
+#: model_terms:ir.ui.view,arch_db:purchase_compare_multiple.purchase_compare_multiple_view_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: purchase_compare_multiple
+#: model_terms:ir.ui.view,arch_db:purchase_compare_multiple.purchase_compare_multiple_view_form
+msgid "Compare Prices"
+msgstr "Comparar Precios"
+
+#. module: purchase_compare_multiple
+#: model_terms:ir.ui.view,arch_db:purchase_compare_multiple.purchase_compare_multiple_view_form
+msgid "Compared Prices"
+msgstr "Precios Comparados"
+
+#. module: purchase_compare_multiple
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compare_multiple__create_uid
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compared_prices__create_uid
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compared_prices_lines__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: purchase_compare_multiple
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compare_multiple__create_date
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compared_prices__create_date
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compared_prices_lines__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: purchase_compare_multiple
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compared_prices__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: purchase_compare_multiple
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compare_multiple__display_name
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compared_prices__display_name
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compared_prices_lines__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: purchase_compare_multiple
+#: model:ir.model.fields.selection,name:purchase_compare_multiple.selection__purchase_compare_multiple__state__done
+#: model_terms:ir.ui.view,arch_db:purchase_compare_multiple.purchase_compare_multiple_view_form
+msgid "Done"
+msgstr "Realizado"
+
+#. module: purchase_compare_multiple
+#: model:ir.model.fields.selection,name:purchase_compare_multiple.selection__purchase_compare_multiple__state__draft
+#: model_terms:ir.ui.view,arch_db:purchase_compare_multiple.purchase_compare_multiple_view_form
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: purchase_compare_multiple
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compared_prices__price2
+msgid "Half price"
+msgstr "Precio Medio"
+
+#. module: purchase_compare_multiple
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compared_prices__price3
+msgid "Higher price"
+msgstr "Precio más Alto"
+
+#. module: purchase_compare_multiple
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compare_multiple__id
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compared_prices__id
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compared_prices_lines__id
+msgid "ID"
+msgstr ""
+
+#. module: purchase_compare_multiple
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compare_multiple____last_update
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compared_prices____last_update
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compared_prices_lines____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: purchase_compare_multiple
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compare_multiple__write_uid
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compared_prices__write_uid
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compared_prices_lines__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: purchase_compare_multiple
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compare_multiple__write_date
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compared_prices__write_date
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compared_prices_lines__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: purchase_compare_multiple
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compared_prices__price1
+msgid "Lower price"
+msgstr "Precio más Bajo"
+
+#. module: purchase_compare_multiple
+#: model:ir.model,name:purchase_compare_multiple.model_purchase_compare_multiple
+msgid "Model for comparations of multiple purchase order prices"
+msgstr "Modelo para la comparación de multiples precios de ordenes de compras"
+
+#. module: purchase_compare_multiple
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compared_prices_lines__price
+msgid "Price"
+msgstr "Precio"
+
+#. module: purchase_compare_multiple
+#: model:ir.actions.report,name:purchase_compare_multiple.action_compared_prices_list
+msgid "Prices Comparison"
+msgstr "Comparación de Precios"
+
+#. module: purchase_compare_multiple
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compared_prices__product_id
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compared_prices_lines__product_id
+msgid "Product"
+msgstr "Producto"
+
+#. module: purchase_compare_multiple
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compared_prices__provider_id1
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compared_prices__provider_id2
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compared_prices__provider_id3
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compared_prices_lines__provider_id
+msgid "Provider"
+msgstr "Proveedor"
+
+#. module: purchase_compare_multiple
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compared_prices__purchase_compare_multiple_id
+msgid "Purchase Compare"
+msgstr "Comparación de Compra"
+
+#. module: purchase_compare_multiple
+#: model_terms:ir.ui.view,arch_db:purchase_compare_multiple.purchase_compare_multiple_view_form
+msgid "Purchase Compare Multiple Form"
+msgstr "Formulario de Comparación de Compras Multiples"
+
+#. module: purchase_compare_multiple
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compare_multiple__purchase_compared_prices_ids
+msgid "Purchase Compared Prices"
+msgstr "Precios Comparados de Compra"
+
+#. module: purchase_compare_multiple
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compare_multiple__purchase_order_ids
+#: model_terms:ir.ui.view,arch_db:purchase_compare_multiple.purchase_compare_multiple_view_form
+msgid "Purchase Orders"
+msgstr "Ordenes de Compra"
+
+#. module: purchase_compare_multiple
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compared_prices__qty1
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compared_prices__qty2
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compared_prices__qty3
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compared_prices_lines__qty
+msgid "Quantity"
+msgstr "Cantidad"
+
+#. module: purchase_compare_multiple
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compare_multiple__name
+msgid "Reference"
+msgstr "Referencia"
+
+#. module: purchase_compare_multiple
+#: model_terms:ir.ui.view,arch_db:purchase_compare_multiple.purchase_compare_multiple_view_search
+msgid "Search Purchase Compare Multiple"
+msgstr "Búsqueda de Comparación Multiple de Compras"
+
+#. module: purchase_compare_multiple
+#: model:ir.model.fields,field_description:purchase_compare_multiple.field_purchase_compare_multiple__state
+msgid "State"
+msgstr "Estado"
+
+#. module: purchase_compare_multiple
+#: code:addons/extra-addons/oasis/purchase_compare_multiple/models/purchase.py:0
+#: code:addons/purchase_compare_multiple/models/purchase.py:0
+#, python-format
+msgid ""
+"There must be three records in the purchase orders to be able to compare"
+msgstr "Deben haber al menos tres registros en las ordenes de pago para poder comparar"
+
+#. module: purchase_compare_multiple
+#: model:ir.model,name:purchase_compare_multiple.model_purchase_compared_prices
+msgid "purchase.compared.prices"
+msgstr ""
+
+#. module: purchase_compare_multiple
+#: model:ir.model,name:purchase_compare_multiple.model_purchase_compared_prices_lines
+msgid "purchase.compared.prices.lines"
+msgstr ""

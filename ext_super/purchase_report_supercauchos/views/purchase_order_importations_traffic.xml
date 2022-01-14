@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="0">
+        <!-- Add you code here -->
+
+        <!-- purchase.order.importations.traffic tree view -->
+        <record id="purchase_order_importations_traffic_view_tree" model="ir.ui.view">
+            <field name="name">purchase.order.importations.traffic.view.tree</field>
+            <field name="model">purchase.order.importations.traffic</field>
+            <field name="arch" type="xml">
+                <tree editable="top">
+                    <!-- Add your fields here -->
+                    <field name="availability"/>
+                    <field name="measures"/>
+                    <field name="pr"/>
+                    <field name="traffic_models"/>
+                    <field name="price"/>
+                    <field name="pronto_pago"/>
+                    <field name="super_promo"/>
+                    <field name="apart_to_seller"/>
+                    <field name="apart_qty_available"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- purchase.order.importations.traffic search view -->
+        <record id="purchase_order_importations_traffic_view_search" model="ir.ui.view">
+            <field name="name">purchase.order.importations.traffic.view.search</field>
+            <field name="model">purchase.order.importations.traffic</field>
+            <field name="arch" type="xml">
+                <search string="Traffic of Merchandise Search">
+                    <!-- Add your fields here -->
+                    <field name="measures"/>
+                    <field name="pr"/>
+                    <field name="traffic_models"/>
+                </search>
+            </field>
+        </record>
+
+    </data>
+</odoo>

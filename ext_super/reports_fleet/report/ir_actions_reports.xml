@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+        <report
+            id="action_flota_consumo_combustible"
+            model="fleet.wizard.fuel"
+            string="reporte_consumo_combustible"
+            report_type="qweb-pdf"
+            name="reports_fleet.flota_consumo_combustible"
+            file="reports_fleet.flota_consumo_combustible"
+            paperformat="reports_fleet.paperformat_lista_horizontal"
+            menu="True"
+        />
+
+        <report
+            id="action_flota_control_disponibilidad"
+            model="fleet.wizard.available"
+            string="reporte_control_disponibilidad_viajes"
+            report_type="qweb-pdf"
+            name="reports_fleet.flota_control_disponibilidad"
+            file="reports_fleet.flota_control_disponibilidad"
+            paperformat="reports_fleet.paperformat_lista_horizontal"
+            menu="True"
+        />
+
+        <report
+            id="action_flota_control_disponibilidad_mantenimiento_mantenimiento"
+            model="fleet.wizard.maintenance"
+            string="reporte_control_disponibilidad_mantenimiento"
+            report_type="qweb-pdf"
+            name="reports_fleet.flota_control_disponibilidad_mantenimiento"
+            file="reports_fleet.flota_control_disponibilidad_mantenimiento"
+            paperformat="reports_fleet.paperformat_lista_horizontal"
+            menu="True"
+        />
+
+        <report
+            id="action_flota_control_servicio"
+            model="fleet.wizard.services"
+            string="reporte_control_servicio"
+            report_type="qweb-pdf"
+            name="reports_fleet.flota_control_servicio"
+            file="reports_fleet.flota_control_servicio"
+            paperformat="reports_fleet.paperformat_lista_horizontal"
+            menu="True"
+        />
+
+        <report
+            id="action_flota_control_servicio_vehiculo"
+            model="fleet.wizard.vehicles"
+            string="reporte_control_servicio_vehiculos"
+            report_type="qweb-pdf"
+            name="reports_fleet.flota_control_servicio_vehiculo"
+            file="reports_fleet.flota_control_servicio_vehiculo"
+            paperformat="reports_fleet.paperformat_lista_horizontal"
+            menu="True"
+        />
+    </data>
+</odoo>

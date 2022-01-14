@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+    
+
+        <record id="internal_transfers_seq" model="ir.sequence">
+            <field name="name">internal.transfers.seq</field>
+            <field name="code">internal.transfers.seq</field>
+            <field name="prefix">TI</field>
+            <field name="padding">5</field>
+            <field name="company_id"></field>
+        </record>
+        
+    </data>
+</odoo>

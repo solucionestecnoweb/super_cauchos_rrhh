@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- prorrateo.iva tree view -->
+    <record id="prorrateo_iva_view_tree" model="ir.ui.view">
+        <field name="name">prorrateo.iva.view.tree</field>
+        <field name="model">prorrateo.iva</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>                
+                <field name="desde"/>                
+                <field name="hasta"/>                
+                <field name="state"/>                
+            </tree>
+        </field>
+    </record>
+
+    <!-- prorrateo.iva form view -->
+    <record id="prorrateo_iva_view_form" model="ir.ui.view">
+        <field name="name">prorrateo.iva.view.form</field>
+        <field name="model">prorrateo.iva</field>
+        <field name="arch" type="xml">
+            <form string="Prorrateo de IVA">
+                <header>
+                    <button name="post" type="object" string="Publicar" states="draft"/>
+                    <button name="draft" type="object" string="Volver a Borrador" states="posted"/>
+                    <button name="find_lines" type="object" string="Buscar"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,posted"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group string="Información de Prorrateo">                        
+                        <group>
+                            <field name="desde"/>                      
+                            <field name="deducible"/>                      
+                            <field name="company_id"/>                      
+                        </group>
+                        <group>                        
+                            <field name="hasta"/>                      
+                            <field name="no_deducible"/>                      
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="facturas" string="Facturas">
+                            <field name="invoice_ids" readonly="1">
+                                <tree>
+                                    <field name="name"/>               
+                                    <field name="amount_total" sum="Total"/>               
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="asientos" string="Asientos Contables">
+                            <field name="move_ids" readonly="1">
+                                <tree>
+                                    <field name="account_id"/>               
+                                    <field name="amount_currency" invisible="1"/>               
+                                    <field name="debit"/>               
+                                    <field name="credit"/>               
+                                    <field name="debit_aux" string="Debe $"/>               
+                                    <field name="credit_aux" string="Haber $"/>               
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_prorrateo_iva" model="ir.actions.act_window">
+        <field name="name">Prorrateo de IVA</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">prorrateo.iva</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem   name="Prorrateo de IVA" 
+                parent="account.menu_finance_reports" 
+                id="prorrateo_iva_menu" 
+                action="action_prorrateo_iva"
+                sequence="6"
+                />
+</odoo>

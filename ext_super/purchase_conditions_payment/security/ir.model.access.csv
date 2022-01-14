@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+acces_purchase_pay_order,purchase.pay.order,model_purchase_pay_order,base.group_user,1,1,1,1
+acces_purchase_pay_order_lines,purchase.pay.order.lines,model_purchase_pay_order_lines,base.group_user,1,1,1,1
+acces_res_supplier_payment_plan,res.supplier.payment.plan,model_res_supplier_payment_plan,base.group_user,1,1,1,1

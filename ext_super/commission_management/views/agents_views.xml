@@ -1,0 +1,39 @@
+<odoo>
+
+    <record id="view_form_agents" model="ir.ui.view">
+        <field name="name">view.form.agents</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']" position="before">
+                <field name="is_agent" string="Are you a commission agent?"/>
+            </xpath>
+            <xpath expr="//page [@name='internal_notes']" position="before">
+                <page name="commissions_agents" string="Commission Agent" attrs="{'invisible': [('is_agent', '=', False)]}">
+                    <group name="commissions_groups">
+                        <group>
+                            <field name="commission_category_id" attrs="{'required': [('is_agent','=',True)]}"/>
+                            <field name="commission_type_id" attrs="{'required': [('is_agent','=',True)]}"/>
+                        </group>
+                        <group>
+                            <field name="commission_period_id" attrs="{'required': [('is_agent','=',True)]}"/>
+                            <field name="commission_base_id" attrs="{'required': [('is_agent','=',True)]}"/>
+                        </group>
+                    </group>
+                </page>                
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_view_agents" model="ir.actions.act_window">
+        <field name="name">Agents</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+        <field name="domain">[('is_agent', '=', True)]</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_comman" name="Commission Management" parent="account_move_invoice_payment.account_move_invoice_payment_menu" sequence="3"/>
+    <menuitem id="menu_agents" name="Agents" parent="menu_comman" action="action_view_agents" sequence="1"/>
+
+</odoo>

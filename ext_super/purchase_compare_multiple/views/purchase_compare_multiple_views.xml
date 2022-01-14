@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="0">
+        <!-- Add you code here -->
+
+        <!-- purchase.compare.multiple tree view -->
+        <record id="purchase_compare_multiple_view_tree" model="ir.ui.view">
+            <field name="name">purchase.compare.multiple.view.tree</field>
+            <field name="model">purchase.compare.multiple</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <!-- Add your fields here -->
+                    <field name="name"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- purchase.compare.multiple form view -->
+        <record id="purchase_compare_multiple_view_form" model="ir.ui.view">
+            <field name="name">purchase.compare.multiple.view.form</field>
+            <field name="model">purchase.compare.multiple</field>
+            <field name="arch" type="xml">
+                <form string="Purchase Compare Multiple Form">
+                    <header>
+                        <button name="compare_price" type="object" string="Compare Prices"/>
+                        <button name="state_cancel" type="object" string="Cancel" attrs="{'invisible': [('state', 'in', ('cancel', 'draft'))]}"/>
+                        <button name="state_done" type="object" string="Done" attrs="{'invisible': [('state', 'in', ('done', 'cancel'))]}"/>
+                        <button name="state_draft" type="object" string="Draft" attrs="{'invisible': [('state', 'in', ('done', 'draft'))]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,done,cancel"/>
+                    </header>
+                    <sheet>
+                        <h1>
+                            <field name="name" readonly="1" attrs="{'invisible': [('name', '=', '/')]}"/>
+                        </h1>
+                        <notebook>
+                            <page name="purchase_orders" string="Purchase Orders">
+                                <field name="purchase_order_ids" domain="[('state', '=', 'draft')]" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            </page>
+                            <page name="compared_prices" string="Compared Prices">
+                                <field name="purchase_compared_prices_ids" readonly="1">
+                                    <tree>
+                                        <field name="product_id"/>
+                                        <field name="provider_id1"/>
+                                        <field name="qty1"/>
+                                        <field name="price1" widget="monetary" options="{'currency_field': 'currency_id1'}"/>
+                                        <field name="currency_id1" invisible="1" readonly="1"/>
+                                        <field name="provider_id2"/>
+                                        <field name="qty2"/>
+                                        <field name="price2" widget="monetary" options="{'currency_field': 'currency_id2'}"/>
+                                        <field name="currency_id2" invisible="1" readonly="1"/>
+                                        <field name="provider_id3"/>
+                                        <field name="qty3"/>
+                                        <field name="price3" widget="monetary" options="{'currency_field': 'currency_id3'}"/>
+                                        <field name="currency_id3" invisible="1" readonly="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- purchase.compare.multiple search view -->
+        <record id="purchase_compare_multiple_view_search" model="ir.ui.view">
+            <field name="name">purchase.compare.multiple.view.search</field>
+            <field name="model">purchase.compare.multiple</field>
+            <field name="arch" type="xml">
+                <search string="Search Purchase Compare Multiple">
+                    <!-- Add your fields here -->
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="purchase_compare_multiple_action" model="ir.actions.act_window">
+            <field name="name">Budget Comparision</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.compare.multiple</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <menuitem   name="Budget Comparision" 
+                    id="purchase_compare_multiple_menu"
+                    sequence="7"
+                    parent="purchase.menu_procurement_management"
+                    action="purchase_compare_multiple_action"
+                    />
+
+    </data>
+</odoo>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- sale.order inherit form view -->
+    <record id="merchandise_transit_view_order_form" model="ir.ui.view">
+        <field name="name">sale.order.inherit.view.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <!-- Add your xpath here -->
+            <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                <field name="is_transit_merch" widget="boolean_toggle"/>
+                <field name="company_to_apart_id" domain="[('id', '!=', company_id)]"/>
+            </xpath>
+            <xpath expr="//tree/field[@name='company_id']" position="after">
+                <field name="is_transit_merch" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

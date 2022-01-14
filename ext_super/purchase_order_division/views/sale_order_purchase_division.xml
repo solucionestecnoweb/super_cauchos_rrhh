@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- sale.order inherit form view -->
+    <record id="view_order_form_purchase_division" model="ir.ui.view">
+        <field name="name">sale.order.inherit.view.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <!-- Add your xpath here -->
+            <xpath expr="//field[@name='payment_condition_id']" position="after">
+                <field name="national_purchase" domain="[('purchase_type','=','national'), ('state','=','purchase')]"/>
+                <field name="international_purchase" domain="[('purchase_type','=','international'), ('state','=','purchase')]"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

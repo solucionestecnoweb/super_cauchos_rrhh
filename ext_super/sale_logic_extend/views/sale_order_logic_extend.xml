@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="0">
+        <!-- Add you code here -->
+        <!-- sale.order inherit form view -->
+        <record id="sale_order_logic_extend_budget_form_view" model="ir.ui.view">
+            <field name="name">sale.order.inherit.view.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <!-- Add your xpath here -->
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="seller_id" domain="[('is_seller', '=', True)]" required="1"/>
+                    <label for="" name="reservation_period">
+                        <b>Reservation Period</b>
+                    </label>
+                    <div>
+                        <field name="date_start" widget="daterange" options="{'related_end_date': 'date_end'}"/>
+                        <span attrs="{'invisible': [('date_start', '=', False), ('date_end', '=', False)]}"> to </span>
+                        <field name="date_end" nolabel="1" widget="daterange" options="{'related_start_date': 'date_start'}"/>
+                    </div>
+                    <field name="estimated_date"/>
+                </xpath>
+            </field>
+        </record>
+       
+        <!-- sale.order inherit tree view -->
+        <record id="sale_order_logic_extend_budget_tree_view" model="ir.ui.view">
+            <field name="name">sale.order.inherit.view.tree</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+            <field name="arch" type="xml">
+                <!-- Add your xpath here -->
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="seller_id" optional="show"/>
+                    <field name="date_start" optional="show"/>
+                    <field name="date_end" optional="show"/>
+                    <field name="estimated_date" optional="hide"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- sale.order inherit tree view -->
+        <record id="sale_order_logic_extend_tree_view" model="ir.ui.view">
+            <field name="name">sale.order.inherit.view.tree</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <!-- Add your xpath here -->
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="seller_id" optional="show"/>
+                    <field name="date_start" optional="show"/>
+                    <field name="date_end" optional="show"/>
+                    <field name="estimated_date" optional="hide"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

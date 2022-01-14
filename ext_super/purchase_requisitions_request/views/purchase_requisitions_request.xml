@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="0">
+        <!-- Add you code here -->
+        
+        <!-- purchase.requisitions -->
+        <record id="purchase_requisitions_tree_view" model="ir.ui.view">
+            <field name="name">purchase.requisitions.view.tree</field>
+            <field name="model">purchase.requisitions</field>
+            <field name="arch" type="xml">
+                <tree decoration-info="state == 'draft'" decoration-muted="state == 'cancel'" decoration-danger="state == 'reject'">
+                    <field name="name"/>
+                    <field name="employee_id"/>
+                    <field name="department_id"/>
+                    <field name="request_date"/>
+                    <field name="date_end"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="purchase_requisitions_form_view" model="ir.ui.view">
+            <field name="name">purchase.requisitions.form.view</field>
+            <field name="model">purchase.requisitions</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button string="Approval Request" name="approvals_request" type="object" class="oe_highlight" states="draft"/>
+                        <field name="is_approved" invisible="1"/>
+                        <button name="reset_draft" type="object" string="Reset to Draft" states="confirmed,cancel,reject,receive" class="btn-primary"/>
+                        <button name="requisition_confirm" type="object" string="Confirm" states="draft" class="btn-primary" groups="base.group_user"/>
+                        <button name="action_received" type="object" string="Receive" states="confirmed" class="btn-primary"/>
+                        <button name="action_cancel" type="object" states="draft,confirmed" string="Cancel" groups="base.group_user"/>
+                        <button name="requisition_reject" type="object" string="Reject" states="confirmed" />
+                        <field name="state" widget="statusbar" string="confirm"  statusbar_visible="draft,confirmed,receive,reject,cancel"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" type="object" icon="fa-credit-card"
+                                    name="show_orders" string="Purchase Orders" groups="base.group_user"/>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/><br/>
+                            </h1>
+                        </div>
+                        <group>
+                                <group>
+                                    <field name="employee_id" attrs="{'readonly': [('state', '!=', 'draft')]}" required="1"/>
+                                    <field name="department_id" attrs="{'readonly': [('state', '!=', 'draft')]}" required="1"/>
+                                    <field name="company_id" attrs="{'readonly': [('state', '!=', 'draft')]}" required="1"/>
+                                    <field name="requisition_responsible_id" attrs="{'readonly': [('state', '!=', 'draft')]}" required="1"/>
+                                    <field name="approver_id" attrs="{'readonly': [('state', '!=', 'draft')]}" required="1"/>
+                                </group>
+                                <group>
+                                    <field name="request_date" attrs="{'readonly': [('state', '!=', 'draft')]}" required="1"/>
+                                    <field name="received_date" readonly="1"/>
+                                    <field name="date_end" attrs="{'readonly': [('state', '!=', 'draft')]}" required="1"/>
+                                    <field name="priority" attrs="{'readonly': [('state', '!=', 'draft')]}" widget="priority"/>
+                                </group>
+                             </group>
+                        <notebook>
+                            <page string="Requisitions Lines">
+                                <field name="requisition_lines_ids" attrs="{'readonly': [('state', '!=', 'draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="product_id"/>
+                                        <field name="description"/>
+                                        <field name="qty"/>
+                                        <field name="uom"/>
+                                    </tree>
+                                </field>
+                                <group>
+                                    <field name="reason" attrs="{'readonly': [['state', 'in', ['reject','cancel','receive']]]}" placeholder="Add Reason for Internal Requistion ...."/>
+                                </group>
+                            </page>
+                    </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- purchase.requisitions search view -->
+        <record id="purchase_requisitions_request_view_search" model="ir.ui.view">
+            <field name="name">purchase.requisitions.view.search</field>
+            <field name="model">purchase.requisitions</field>
+            <field name="arch" type="xml">
+                <search string="Requisitions Request Search">
+                    <!-- Add your fields here -->
+                    <field name="name"/>
+                    <field name="employee_id"/>
+                    <field name="department_id"/>
+                    <field name="request_date"/>
+                    <field name="date_end"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="purchase_requisitions_request_action" model="ir.actions.act_window">
+            <field name="name">Requisitions Request</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.requisitions</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <menuitem   name="Requisitions Request" 
+                    id="purchase_requisitions_request_menu"
+                    sequence="10"
+                    parent="purchase.menu_procurement_management"
+                    action="purchase_requisitions_request_action"
+                    />
+
+    </data>
+</odoo>

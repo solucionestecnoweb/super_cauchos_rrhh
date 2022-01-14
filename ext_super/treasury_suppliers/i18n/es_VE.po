@@ -1,0 +1,27 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* treasury_suppliers
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0-20210510\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-06-11 01:19+0000\n"
+"PO-Revision-Date: 2021-06-11 01:19+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: treasury_suppliers
+#: model:ir.model.fields,field_description:treasury_suppliers.field_account_payment__documents_id
+#: model_terms:ir.ui.view,arch_db:treasury_suppliers.view_form_suppliers
+msgid "Associated Documents"
+msgstr "Documentos Asociados"
+
+#. module: treasury_suppliers
+#: model:ir.model,name:treasury_suppliers.model_account_payment
+msgid "Payments"
+msgstr "Pagos"

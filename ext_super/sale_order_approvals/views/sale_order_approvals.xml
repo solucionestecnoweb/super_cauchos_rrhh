@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="0">
+        <!-- Add you code here -->
+        <!-- sale.order inherit form view -->
+        <record id="sale_order_view_form_approvals_extend" model="ir.ui.view">
+            <field name="name">sale.order.inherit.view.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <!-- Add your xpath here -->
+                <xpath expr="//field[@name='authorized_transaction_ids']" position="after">
+                    <button string="Approval Request" name="approvals_request_sale" type="object" class="oe_highlight"
+                    attrs="{'invisible': [('is_contado', '=', True)]}"/>
+                </xpath>
+
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="approver_ids" widget="many2many_tags"  attrs="{'invisible': [('is_contado', '=', True)], 'required': [('is_contado', '=', False)]}"/>
+                    <field name="is_approved" string="Solicitud aprobada" readonly="1"/>
+                    <field name="is_rejected" string="Solicitud rechazada" readonly="1"/>
+                    <field name="is_contado" invisible="1"/>
+                </xpath>
+                <xpath expr="//button[@name='action_confirm'][2]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_confirm'][1]" position="attributes">
+                     <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_confirm'][1]" position="after">
+                    <button name="action_confirm" id="action_confirm" string="Confirmar" class="btn-primary"
+                            type="object"
+                            attrs="{'invisible': ['|', '|', '|', ('is_approved', '=', False), ('is_rejected', '=', True), ('state', 'in', ['sent', 'done', 'cancel'])]}"/>
+                    <button name="action_confirm" id="action_confirm" string="Confirmar" class="btn-primary"
+                            type="object" attrs="{'invisible': [ '|', ('is_contado', '=', False), ('state', 'in', ['sent', 'done', 'cancel'])]}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

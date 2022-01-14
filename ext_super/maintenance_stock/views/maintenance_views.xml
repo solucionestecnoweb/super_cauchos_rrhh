@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="hr_equipment_request_fleet_view_form" model="ir.ui.view">
+            <field name="name">equipment.request.form</field>
+            <field name="model">maintenance.request</field>
+            <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form"/>
+            <field name="arch" type="xml">
+                <!--xpath expr="//sheet/div" position="before">
+                    <div class="oe_button_box" name="button_box" attrs="{'invisible': [('delivery_count', '=', 0)]}">
+                        <button name="action_view_delivery"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-truck">
+                            <field name="delivery_count" widget="statinfo" string="Delivery"/>
+                        </button>
+                    </div>
+                </xpath-->
+
+                <xpath expr="//field[@name='maintenance_team_id']" position="before">
+                    <field name="number_petition" readonly="1"/>
+                </xpath>
+
+                <xpath expr="//field[@name='user_id']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='equipment_id']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='maintenance_type']" position="before">
+                    <field name="type_equipment" widget="radio"/>
+                    <field name="equipment_id"  attrs="{'invisible': [('type_equipment', '!=', 'maquinas y herramientas')]}"/>
+                    <field name="user_id" required="1"/>
+                </xpath>
+
+                <xpath expr="//field[@name='description']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+
+
+                <xpath expr="//field[@name='maintenance_type']" position="after">
+                    <label for="preventive_maintenance"
+                           attrs="{'invisible': [('maintenance_type', '!=', 'preventive')]}"/>
+                    <div attrs="{'invisible': [('maintenance_type', '!=', 'preventive')]}">
+                        <field name="preventive_maintenance"/>
+                    </div>
+                </xpath>
+
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="warehouse_id"/>
+                    <field name="work_order"/>
+                </xpath>
+
+                <xpath expr="//field[@name='description']" position="after">
+                    <notebook attrs="{'invisible': [('work_order', '=', False)]}">
+                        <page string="Piezas">
+                            <field name="maintenance_line_ids">
+                                <tree editable="bottom" string="maintenance line">
+                                    <field name="product_id" string="productos"/>
+                                    <field name="name"/>
+                                    <field name="product_qty"/>
+                                    <field name="product_uom_id"/>
+                                    <field name="display_qty_widget" invisible="1"/>
+<!--                                    <widget name="qty_at_date_widget" width="20px"/>-->
+                                    <field name="state" invisible="1"/>
+                                    <field name="sequence" invisible="1"/>
+                                    <field name="maintenance_id" invisible="1"/>
+                                    <field name="product_uom_category_id" invisible="1"/>
+                                    <field name="route_id" invisible="1"/>
+                                    <field name="company_id" invisible="1"/>
+                                    <field name="move_ids" invisible="1"/>
+                                    <field name="warehouse_id" invisible="1"/>
+                                    <field name="product_type" invisible="1"/>
+                                    <field name="scheduled_date" invisible="1"/>
+                                    <field name="free_qty_today" invisible="1"/>
+                                    <field name="virtual_available_at_date" invisible="1"/>
+                                    <field name="qty_available_today" invisible="1"/>
+                                    <field name="qty_to_deliver" invisible="1"/>
+                                    <field name="customer_lead" invisible="1"/>
+                                    <field name="is_mto" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                        <page string="Notas">
+                            <field name="note" string="Nota" placeholder="Detalle del mantenimiento"/>
+                        </page>
+
+                        <page string="Reporte">
+                            <group>
+                                <field name="report_succes"/>
+                            </group>
+                        </page>
+
+                    </notebook>
+                </xpath>
+                <xpath expr="//field[@name='type_equipment']" position="after">
+                    <field name="vehicle_id" attrs="{'invisible': [('type_equipment', '!=', 'flota de vehículos')]}"/>
+                    <label for="odometer" attrs="{'invisible': [('type_equipment', '!=', 'flota de vehículos')]}"/>
+                    <div class="o_row" attrs="{'invisible': [('type_equipment', '!=', 'flota de vehículos')]}">
+                        <field name="odometer" readonly="1"/>
+                        <field name="odometer_unit" readonly="1"/>
+                    </div>
+                    <field name="license_plate" attrs="{'invisible': [('type_equipment', '!=', 'flota de vehículos')]}"/>
+                    <field name="driver_id" attrs="{'invisible': [('type_equipment', '!=', 'flota de vehículos')]}"/>
+                </xpath>
+
+                <xpath expr="//group/group[2]" position="after">
+                    <group attrs="{'invisible': [('maintenance_type', '!=', 'corrective')]}">
+                        <field name="description_fault"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+         <menuitem id="menu_maintenance_fleet" parent="maintenance.menu_equipment_form" name="Flota de Vehiculos" sequence='10' action="fleet.fleet_vehicle_action"/>
+    </data>
+</odoo>
+

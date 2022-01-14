@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sale_order_inherit_form" model="ir.ui.view">
+        <field name="name">sale.order-inherit.qty</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <!--xpath expr="//field[@name='validity_date']" position="attributes">
+                <attribute name="attrs">{"invisible": [["state","in",["sale","done"]]], "readonly": [["state","=","draft"]]}</attribute>
+            </xpath>
+
+            <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='date_order']" position="attributes">
+                <attribute name="attrs">{"readonly": [["state","=","cancel"]]}</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='validity_date']" position="attributes">
+                <attribute name="attrs">{"invisible": [["state","=","draft"]], "readonly": [["state","=","draft"]]}</attribute>
+            </xpath-->
+
+             <xpath expr="//field[@name='date_order']" position="replace">
+                <field name="date_order"  string="Fecha de cotización" attrs="{'invisible': [('state', 'in', ['sale', 'done', 'cancel'])]}"/>
+            </xpath>
+
+            <xpath expr="//field[@name='payment_term_id']" position="before">
+                <field name="commitment_date" invisible="0" string="Fecha Prevista"/>
+            </xpath>
+
+            
+        </field>
+    </record>
+    <!--xpath expr="//field[@name='date_order']" position="replace">
+                <field name="date_order" invisible="0" nolabel="1"/>
+            </xpath-->
+    
+
+     <record id="sale_order_inherit_tree" model="ir.ui.view">
+        <field name="name">sale.order.inherit.tree</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='create_date']" position="replace">
+                <field name="date_order" invisible="0" string="Fecha Orden"/>
+            </xpath>
+
+            <xpath expr="//field[@name='commitment_date']" position="replace">
+                <field name="validity_date" invisible="0" string="Fecha Expiracion"/>
+            </xpath>
+        </field>
+    </record>
+
+    
+</odoo>

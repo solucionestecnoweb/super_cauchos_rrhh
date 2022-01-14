@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="0">
+        <!-- Add you code here -->
+
+        <!-- approval.category inherit form view -->
+        <record id="approvals_category_account_move_view_form_extend" model="ir.ui.view">
+            <field name="name">approval.category.inherit.view.form</field>
+            <field name="model">approval.category</field>
+            <field name="inherit_id" ref="approvals.approval_category_view_form"/>
+            <field name="arch" type="xml">
+                <!-- Add your xpath here -->
+                <xpath expr="//group[@name='option_settings']" position="inside">
+                    <field name="has_conciliation" widget="radio" options="{'horizontal': true}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- approval.request inherit form view -->
+        <record id="approval_request_account_move_view_form_extend" model="ir.ui.view">
+            <field name="name">approval.request.inherit.view.form</field>
+            <field name="model">approval.request</field>
+            <field name="inherit_id" ref="approvals.approval_request_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='request_details']" position="inside">
+                    <field name="has_conciliation" invisible="1"/>
+                    <field name="conciliation_id" attrs="{'invisible':[('has_conciliation','==','no')], 'required': [('has_conciliation','==','required')]}"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

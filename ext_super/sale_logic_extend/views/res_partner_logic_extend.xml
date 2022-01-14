@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+        <!-- Add you code here -->
+
+        <!-- res.partner inherit form view -->
+        <record id="other_client_data_form_view" model="ir.ui.view">
+            <field name="name">res.partner.inherit.view.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <!-- Add your xpath here -->
+                <xpath expr="//field[@name='people_type']" position="after">
+                    <field name="is_seller" widget="boolean_toggle"/>
+                </xpath>
+
+                <xpath expr="//page[@name='isrl_retention']" position="after">
+                    <page name="other_client_data" string="Other Client Data">
+                        <group>
+                            <group>
+                                <field name="customer_type" widget="radio"/>
+                            </group>
+                            <group>
+                                <field name="assigned_seller_id" domain="[('is_seller', '=', True)]"/>
+                                <field name="zone_id"/>
+                                <field name="payment_condition_id"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+
+                <xpath expr="//field[@name='child_ids']/form/sheet/group/group/field[@name='mobile']" position="after">
+                    <field name="delivery_schedule"/>
+                    <field name="direction_map" widget="image" class="oe_avatar"/>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,21 @@
+{
+    'name': 'special permits for sales',
+    'description': 'Crea permisos unicos para SUPC',
+    'version': '13.0.1.0.0',
+    'author': 'INM & LDR Soluciones Tecnológicas y Empresariales C.A',
+    'maintainer': 'Bryan Gomez',
+    'website': '',
+    'license': 'AGPL-3',
+    'depends': ['sale', 'sales_team', 'product_list_prices_multi_currency', 'sales_merchandise_in_transit', 'administration_module'],
+    'data': [
+        'data/sale_security.xml',
+        'security/ir.model.access.csv',
+        'views/sale_views.xml',
+        'views/account_views.xml',
+        'views/wizard_price_list.xml',
+        'views/administracion_views.xml',
+    ],
+    'installable': True,
+    'auto_install': False,
+    'application': False,
+}

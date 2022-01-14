@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+acces_daily_sales,daily.sales,model_daily_sales,base.group_user,1,1,1,1
+acces_daily_sales_report,daily.sales.report,model_daily_sales_report,base.group_user,1,1,1,1
+acces_daily_sales_journal,daily.sales.journal,model_daily_sales_journal,base.group_user,1,1,1,1
+

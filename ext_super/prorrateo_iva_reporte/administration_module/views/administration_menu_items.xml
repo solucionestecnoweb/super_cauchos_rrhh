@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Menu Root -->
+    <menuitem
+        id="administration_module_menu"
+        name="Administration"
+        sequence="41"
+        web_icon="fa fa-credit-card,#FFFFFF,#d49054"
+        />
+
+
+
+    <!-- Main Menus -->
+
+    <!-- Billing -->
+    <menuitem
+        id="admin_billing_menu"
+        name="Billing"
+        parent="administration_module_menu"
+        sequence="1"/>
+
+    <!-- Accounts Receivable -->
+    <menuitem
+        id="admin_account_receivable_menu"
+        name="Accounts Receivable"
+        parent="administration_module_menu"
+        sequence="5"/>
+    
+    <!-- Accounts Payable -->
+    <menuitem
+        id="admin_account_payable_menu"
+        name="Accounts Payable"
+        parent="administration_module_menu"
+        sequence="10"/>
+
+    <!-- Collections -->
+    <menuitem
+        id="admin_collection_menu"
+        name="Collections"
+        parent="administration_module_menu"
+        sequence="15"/>
+
+    <!-- Treasury -->
+    <menuitem
+        id="admin_treasury_menu"
+        name="Treasury"
+        parent="administration_module_menu"
+        sequence="20"/>
+
+    <!-- End Main Menus -->
+
+
+
+    
+    <!-- Billing Sub Menus -->
+
+    <menuitem
+        id="admin_customer_invoices_menu"
+        name="Customer Invoices"
+        parent="admin_billing_menu"
+        sequence="1"
+        action="account.action_move_out_invoice_type"/>
+
+    <record id="action_admin_billing_move_out_refund_type" model="ir.actions.act_window">
+        <field name="name">Credit Notes</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_id" ref="account.view_invoice_tree"/>
+        <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+        <field name="domain">[('type', '=', 'out_refund'), ('promos', '=', False)]</field>
+        <field name="context">{'default_type': 'out_refund'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+            Create a credit note
+            </p><p>
+            Note that the easiest way to create a credit note is to do it directly
+            from the customer invoice.
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+        id="admin_customer_credit_notes_menu"
+        name="Credit Notes"
+        parent="admin_billing_menu"
+        sequence="5"
+        action="action_admin_billing_move_out_refund_type"/>
+
+    <menuitem
+        id="admin_customer_debit_notes_menu"
+        name="Debit Notes"
+        parent="admin_billing_menu"
+        sequence="10"
+        action="account.action_move_out_receipt_type"/>
+
+    <menuitem
+        id="admin_customer_menu"
+        name="Customers"
+        parent="admin_billing_menu"
+        sequence="15"
+        action="account.res_partner_action_customer"/>
+
+    <menuitem
+        id="admin_customer_products_menu"
+        name="Products"
+        parent="admin_billing_menu"
+        sequence="20"
+        action="stock.product_template_action_product"/>
+
+    <menuitem
+        id="admin_billing_customer_payment_menu"
+        name="Payment Record / Payment Receipt"
+        parent="admin_billing_menu"
+        sequence="25"
+        action="account.action_account_payments"/>
+
+    <menuitem
+        id="admin_reconciliation_authorization_menu"
+        name="Payment Reconciliation Authorization"
+        parent="admin_billing_menu"
+        sequence="30"
+        action=""/>
+
+    <menuitem
+        id="admin_daily_sales_close_report_menu"
+        name="Daily Sales Close Report"
+        parent="admin_billing_menu"
+        sequence="35"
+        action="daily_sales_closing_report.action_daily_sales_report"/>
+
+    <menuitem
+        id="admin_withhilding_vat_customers_menu"
+        name="Withholding VAT from Customers"
+        parent="admin_billing_menu"
+        sequence="40"
+        action="vat_retention.action_vat_customers_retention"/>
+
+    <menuitem
+        id="admin_retention_islr_customers_menu"
+        name="Retention of ISLR to Customers"
+        parent="admin_billing_menu"
+        sequence="45"
+        action="isrl_retention.action_isrl_customers_retention"/>
+
+    <menuitem
+        id="admin_municipal_customer_withholding_menu"
+        name="Municipal Customer Withholding"
+        parent="admin_billing_menu"
+        sequence="50"
+        action="municipality_tax.action_municipality_tax_customer"/>
+
+    <!-- End Billing Sub Menus -->
+
+    <!-- Accounts Receivable Sub Menus -->
+
+    <record id="action_admin_receivable_move_out_refund_type" model="ir.actions.act_window">
+        <field name="name">Credit Notes Promotion</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_id" ref="account.view_invoice_tree"/>
+        <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+        <field name="domain">[('type', '=', 'out_refund'), ('promos', '!=', False)]</field>
+        <field name="context">{'default_type': 'out_refund'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+            Create a credit note
+            </p><p>
+            Note that the easiest way to create a credit note is to do it directly
+            from the customer invoice.
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+        id="admin_credit_promotion_pago_menu"
+        name="Credit Note Promotion"
+        parent="admin_account_receivable_menu"
+        sequence="10"
+        action="action_admin_receivable_move_out_refund_type"/>
+
+    <menuitem
+        id="admin_account_customer_payment_menu"
+        name="Payment Record / Payment Receipt"
+        parent="admin_account_receivable_menu"
+        sequence="15"
+        action="account.action_account_payments"/>
+
+    <menuitem
+        id="admin_sale_orders_menu"
+        name="Sale Orders"
+        parent="admin_account_receivable_menu"
+        sequence="15"
+        action="sale.action_orders"/>
+
+
+    <!-- End Accounts Receivable Sub Menus -->
+
+    <!-- Accounts Payable Sub Menus -->
+
+    <menuitem
+        id="admin_supplier_invoice_menu"
+        name="Supplier Invoice"
+        parent="admin_account_payable_menu"
+        sequence="1"
+        action="account.action_move_in_invoice_type"/>
+
+    <menuitem
+        id="admin_supplier_credit_notes_menu"
+        name="Supplier Credit Notes"
+        parent="admin_account_payable_menu"
+        sequence="5"
+        action="account.action_move_in_refund_type"/>
+
+    <menuitem
+        id="admin_supplier_debit_notes_menu"
+        name="Supplier Debit Notes"
+        parent="admin_account_payable_menu"
+        sequence="10"
+        action="account.action_move_in_receipt_type"/>
+
+    <menuitem
+        id="admin_payment_plan_report_menu"
+        name="Payment Plan Report"
+        parent="admin_account_payable_menu"
+        sequence="25"
+        action="account_payment_plan_reports.action_payment_plan"/>
+
+    <menuitem
+        id="admin_supplier_menu"
+        name="Supplier"
+        parent="admin_account_payable_menu"
+        sequence="30"
+        action="account.res_partner_action_supplier"/>
+
+    <menuitem
+        id="admin_supplier_products_menu"
+        name="Products"
+        parent="admin_account_payable_menu"
+        sequence="35"
+        action="stock.product_template_action_product"/>
+
+    <menuitem
+        id="admin_account_supplier_payment_menu"
+        name="Payment Record / Payment Receipt"
+        parent="admin_account_payable_menu"
+        sequence="40"
+        action="account.action_account_payments_payable"/>
+
+    <menuitem
+        id="admin_vat_supplier_retention_menu"
+        name="VAT Supplier Retention"
+        parent="admin_account_payable_menu"
+        sequence="45"
+        action="vat_retention.action_vat_vendors_retention"/>
+
+    <record  id="action_admin_isrl_vendors_retention" model="ir.actions.act_window">
+        <field name="name">Retención de ISLR Proveedores</field>
+        <field name="res_model">isrl.retention</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('type','=',('in_invoice','in_refund')),('state','=','done')]</field>
+        <field name="context">{'type':'in_invoice'}</field>
+    </record>
+
+    <menuitem
+        id="admin_withholding_islr_suppliers_menu"
+        name="Withholding ISLR from Suppliers"
+        parent="admin_account_payable_menu"
+        sequence="50"
+        action="action_admin_isrl_vendors_retention"/>
+
+    <menuitem
+        id="admin_municipal_withholding_suppliers_menu"
+        name="Municipal Withholding of Suppliers"
+        parent="admin_account_payable_menu"
+        sequence="55"
+        action="municipality_tax.action_municipality_tax_suppliers"/>
+
+    <!-- End Accounts Payable Sub Menus -->
+
+    <!-- Collections Sub Menus -->
+
+    <menuitem
+        id="admin_followup_levels_menu"
+        name="Follow up Levels"
+        parent="admin_collection_menu"
+        sequence="1"
+        action="account_followup.action_account_followup_line_definition_form"/>
+
+    <menuitem
+        id="admin_followup_report_menu"
+        name="Follow up Report"
+        parent="admin_collection_menu"
+        sequence="5"
+        action="account_followup.action_view_list_customer_statements"/>
+
+    <!-- End Collections Sub Menus -->
+
+    <!-- Treasury Sub Menus -->
+
+    <menuitem
+        id="admin_bank_cash_menu"
+        name="Bank and Cash"
+        parent="admin_treasury_menu"
+        sequence="1"
+        action="account.action_account_moves_journal_bank_cash"/>
+
+    <menuitem
+        id="admin_treasury_supplier_payment_menu"
+        name="Supplier Payment"
+        parent="admin_treasury_menu"
+        sequence="5"
+        action="account.action_account_payments_payable"/>
+
+    <menuitem
+        id="admin_exchange_transactions_menu"
+        name="Exchange Transactions"
+        parent="admin_treasury_menu"
+        sequence="10"
+        action="treasury_exchange.action_view_exchange"/>
+
+    <menuitem
+        id="admin_exchange_transactions_report_menu"
+        name="Exchange Transactions Report"
+        parent="admin_treasury_menu"
+        sequence="11"
+        action="treasury_exchange.action_exchange_report"/>
+
+    <menuitem
+        id="admin_internal_transactions_menu"
+        name="Internal Transactions"
+        parent="admin_treasury_menu"
+        sequence="15"
+        action="treasury_internal.action_internal"/>
+
+    <menuitem
+        id="admin_cash_flow_menu"
+        name="Statement of Cash Flows"
+        parent="admin_treasury_menu"
+        sequence="20"
+        action="account_reports.action_account_report_cs"/>
+
+    <menuitem
+        id="admin_current_assets_menu"
+        name="Current Assets"
+        parent="admin_treasury_menu"
+        sequence="25"
+        action="account_reports.account_financial_html_report_action_2"/>
+
+    <menuitem
+        id="admin_conciliation_menu"
+        name="Conciliation"
+        parent="admin_treasury_menu"
+        sequence="30"
+        action="account.action_manual_reconciliation"/>
+
+    <!-- End Treasury Sub Menus -->
+
+</odoo>

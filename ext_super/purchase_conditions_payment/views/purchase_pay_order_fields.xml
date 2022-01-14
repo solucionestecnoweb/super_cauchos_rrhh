@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="0">
+        <!-- Add you code here -->
+        
+        <!-- purchase.pay.order -->
+        <record id="purchase_pay_order_tree_view" model="ir.ui.view">
+            <field name="name">purchase.pay.order.view.tree</field>
+            <field name="model">purchase.pay.order</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="employee_id"/>
+                    <field name="request_date"/>
+                    <field name="cancel_date"/>
+                    <field name="invoice_id"/>
+                    <field name="order_id"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="purchase_pay_order_form_view" model="ir.ui.view">
+            <field name="name">purchase.pay.order.form.view</field>
+            <field name="model">purchase.pay.order</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="reset_draft" type="object" string="Reset to Draft" states="cancel,confirmed" class="btn-primary"/>
+                        <button name="action_confirmed" type="object" string="Confirm" states="draft" class="btn-primary" groups="base.group_user"/>
+                        <button name="action_done" type="object" string="Done" states="confirmed" class="btn-primary"/>
+                        <button name="action_cancel" type="object" states="draft" string="Cancel" groups="base.group_user"/>
+                        <field name="state" widget="statusbar" string="confirm"  statusbar_visible="draft,confirmed,done,cancel"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1" attrs="{'invisible': [('state', '!=', 'confirmed'), ('name', '=', '/')]}"/><br/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="employee_id" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                <field name="company_id" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                <field name="payment_reference" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                <field name="currency_id" required="1" attrs="{'readonly': [('state', 'in', ['done','cancel'])]}"/>
+                                <field name="rate" required="1" attrs="{'readonly': [('state', 'in', ['done','cancel'])]}"/>
+                            </group>
+                            <group>
+                                <field name="request_date" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                <field name="cancel_date" required="1" attrs="{'readonly': [('state', 'in', ['done','cancel'])]}"/>
+                                <field name="invoice_id" domain="[('state', '=', 'posted'), ('type', 'in', ('out_invoice','in_invoice')), ('invoice_payment_state', '!=', 'paid')]" attrs="{'readonly': [('state', 'in', ['done','cancel'])], 'invisible': [('payment_reference', '!=', 'invoice')], 'required': [('payment_reference', '=', 'invoice')]}"/>
+                                <field name="order_id" domain="[('state', '=', 'purchase')]" attrs="{'readonly': [('state', 'in', ['done','cancel'])], 'invisible': [('payment_reference', '!=', 'purchase_order')], 'required': [('payment_reference', '=', 'purchase_order')]}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Orders">
+                                <field name="pay_order_lines_ids" attrs="{'readonly': [('state', '!=', 'draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="amount" widget="monetary"/>
+                                        <field name="pay_date"/>
+                                        <field name="currency_id" invisible="1" readonly="1"/>
+                                    </tree>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right">
+                                    <field name="total_debt_invoice" readonly="1" widget="monetary" attrs="{'invisible': [('payment_reference', '!=', 'invoice')]}" options="{'currency_field': 'currency_invoice'}"/>
+                                    <field name="total_debt_order" readonly="1" widget="monetary" attrs="{'invisible': [('payment_reference', '!=', 'purchase_order')]}" options="{'currency_field': 'currency_order'}"/>
+                                    
+                                    <field name="currency_order" invisible="1"/>
+                                    <field name="currency_invoice" invisible="1"/>
+                                    
+                                    <field name="amount_total" class="oe_subtotal_footer_separator" readonly="1" attrs="{'invisible': [('payment_reference', '!=', 'invoice')]}" widget="monetary" options="{'currency_field': 'currency_invoice'}"/>
+                                    <field name="amount_total" class="oe_subtotal_footer_separator" readonly="1" widget="monetary" attrs="{'invisible': [('payment_reference', '!=', 'purchase_order')]}" options="{'currency_field': 'currency_order'}"/>
+                                    <field name="current_debt" class="oe_subtotal_footer_separator" readonly="1" attrs="{'invisible': [('payment_reference', '!=', 'invoice')]}" widget="monetary" options="{'currency_field': 'currency_invoice'}"/>
+                                    <field name="current_debt" class="oe_subtotal_footer_separator" readonly="1" widget="monetary" attrs="{'invisible': [('payment_reference', '!=', 'purchase_order')]}" options="{'currency_field': 'currency_order'}"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- purchase.pay.order.lines form view -->
+        <record id="purchase_pay_order_lines_view_form" model="ir.ui.view">
+            <field name="name">purchase.pay.order.lines.view.form</field>
+            <field name="model">purchase.pay.order.lines</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="amount"/>
+                            </group>
+                            <group>                                
+                                <field name="pay_date"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- purchase.pay.order search view -->
+        <record id="purchase_pay_order_view_search" model="ir.ui.view">
+            <field name="name">purchase.pay.order.view.search</field>
+            <field name="model">purchase.pay.order</field>
+            <field name="arch" type="xml">
+                <search string="Pay Order Search">
+                    <!-- Add your fields here -->
+                    <field name="name"/>
+                    <field name="employee_id"/>
+                    <field name="request_date"/>
+                    <field name="cancel_date"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="invoice_id"/>
+                    <field name="order_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="purchase_pay_order_action" model="ir.actions.act_window">
+            <field name="name">Pay Orders</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.pay.order</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <menuitem   name="Pay Orders" 
+                    id="purchase_pay_order_menu"
+                    sequence="11"
+                    parent="purchase.menu_procurement_management"
+                    action="purchase_pay_order_action"
+                    />
+
+    </data>
+</odoo>

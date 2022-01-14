@@ -1,0 +1,263 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data >
+        <!-- Add you code here -->        
+        <report 
+            id="action_purchase_order_purchases_extend" 
+            model="purchase.order" 
+            string="O Compras ME" 
+            report_type="qweb-pdf"
+            name="purchase_report_supercauchos.purchase_order_purchases_extend" 
+            file="purchase_report_supercauchos.purchase_order_purchases_extend" />
+
+        <template id="external_layout_purchase_order_purchases_extend">
+            <div class="header" style="font-size: 12px; font-family: Arial;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-5">
+                            <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)" style="max-height: 100px; max-width: 200px;"/>
+                        </div>
+                        <div class="col-2">
+                        </div>
+                        <div class="col-5">
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-6">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <b>Orden de Compra Realizada a:</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span><b>Proveedor </b> : </span><t t-esc="o.partner_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span><b> R.I.F </b> :  </span><t t-esc="o.partner_id.vat"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span><b> Telefono </b>:  </span><t t-esc="o.partner_id.phone"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span><b>Dirección </b>:  </span><t t-esc="o.partner_id.street"/> <t t-esc="o.partner_id.city"/> <t t-esc="o.partner_id.state_id.name"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-6">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <b>Orden de Compra N° <t t-esc="o.name"/></b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span><b> Emisión</b></span> <t t-if="o.date_approve" t-esc="o.date_approve.strftime('%d/%m/%Y')"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <br/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <t t-if="o.date_end">
+                                            <span><b t-if="o.date_end"> Vencimiento </b></span> <t t-esc="o.date_end.strftime('%d/%m/%Y')"/> 
+                                            <br/>
+                                        </t>
+                                        <span><b> Tasa </b></span> <t t-esc="o.rate"/> 
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <br/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article o_report_layout_standard">
+                <t t-raw="0"/>
+            </div>
+
+            <div class="footer" style="font-size: 12px; font-family: Arial;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-6 border border-dark">
+                            <b>Notas</b> <br/>
+                            <span t-if="o.notes"><t t-esc="o.notes"/><br/></span> <span t-else=""><br/><br/></span>
+                        </div>
+                        <div class="col-6 border border-dark">
+                            <t t-set="currency_bs" t-value="o.env['res.currency'].search([('id', '=', 3)])"/>
+                            <t t-set="currency_usd" t-value="o.env['res.currency'].search([('id', '=', 2)])"/>
+                            <table style="width: 100%;">
+                                <tr class="text-right">
+                                    <td>
+                                        <b>Total Interno :</b>
+                                    </td>
+                                    <t t-if="o.currency_id.id == 3">
+                                        <td>
+                                            <b>$ <t t-esc="subtotal / o.rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></b>
+                                        </td>
+                                        <td>
+                                            <b><t t-esc="subtotal" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/> Bs.</b>
+                                        </td>
+                                    </t>
+                                    <t t-else="">
+                                        <td>
+                                            <b>$ <t t-esc="subtotal" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></b>
+                                        </td>
+                                        <td>
+                                            <b><t t-esc="subtotal * o.rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/> Bs.</b>
+                                        </td>
+                                    </t>
+                                </tr>
+                                <tr class="text-right">
+                                    <td>
+                                        <b>Impuestos :</b>
+                                    </td>
+                                    <t t-if="o.currency_id.id == 3">
+                                        <td>
+                                            <b>$ <t t-esc="taxes / o.rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></b>
+                                        </td>
+                                        <td>
+                                            <b><t t-esc="taxes" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/> Bs.</b>
+                                        </td>
+                                    </t>
+                                    <t t-else="">
+                                        <td>
+                                            <b>$ <t t-esc="taxes" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></b>
+                                        </td>
+                                        <td>
+                                            <b><t t-esc="taxes * o.rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/> Bs.</b>
+                                        </td>
+                                    </t>
+                                </tr>
+                                <tr class="text-right">
+                                    <td>
+                                        <b>Total Orden de Compra :</b>
+                                    </td>
+                                    <t t-if="o.currency_id.id == 3">
+                                        <td>
+                                            <b>$ <t t-esc="total / o.rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></b>
+                                        </td>
+                                        <td>
+                                            <b><t t-esc="total" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/> Bs.</b>
+                                        </td>
+                                    </t>
+                                    <t t-else="">
+                                        <td>
+                                            <b>$ <t t-esc="total" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></b>
+                                        </td>
+                                        <td>
+                                            <b><t t-esc="total * o.rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/> Bs.</b>
+                                        </td>
+                                    </t>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template id="purchase_order_purchases_extend">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="purchase_report_supercauchos.external_layout_purchase_order_purchases_extend" t-lang="o.partner_id.lang">
+                        <div class="page" style="font-size: 11px; font-family: Arial;" >
+                            <br/><br/><br/><br/><br/>
+                            <table style="width: 100%;">
+
+                                <!-- Cantidad de columnas -->
+                                <colgroup>
+                                    <col span="1" style="width: 14%;"/>
+                                    <col span="1" style="width: 30%;"/>
+                                    <col span="1" style="width: 13%;"/>
+                                    <col span="1" style="width: 13%;"/>
+                                    <col span="1" style="width: 15%;"/>
+                                    <col span="1" style="width: 15%;"/>
+                                </colgroup>
+                                <!-- Fin Cantidad de columnas -->
+
+                                <!-- Cabeceras -->
+                                <thead>
+                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca;">Código</th>
+                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca;">Descripción</th>
+                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca;">Cant.</th>
+                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca;">FillerT.</th>
+                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca;">Costo</th>
+                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca;">Total</th>
+                                </thead>
+                                <!-- Fin Cabeceras -->
+                                
+                                <!-- Variables totales -->
+                                <t t-set="subtotal" t-value="0"/>
+                                <t t-set="taxes" t-value="0"/>
+                                <t t-set="total" t-value="0"/>
+                                <t t-set="total_qty" t-value="0"/>
+                                <!-- Fin variables totales -->
+
+                                <!-- Lineas -->
+                                <tbody>
+                                    <t t-foreach="o.order_line" t-as="item">
+                                        <tr>
+                                            <td class="text-center">
+                                                <span><t t-esc="item.product_id.default_code"/></span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span><t t-esc="item.name"/></span>
+                                            </td>
+                                            <td class="text-right">
+                                                <span><t t-esc="'%.2f'% item.product_qty"  /></span>
+                                            </td>
+                                            <td class="text-right">
+                                                <span><t t-esc=" item.product_id.filler * item.product_uom_qty" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_secundaria_id"}' /></span>
+                                            </td>
+
+                                            <td class="text-center">
+                                                <span><t t-esc="item.price_unit" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/></span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span><t t-esc="item.product_qty * item.price_unit" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/></span>
+                                            </td>
+                                            <t t-set="total_qty" t-value="total_qty + item.product_qty"/>
+                                            <t t-set="price" t-value="item.product_qty * item.price_unit"/>
+                                            <t t-set="subtotal" t-value="subtotal + price"/>
+                                            <t t-if="item.taxes_id">
+                                                <t t-set="tax" t-value="(price * item.taxes_id.amount)/100"/>
+                                                <t t-set="taxes" t-value="taxes + tax"/>
+                                            </t>
+                                            <t t-set="total" t-value="subtotal + taxes"/>
+                                        </tr>
+                                    </t>
+                                    <tr>
+                                        <td colspan="2" class="text-right">Total Piezas</td>
+                                        <td class="text-right"><t t-esc="total_qty" t-options='{"widget": "float", "decimal_precision": "o.currency_id"}'/></td>
+                                    </tr>
+                                </tbody>     
+                                <!-- Fin lineas -->
+
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

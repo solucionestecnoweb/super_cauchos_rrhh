@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <report
+            id="action_importation_cycle"
+            model="wizard.importation.cycle"
+            string="importation_cycle"
+            report_type="qweb-pdf"
+            name="purchase_imports_extend.importation_cycle"
+            file="purchase_imports_extend.importation_cycle"
+            menu="True"
+            />
+
+        <template id="external_layout_importation_cycle">
+
+            <div class="header">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="col-xs-3">
+                                <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)" style="max-height: 100px; max-width: 150px; margin-top:22px;"/>
+                            </div>
+                            <div class="col-xs-9 text-right" style="margin-top:22px;" name="moto"/>
+                        </div>
+                        <div t-if="o.company_id.logo or o.company_id.report_header" class="row zero_min_height">
+                            <div class="col-xs-12">
+                                <div style="border-bottom: 1px solid black;"/>
+                            </div>
+                        </div>
+                        <div class="col-4 text-center"><br/>
+                            <b style="font-size:20px;">Importation Cycle</b><br/>
+                            <small style="font-size:12px;">From: <t t-esc="o.date_from.strftime('%d/%m/%y')"/> To: <t t-esc="o.date_to.strftime('%d/%m/%y')"/></small><br/>
+                        </div>
+                        <div class="col-4 text-right">
+                            <b style="font-size:12px;">Page <span class="page" style="font-size:12px;"/> / <span class="topage" style="font-size:12px;"/></b><br/>
+                            <b style="font-size:12px;" t-field="o.date_now"></b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article o_report_layout_standard">
+                <t t-raw="0"/>
+            </div>
+
+            <div class="footer">
+                <div class="text-center" style="border-top: 1px solid black;">
+                    
+                </div>
+            </div>
+        </template>
+
+        <template id="importation_cycle">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="purchase_imports_extend.external_layout_importation_cycle">
+                        
+                        <div class="page">
+                            <br/><br/>
+                            <table>
+                                <colgroup>
+                                    <col span="1" style="width: 9%;"/>
+                                    <col span="1" style="width: 7%;"/>
+                                    <col span="1" style="width: 7%;"/>
+                                    <col span="1" style="width: 7%;"/>
+                                    <col span="1" style="width: 7%;"/>
+                                    <col span="1" style="width: 7%;"/>
+                                    <col span="1" style="width: 7%;"/>
+                                    <col span="1" style="width: 7%;"/>
+                                    <col span="1" style="width: 7%;"/>
+                                    <col span="1" style="width: 7%;"/>
+                                    <col span="1" style="width: 7%;"/>
+                                    <col span="1" style="width: 7%;"/>
+                                    <col span="1" style="width: 7%;"/>
+                                    <col span="1" style="width: 7%;"/>
+                                </colgroup>
+                                <thead>
+                                    <tr style="background-color: #cacaca">
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Supplier</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Brand</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Prof</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Type</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Prof Date</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Invoice</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Container</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">BL Date</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Transc</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Accumulated</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">ETA</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Transit</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">NAC</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Total</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Totals -->
+                                    <t t-set="t_cont" t-value="0"/>
+                                    <t t-set="t_accumulated" t-value="0"/>
+                                    <t t-set="t_transit" t-value="0"/>
+                                    <t t-set="t_nac" t-value="0"/>
+                                    <t t-set="t_total" t-value="0"/>
+                                    <!-- Totals -->
+                                    
+                                    <t t-if="o.group_field == 'supplier'">
+                                        <t t-foreach="o.get_imports().sorted(key=lambda x: x.name.id)" t-as="item">
+                                            <tr>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.name.name"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.importation_brand.name"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.prof"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.importation_type"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;" t-if="item.f_prof"><t t-esc="item.f_prof.strftime('%d/%m/%y')"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.invoice_id.name"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.container" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;" t-if="item.bl_date"><t t-esc="item.bl_date.strftime('%d/%m/%y')"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.transc" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.accumulated" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;" t-if="item.eta"><t t-esc="item.eta.strftime('%d/%m/%y')"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.transit" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.nac" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.total" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                            </tr>
+                                            <t t-set="t_cont" t-value="t_cont + item.container"/>
+                                            <t t-if="item.nac">
+                                                <t t-set="t_accumulated" t-value="item.accumulated"/>
+                                            </t>
+                                            <t t-set="t_transit" t-value="t_transit + item.transit"/>
+                                            <t t-set="t_nac" t-value="t_nac + item.nac"/>
+                                            <t t-set="t_total" t-value="t_total + item.total"/>
+                                        </t>
+                                    </t>
+                                    <t t-elif="o.group_field == 'importation_brand'">
+                                        <t t-foreach="o.get_imports().sorted(key=lambda x: x.importation_brand.id)" t-as="item">
+                                            <tr>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.name.name"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.importation_brand.name"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.prof"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.importation_type"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;" t-if="item.f_prof"><t t-esc="item.f_prof.strftime('%d/%m/%y')"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.invoice_id.name"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.container" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;" t-if="item.bl_date"><t t-esc="item.bl_date.strftime('%d/%m/%y')"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.transc" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.accumulated" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;" t-if="item.eta"><t t-esc="item.eta.strftime('%d/%m/%y')"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.transit" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.nac" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.total" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                            </tr>
+                                            <t t-set="t_cont" t-value="t_cont + item.container"/>
+                                            <t t-if="item.nac">
+                                                <t t-set="t_accumulated" t-value="item.accumulated"/>
+                                            </t>
+                                            <t t-set="t_transit" t-value="t_transit + item.transit"/>
+                                            <t t-set="t_nac" t-value="t_nac + item.nac"/>
+                                            <t t-set="t_total" t-value="t_total + item.total"/>
+                                        </t>
+                                    </t>
+                                    <t t-elif="o.group_field == 'prof'">
+                                        <t t-foreach="o.get_imports().sorted(key=lambda x: x.prof)" t-as="item">
+                                            <tr>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.name.name"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.importation_brand.name"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.prof"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.importation_type"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;" t-if="item.f_prof"><t t-esc="item.f_prof.strftime('%d/%m/%y')"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.invoice_id.name"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.container" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;" t-if="item.bl_date"><t t-esc="item.bl_date.strftime('%d/%m/%y')"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.transc" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.accumulated" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;" t-if="item.eta"><t t-esc="item.eta.strftime('%d/%m/%y')"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.transit" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.nac" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.total" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                            </tr>
+                                            <t t-set="t_cont" t-value="t_cont + item.container"/>
+                                            <t t-if="item.nac">
+                                                <t t-set="t_accumulated" t-value="item.accumulated"/>
+                                            </t>
+                                            <t t-set="t_transit" t-value="t_transit + item.transit"/>
+                                            <t t-set="t_nac" t-value="t_nac + item.nac"/>
+                                            <t t-set="t_total" t-value="t_total + item.total"/>
+                                        </t>
+                                    </t>
+                                    <t t-elif="o.group_field == 'importation_type'">
+                                        <t t-foreach="o.get_imports().sorted(key=lambda x: x.importation_type)" t-as="item">
+                                            <tr>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.name.name"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.importation_brand.name"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.prof"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.importation_type"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;" t-if="item.f_prof"><t t-esc="item.f_prof.strftime('%d/%m/%y')"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.invoice_id.name"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.container" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;" t-if="item.bl_date"><t t-esc="item.bl_date.strftime('%d/%m/%y')"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.transc" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.accumulated" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;" t-if="item.eta"><t t-esc="item.eta.strftime('%d/%m/%y')"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.transit" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.nac" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.total" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                            </tr>
+                                            <t t-set="t_cont" t-value="t_cont + item.container"/>
+                                            <t t-if="item.nac">
+                                                <t t-set="t_accumulated" t-value="item.accumulated"/>
+                                            </t>
+                                            <t t-set="t_transit" t-value="t_transit + item.transit"/>
+                                            <t t-set="t_nac" t-value="t_nac + item.nac"/>
+                                            <t t-set="t_total" t-value="t_total + item.total"/>
+                                        </t>
+                                    </t>
+                                    <t t-else="">
+                                        <t t-foreach="o.get_imports()" t-as="item">
+                                            <tr>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.name.name"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.importation_brand.name"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.prof"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.importation_type"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;" t-if="item.f_prof"><t t-esc="item.f_prof.strftime('%d/%m/%y')"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.invoice_id.name"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.container" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;" t-if="item.bl_date"><t t-esc="item.bl_date.strftime('%d/%m/%y')"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.transc" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.accumulated" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;" t-if="item.eta"><t t-esc="item.eta.strftime('%d/%m/%y')"/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.transit" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.nac" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                                <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.total" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                            </tr>
+                                            <t t-set="t_cont" t-value="t_cont + item.container"/>
+                                            <t t-if="item.nac">
+                                                <t t-set="t_accumulated" t-value="item.accumulated"/>
+                                            </t>
+                                            <t t-set="t_transit" t-value="t_transit + item.transit"/>
+                                            <t t-set="t_nac" t-value="t_nac + item.nac"/>
+                                            <t t-set="t_total" t-value="t_total + item.total"/>
+                                        </t>
+                                    </t>
+                                        <tr>
+                                            <td colspan="6" class="text-right" style="border-bottom: 1px solid #cacaca;"><b style="font-size:12px;">Totals...</b></td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-right"><b style="font-size:12px;"><t t-esc="t_cont" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></b></td>
+                                            <td colspan="4" class="text-right" style="border-bottom: 1px solid #cacaca;"></td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-right"><span style="font-size:12px;"><t t-esc="t_transit" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span></td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-right"><span style="font-size:12px;"><t t-esc="t_nac" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span></td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-right"><span style="font-size:12px;"><t t-esc="t_total" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="11" class="text-right"></td>
+                                            <td colspan="2" style="border-left: 1px solid #cacaca; border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-right"><span style="font-size:12px;"><t t-esc="t_transit + t_nac" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span></td>
+                                            <td class="text-right" style="border-right: 1px solid #cacaca; border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;"></td>
+                                        </tr>
+                                        <tr></tr>
+                                        <tr class="border border-dark">
+                                            <td colspan="2" class="text-center" style="background-color: #cacaca; display: table-cell; vertical-align: middle;"><span style="font-size:12px;">Average Production</span></td>
+                                            <td class="text-right border-right border-dark" style="display: table-cell; vertical-align: middle;"><span style="font-size:12px;"><t t-esc="t_accumulated / t_cont" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span></td>
+                                        </tr>
+                                        <tr class="border border-dark">
+                                            <td colspan="2" class="text-center" style="background-color: #cacaca; display: table-cell; vertical-align: middle;"><span style="font-size:12px;">Average Transit</span></td>
+                                            <td class="text-right border-right border-dark" style="display: table-cell; vertical-align: middle;"><span style="font-size:12px;"><t t-esc="(t_transit + t_nac) / len(o.get_imports())" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span></td>
+                                        </tr>
+                                        <tr class="border border-dark">
+                                            <td colspan="2" class="text-center" style="background-color: #cacaca; display: table-cell; vertical-align: middle;"><span style="font-size:12px;">Total Average Days</span></td>
+                                            <td class="text-right border-right border-dark" style="display: table-cell; vertical-align: middle;"><span style="font-size:12px;"><t t-esc="(t_accumulated / t_cont) + ((t_transit + t_nac) / len(o.get_imports()))" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span></td>
+                                        </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+</odoo>

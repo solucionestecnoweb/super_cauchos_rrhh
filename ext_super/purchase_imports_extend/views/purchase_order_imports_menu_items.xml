@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+        <!-- Add you code here -->
+
+        <!-- imports menu root -->
+        <menuitem   name="Imports" 
+                    id="purchase_order_menu_root_extend"
+                    sequence="90"
+                    parent="purchase.menu_purchase_root"
+                    />
+
+        <!-- Import Payment Schedule -->
+        <record id="purchase_order_imports_payment_action" model="ir.actions.act_window">
+            <field name="name">Import Payment Schedule</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.order.imports.payment</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <menuitem   name="Import Payment Schedule" 
+                    id="purchase_order_imports_menu"
+                    sequence="1"
+                    parent="purchase_order_menu_root_extend"
+                    action="purchase_order_imports_payment_action"
+                    />
+
+        <!-- Container Arrival Schedule -->
+        <record id="purchase_order_containers_action" model="ir.actions.act_window">
+            <field name="name">Container Arrival Schedule</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.order.imports.containers</field>
+            <field name="view_mode">tree</field>
+        </record>
+        
+        <menuitem   name="Container Arrival Schedule" 
+                    id="purchase_order_containers_menu"
+                    sequence="3"
+                    parent="purchase_order_menu_root_extend"
+                    action="purchase_order_containers_action"
+                    />
+
+        <!-- Importation Cycle -->
+        <record id="purchase_order_importation_action" model="ir.actions.act_window">
+            <field name="name">Importation Cycle</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.order.imports.importations</field>
+            <field name="view_mode">tree</field>
+        </record>
+        
+        <menuitem   name="Importation Cycle" 
+                    id="purchase_order_importation_menu"
+                    sequence="5"
+                    parent="purchase_order_menu_root_extend"
+                    />
+
+        <menuitem   name="Importation Cycle Records" 
+                    id="importation_records_menu"
+                    sequence="1"
+                    parent="purchase_order_importation_menu"
+                    action="purchase_order_importation_action"
+                    />
+        
+        <!-- Merchandise in transit -->
+        <record id="imports_merchandise_transit_action" model="ir.actions.act_window">
+            <field name="name">Merchandise in Transit</field>
+            <field name="res_model">wizard.merchandise.transit</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="purchase_imports_extend.wizard_merchandise_transit_view_form"/>
+            <field name="target">new</field>
+        </record>
+            
+        <menuitem   name="Merchandise in Transit" 
+                    id="purchase_imports_extend.imports_merchandise_in_transit_menu"
+                    sequence="7"
+                    parent="purchase_order_menu_root_extend"
+                    action="imports_merchandise_transit_action"
+                    />
+
+        <!-- Landed Cost -->
+        <menuitem   name="Landed Cost" 
+                    id="purchase_order_landed_cost_menu"
+                    sequence="11"
+                    parent="purchase_order_menu_root_extend"
+                    action="stock_landed_costs.action_stock_landed_cost"
+                    />
+
+    </data>
+</odoo>

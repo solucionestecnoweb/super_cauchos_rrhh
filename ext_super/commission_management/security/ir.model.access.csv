@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_commission_category,commission.category,model_commission_category,base.group_user,1,1,1,1
+access_commission_type,commission.type,model_commission_type,base.group_user,1,1,1,1
+access_commission_settlement_period,commission.settlement.period,model_commission_settlement_period,base.group_user,1,1,1,1
+access_commission_base_type,commission.base.type,model_commission_base_type,base.group_user,1,1,1,1
+
+access_commission_type_type,commission.type.type,model_commission_type_type,base.group_user,1,1,1,1
+access_commission_type_base,commission.type.base,model_commission_type_base,base.group_user,1,1,1,1
+access_commission_type_invoice,commission.type.invoice,model_commission_type_invoice,base.group_user,1,1,1,1

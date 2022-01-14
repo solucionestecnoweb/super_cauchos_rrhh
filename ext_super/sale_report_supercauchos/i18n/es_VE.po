@@ -1,0 +1,302 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_report_supercauchos
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-06-22 18:34+0000\n"
+"PO-Revision-Date: 2021-06-22 18:34+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.sale_order_extend
+msgid "% de Descuento"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.sale_order_budget_extend
+msgid "-Condiciones de pago:"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.sale_order_budget_extend
+msgid "-Fecha de llegada"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.sale_order_budget_extend
+msgid ""
+"<b style=\"font-size:12px;\">Bank of America Grupo Chakao Corp.</b><br/>\n"
+"                                        <b style=\"font-size:12px;\">N° de cuenta: 898104348430</b><br/>\n"
+"                                        <b style=\"font-size:12px;\">Dirección BENET: 8955 west 33 av Hialeah Florida 33018</b><br/>\n"
+"                                        <b style=\"font-size:12px;\">Routing Number: 063100277/026009593</b><br/>\n"
+"                                        <b style=\"font-size:12px;\">Zelle: agrocauchoschakao@gmail.com</b><br/>\n"
+"                                        <b style=\"font-size:12px;\">Banesco Panama </b><br/>"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.sale_order_budget_extend
+msgid "<b style=\"font-size:12px;\">IVA</b>"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.external_layout_sale_order_extend
+msgid "<b style=\"font-size:12px;\">Notas</b> <br/>"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.sale_order_budget_extend
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.sale_order_extend
+msgid "<b style=\"font-size:12px;\">Subtotal</b>"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.sale_order_budget_extend
+msgid "<b style=\"font-size:12px;\">Total</b>"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.sale_order_budget_extend
+msgid ""
+"<br/>\n"
+"                                        <b style=\"font-size:12px;\">221020361634</b><br/>"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.sale_order_budget_extend
+msgid ""
+"<br/>\n"
+"                                        <span style=\"font-size:12px;\">-Anticipo 50%</span><br/>"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.sale_order_budget_extend
+msgid ""
+"<br/>\n"
+"                                        <span style=\"font-size:12px;\">-Debido a la alta rotación de los neumáticos por favor indicar la aprobación de los Cauchos para bloquear.</span><br/>\n"
+"                                        <span style=\"font-size:12px;\">-Los precios incluyen IVA </span><br/>\n"
+"                                        <span style=\"font-size:12px;\">-Precios se mantienen si Venezuela mantiene sin pago de aranceles de importación</span><br/>"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.external_layout_sale_order_extend
+msgid ""
+"<span style=\"font-size:12px;\">Base Imponible</span> <br/>\n"
+"                                    <span style=\"font-size:12px;\">Sub Total</span> <br/>\n"
+"                                    <span style=\"font-size:12px;\">Descuento</span> <br/>\n"
+"                                    <span style=\"font-size:12px;\">Total</span>"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.external_layout_sale_order_budget_extend
+msgid ""
+"<span style=\"font-size:12px;\">CALLE LOS MANGOS Y CALLE BOLIVAR EDIF. LOS "
+"MELONES PISO P.B. LOCAL 5 SECTOR CENTRO SAN RAFAEL DE ONOTO EDO PORTUGUESA /"
+" AV CIRCUNVALACION SUR, CENTRO EMPRESARIAL LOS LLANOS LOCAL NRO 4, ACARIGUA "
+"EDO PORTUGUESA. TELF.: 0255-6643286</span>"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.sale_order_budget_extend
+msgid "<span style=\"font-size:14px;\">Condiciones: </span><br/>"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model:ir.model.fields,field_description:sale_report_supercauchos.field_sale_order__arrive_date
+msgid "Arrive Date"
+msgstr "Fecha de Llegada"
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.external_layout_sale_order_extend
+msgid "C.I. / R.I.F:"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.sale_order_budget_extend
+msgid "Cant."
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.sale_order_extend
+msgid "Cantidad"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.sale_order_extend
+msgid "Codigo"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.external_layout_sale_order_extend
+msgid "Cond. de Pago:"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.sale_order_budget_extend
+msgid "Costo Unitario"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.sale_order_extend
+msgid "Deposito"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.sale_order_budget_extend
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.sale_order_extend
+msgid "Descripción"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.external_layout_sale_order_budget_extend
+msgid "Dirección:"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.external_layout_sale_order_extend
+msgid "Domicilio Fiscal:"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.external_layout_sale_order_extend
+msgid "Emisión:"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.sale_order_extend
+msgid "Filler"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.sale_order_extend
+msgid "FillerT"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.sale_order_budget_extend
+msgid "IVA"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model:ir.model.fields,field_description:sale_report_supercauchos.field_res_users__is_boss
+msgid "Is vice-president?"
+msgstr "¿Es el Vice-Presidente?"
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.sale_order_budget_extend
+msgid "Marca"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.sale_order_budget_extend
+msgid "Medida"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.sale_order_budget_extend
+msgid "Modelo"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.external_layout_sale_order_extend
+msgid "Nombre y Apellido o Razón Social:"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.external_layout_sale_order_budget_extend
+msgid "Nro. Cotización:"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.sale_order_budget_extend
+msgid "Observaciones"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model:ir.actions.report,name:sale_report_supercauchos.action_sale_order_extend
+msgid "Ordenes de Ventas"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model:ir.model.fields,field_description:sale_report_supercauchos.field_sale_order__payment_condition_id
+msgid "Payment Condition"
+msgstr "Condición de Pago"
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.external_layout_sale_order_extend
+msgid "Pedido ME"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.sale_order_extend
+msgid "Precio Unit."
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model:ir.actions.report,name:sale_report_supercauchos.action_sale_order_budget_extend
+msgid "Presupuestos de Ventas"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.external_layout_sale_order_budget_extend
+msgid "R.I.F:"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model:ir.model,name:sale_report_supercauchos.model_sale_order
+msgid "Sales Order"
+msgstr "Pedido de venta"
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.external_layout_sale_order_budget_extend
+msgid "Señores:"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.external_layout_sale_order_extend
+msgid "Tasa"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.external_layout_sale_order_budget_extend
+msgid "Teléfono:"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model:ir.model.fields,field_description:sale_report_supercauchos.field_res_users__the_boss
+msgid "The Boss"
+msgstr "El Jefe"
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.sale_order_budget_extend
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.sale_order_extend
+msgid "Total"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model:ir.model,name:sale_report_supercauchos.model_res_users
+msgid "Users"
+msgstr "Usuarios"
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.external_layout_sale_order_extend
+msgid "Vencimiento:"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.external_layout_sale_order_budget_extend
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.external_layout_sale_order_extend
+msgid "Vendedor:"
+msgstr ""
+
+#. module: sale_report_supercauchos
+#: model_terms:ir.ui.view,arch_db:sale_report_supercauchos.sale_order_budget_extend
+msgid "Vice-presidente <br/>"
+msgstr ""

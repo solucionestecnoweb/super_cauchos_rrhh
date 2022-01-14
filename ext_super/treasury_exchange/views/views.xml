@@ -1,0 +1,95 @@
+<odoo>
+    <record id="view_tree_exchange" model="ir.ui.view">
+        <field name="name">view.tree.exchange</field>
+        <field name="model">account.exchange</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="amount"/>
+                <field name="transaction"/>
+                <field name="final_currency_id"/>
+                <field name="rate" optional="hide"/>
+                <field name="debit_id" optional="hide"/>
+                <field name="credit_id" optional="hide"/>
+                <field name="final_amount"/>
+                <field name="origin_currency_id" optional="hide"/>
+                <field name="request" optional="show"/>
+                <field name="confirmation" optional="hide"/>
+                <field name="reference" optional="show"/>
+                <field name="company_id"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_form_exchange" model="ir.ui.view">
+        <field name="name">view.form.exchange</field>
+        <field name="model">account.exchange</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="draft" class="oe_highlight" states="confirmed,done,cancel" string="Draft" type="object"/>                    
+                    <button name="confirmed" class="oe_highlight" states="draft" string="Confirmed" type="object"/>
+                    <button name="done" class="oe_highlight" states="confirmed" string="Done" type="object"/>
+                    <button name="cancel" class="oe_highlight" states="confirmed" string="Cancel" type="object"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done,cancel"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1" attrs="{'invisible': [('state', '!=', 'confirmed'), ('name', '=', '/')]}"/><br/>
+                        </h1>
+                    </div>
+                    <group string="Monto a Cambiar" name="info" priority="1">
+                        <group>
+                            <field name="amount" required="1" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                            <field name="origin_currency_id" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                            <field name="rate" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                            <field name="debit_id"  string="Origen de Fondos" required="1" domain="[('company_id', '=', company_id),('type','in',('bank','cash') )]" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                            <field name="account_id" required="1" /> 
+                        </group>
+                        <group>
+                            <field name="transaction" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>                         
+                            <field name="company_id" required="1" readonly="1"/>
+                            <!-- <field name="journal_id" required="1" /> -->
+                            <field name="credit_id" string="Destino de Fondos"  required="1" domain="[('company_id', '=', company_id),('type','in',('bank','cash') )]" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                        </group>
+                    </group>
+                    <group string="Resultado" name="result" priority="2">
+                        <group>
+                            <field name="final_amount"  attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                            <field name="final_currency_id" string="Moneda Destino" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                            <field name="request" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                            <field name="confirmation" attrs="{'required': [('state','=','confirmed')] ,'readonly': [('state', 'in', ('cancel','draft', 'done'))]}"/>
+                            <field name="reference" attrs="{'invisible': [('state', 'in', 'draft')],  'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
+                        </group>
+                    </group>
+                    <group string="Asientos" name="result" priority="2">
+                        <group>
+                            <field name="move_transient_id"  readonly="1" />
+                            <field name="move_id"  readonly="1" />
+                        </group>
+                    </group>
+
+                    <footer>
+                        <button name="calculate" string="Calcular" type="object" class="oe_highlight"/>
+                    </footer>
+                </sheet>
+                <!-- <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div> -->
+        </form>
+        </field>
+    </record>
+
+    <record id="action_view_exchange" model="ir.actions.act_window">
+        <field name="name">Transacciones de Cambio</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.exchange</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_transactions" name="Transacciones" parent="account.menu_finance_entries" sequence="2"/>
+    <menuitem id="menu_exchange" name="Transacciones de Cambio" parent="treasury_exchange.menu_transactions" action="treasury_exchange.action_view_exchange" sequence="1"/>
+
+</odoo>

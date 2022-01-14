@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+    	<record id="fleet_wizard_control_servicio" model="ir.ui.view">
+       	    <field name="name">Asistente de Reporte de Control de Servicios de Conductores</field>
+            <field name="model">fleet.wizard.services</field>
+    	    <field name="arch" type="xml">
+    	    	<form string="Control de Servicios de Conductores">
+                    <field invisible="1" name="state"/>
+                    <div states="choose">
+                        <group >
+                            <group >
+                                <field name="date_from" string="Desde" required="1"/>
+                            </group>
+                            <group >
+                                <field name="date_to" string="Hasta" required="1"/>
+                            </group>
+                        </group>
+                    </div>
+                    <div states="get">
+						<group>
+							<field name="name" colspan="4" invisible="1"/>
+							<field name="report" filename="name" colspan="4"/>
+						</group>
+					</div>
+                    <footer states="choose"> 
+                        <button name="print_ordenes" string="Exportar PDF" type="object" class="oe_highlight" />
+                        <button name="generate_xls_report" string="Exportar EXCEL" type="object" class="oe_highlight" />
+                        <button special="cancel" string="Cancel" class="oe_highlight" />
+                    </footer>
+                    <footer states="get">
+						<button special="cancel" string="Cancel" class="oe_highlight" />
+					</footer>
+                </form>
+    	    </field>
+    	</record>
+        <record id="action_fleet_control_servicio" model="ir.actions.act_window">
+        	<field name="name">Control de Servicios de Conductores</field>
+        	<field name="res_model">fleet.wizard.services</field>
+        	<field name="view_mode">form</field>
+        	<field name="view_id" ref="fleet_wizard_control_servicio"/>
+        	<field name="target">new</field>
+    	</record>
+
+		<menuitem name="Reporte Control de Servicios de Conductores" parent="fleet.menu_fleet_reporting" id="supercauchos_fleet.fleet_wizard_servicio" sequence="12" action="action_fleet_control_servicio"/>
+	</data>
+</odoo>

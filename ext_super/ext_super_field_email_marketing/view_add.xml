@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record id="config_modelo_mercado_form" model="ir.ui.view">
+		<field name="name">cconfig.modelo.mercado.form</field>
+		<field name="model">res.mercado</field>
+		<field name="arch" type="xml">
+			<form string="Configuracion de Mercado del Cliente">
+                <sheet>
+				    <group>						
+				        <field name="name"></field>
+				    </group>
+                </sheet>		
+			</form>
+		</field>
+	</record>
+
+	<record id="config_modelo_tipologia_form" model="ir.ui.view">
+		<field name="name">cconfig.modelo.tipologia.form</field>
+		<field name="model">res.tipologia</field>
+		<field name="arch" type="xml">
+			<form string="Configuracion de Tipología del Cliente">
+                <sheet>
+				    <group>						
+				        <field name="name"></field>
+				    </group>
+                </sheet>		
+			</form>
+		</field>
+	</record>
+
+	<record id="config_modelo_formato_form" model="ir.ui.view">
+		<field name="name">cconfig.modelo.formato.form</field>
+		<field name="model">res.formato</field>
+		<field name="arch" type="xml">
+			<form string="Configuracion de Formatos del Cliente">
+                <sheet>
+				    <group>						
+				        <field name="name"></field>
+				    </group>
+                </sheet>		
+			</form>
+		</field>
+	</record>
+
+
+	
+		<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+	<!-- For display the quotation cancel reason menu  -->
+	<record id="config_modelo_mercado_tree" model="ir.ui.view">
+		<field name="name">config.modelo.mercado.tree</field>
+		<field name="model">res.mercado</field>
+		<field name="arch" type="xml">
+			<tree string="Configuracion de Mercados del Cliente" >
+				<field name="name" string="Nombre del Mercado"></field>		
+			</tree>
+		</field>
+	</record>
+
+	<record id="config_modelo_tipologia_tree" model="ir.ui.view">
+		<field name="name">config.modelo.tipologia.tree</field>
+		<field name="model">res.tipologia</field>
+		<field name="arch" type="xml">
+			<tree string="Configuracion de Tipologías del Cliente" >
+				<field name="name" string="Nombre de la Tipología"></field>		
+			</tree>
+		</field>
+	</record>
+
+	<record id="config_modelo_formato_tree" model="ir.ui.view">
+		<field name="name">config.modelo.formato.tree</field>
+		<field name="model">res.formato</field>
+		<field name="arch" type="xml">
+			<tree string="Configuracion de Formatos del Cliente" >
+				<field name="name" string="Nombre del Formato"></field>		
+			</tree>
+		</field>
+	</record>
+
+	
+<!-- ********************************************************************** -->
+	<record id="mercado_menu" model="ir.actions.act_window">
+		<field name="name">Configuracion de  Mercado de Clientes</field>
+		<field name="res_model">res.mercado</field>
+		<field name="view_mode">form,tree</field>
+		<field name="view_id" ref="config_modelo_mercado_tree"></field>
+	</record>
+
+	<record id="tipologia_menu" model="ir.actions.act_window">
+		<field name="name">Configuracion de  Tipología de Clientes</field>
+		<field name="res_model">res.tipologia</field>
+		<field name="view_mode">form,tree</field>
+		<field name="view_id" ref="config_modelo_tipologia_tree"></field>
+	</record>
+
+	<record id="formato_menu" model="ir.actions.act_window">
+		<field name="name">Configuracion de  Formato de Clientes</field>
+		<field name="res_model">res.formato</field>
+		<field name="view_mode">form,tree</field>
+		<field name="view_id" ref="config_modelo_formato_tree"></field>
+	</record>
+
+	<menuitem
+		id="menu_mercado"
+		name="Configuraciones de Mercado del Cliente" 
+		parent="sale.menu_sale_config"
+		action="mercado_menu"
+		sequence="20"/>
+
+	<menuitem
+		id="menu_tipologia"
+		name="Configuraciones de Tipología del Cliente" 
+		parent="sale.menu_sale_config"
+		action="tipologia_menu"
+		sequence="30"/>
+
+	<menuitem
+		id="menu_formato"
+		name="Configuraciones de Formato del Cliente" 
+		parent="sale.menu_sale_config"
+		action="formato_menu"
+		sequence="40"/>
+</odoo>

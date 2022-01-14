@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_purchase_compare_multiple,purchase.compare.multiple,model_purchase_compare_multiple,base.group_user,1,1,1,1
+access_purchase_compared_prices,purchase.compared.prices,model_purchase_compared_prices,base.group_user,1,1,1,1
+access_purchase_compared_prices_lines,purchase.compared.prices.lines,model_purchase_compared_prices_lines,base.group_user,1,1,1,1

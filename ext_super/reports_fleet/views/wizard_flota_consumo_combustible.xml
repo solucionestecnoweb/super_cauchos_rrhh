@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+    	<record id="fleet_wizard_consumo_combustible" model="ir.ui.view">
+       	    <field name="name">Asistente de Reporte de Consumo de Combustible</field>
+            <field name="model">fleet.wizard.fuel</field>
+    	    <field name="arch" type="xml">
+    	    	<form string="Consumo de Combustible">
+                    <div>
+                        <group >
+                            <field name="date_from" string="Fecha Inicio" required="1"/>
+                            <field name="date_to"  string="Fecha Fin" required="1"/>
+                        </group>
+                    </div>
+                    <footer> 
+                        <button name="print_ordenes" string="Exportar PDF" type="object" class="oe_highlight" />
+                        <button special="cancel" string="Cancel" class="oe_highlight" />
+                    </footer>
+                </form>
+    	    </field>
+    	</record>
+        <record id="action_fleet_consumo_combustible" model="ir.actions.act_window">
+        	<field name="name">Consumo de Combustible</field>
+        	<field name="res_model">fleet.wizard.fuel</field>
+        	<field name="view_mode">form</field>
+        	<field name="view_id" ref="fleet_wizard_consumo_combustible"/>
+        	<field name="target">new</field>
+    	</record>
+
+		<menuitem name="Reporte Consumo de Combustible" parent="fleet.menu_fleet_reporting" id="reports_fleet.fleet_wizard_consumo" action="action_fleet_consumo_combustible"/>
+	</data>
+</odoo>

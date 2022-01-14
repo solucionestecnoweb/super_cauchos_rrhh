@@ -1,0 +1,84 @@
+<odoo>
+    <data>
+
+    <record id="vista_from_anticipo" model="ir.ui.view">
+        <field name="name">vista.from.anticipo</field>
+        <field name="model">account.gasto.anticipo</field>
+        <field name="arch" type="xml">
+            <form string="Asignaciones de anticipo al Empleado">
+                <header>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,posted" readonly="True"/>
+
+                        <button name="aprobar" string="Asignar Anticipo" type="object" attrs="{'invisible': [('state', '!=','draft')]}"/>
+                        <button name="cancel" string="Cancelar" type="object" attrs="{'invisible': [('state', '=','draft')]}"/>
+                        <!-- attrs="{'invisible': [('manual', '=',False)]}"-->
+                </header>
+                <sheet>
+                    <group name="padre">
+                        <group name="Campos izq">
+                            <field name="nro_recibo" string="Nro de Recibo"/>
+                            <field name="payment_type" string="Tipo de Pago"/>
+                            <field name="employee_id" string="Empleado"/>
+                            <field name="company_id" groups="base.group_multi_company" required="1"/>
+                            <field name="currency_id" options="{'no_create': True, 'no_open': True}" groups="base.group_multi_currency" string="Moneda"/>
+                            <label for="amount"/>
+                                <div name="amount_div" class="o_row">
+                                    <field name="amount" string="Monto Real Entregado"/>
+                                </div>  
+                            <field name="company_currency_id" invisible="1"/>
+                            <field name="monto_moneda_company" string="Monto Compañia (Bs)"/>
+                            <field name="nro_ref" string="Nro Referencia:" attrs="{'readonly': [('state', '=', 'posted')]}"/>
+                            <field name="payment_date" string="Fecha"/>
+                        </group>
+                        <group name="Campos der">
+                            <field name="asiento" string="Nro asiento contable anticipo" attrs="{'invisible': [('state', '=', 'draft')]}" readonly="1"/>
+                            <field name="journal_id" string="Diario" widget="selection" attrs="{'invisible': [('amount', '=', 0), ('state', '!=', 'draft')]}"/>
+                            <field name="hide_payment_method" invisible="1"/>
+                            <field name="anticipo" readonly="1"/>
+                            <field name="payment_method_id" string="Motodo de pago" widget="radio" attrs="{'invisible': [('hide_payment_method', '=', True)]}"/>
+                            <field name="payment_method_code" invisible="1"/>
+                            <field name="tasa_personalizada" string="Tasa Personalizada"/>
+                            <field name = "rate" string="Tasa" attrs="{'invisible': [('tasa_personalizada', '!=', True)],'readonly': [('state', '=', 'posted')]}"/>
+                            <field name="account_anti_employee_payable_id" string="Cuenta de anticipo" attrs="{'readonly': [('state', '=', 'posted')]}"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="vista_tree_anticipo" model="ir.ui.view">
+        <field name="name">vista.tree.anticipo</field>
+        <field name="model">account.gasto.anticipo</field>
+        <field name="arch" type="xml">
+            <tree string="Asignaciones de Anticipo" >
+                <field name="nro_recibo" string="Documento"/>
+                <field name="payment_date" string="Fecha"></field>
+                <field name="journal_id" string="Diario"></field>   
+                <field name="payment_method_id"></field>
+                <field name="employee_id" string="Empleado"></field> 
+                <field name="currency_id" options="{'no_create': True, 'no_open': True}" groups="base.group_multi_currency" string="Moneda" invisible="1"/>
+                <field name="rate" string="Tasa"/>
+                <field name="amount"/>
+                <field name="saldo_disponible"/>
+                <field name="state"/>   
+                <field name="company_id" string="Compañia"/> 
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_solicitud_anticipo_menu" model="ir.actions.act_window">
+        <field name="name">Registro de Anticipo</field>
+        <field name="res_model">account.gasto.anticipo</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="vista_tree_anticipo"></field>
+    </record>
+
+</data>
+
+</odoo>

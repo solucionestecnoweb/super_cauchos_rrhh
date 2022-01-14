@@ -1,0 +1,53 @@
+<odoo>
+
+    <record id="wizard_street_days_report" model="ir.ui.view">
+        <field name="name">Asistente de Reporte de Días Calle</field>
+        <field name="model">street_days.report</field>
+        <field name="arch" type="xml">
+            <form string="Reporte de Días Calle">
+                <field invisible="1" name="state"/>
+                <div states="choose">
+                    <group >
+                        <group >
+                            <field name="date_from" required="1"/>
+                        </group>
+                        <group >
+                            <field name="date_to" required="1"/>
+                        </group>
+                    </group>
+                </div>
+                <div states="get">
+                    <group>
+                        <field name="name" colspan="4" invisible="1"/>
+                        <field name="report" filename="name" colspan="4"/>
+                    </group>
+                </div>
+                <footer states="choose">
+                    <button name="generate_xls_report" string="Exportar XLS" type="object" class="oe_highlight" />
+                    <button name="print_report" string="Exportar PDF" type="object" class="oe_highlight" />
+                    <button name="show_street_days" string="Mostrar Días Calle" type="object" class="oe_highlight" />
+                    <button special="cancel" string="Cancelar" class="oe_highlight" />
+                </footer>
+                <footer states="get">
+                    <button name="show_street_days" string="Mostrar Días Calle" type="object" class="oe_highlight" />
+                    <button special="cancel" string="Cancelar" class="oe_highlight" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_street_days_report" model="ir.actions.act_window">
+        <field name="name">Reporte de Días Calle</field>
+        <field name="res_model">street_days.report</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="wizard_street_days_report"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem   name="Días Calle" 
+                parent="administration_module.admin_collection_menu"
+                id="street_days_report_menu" 
+                action="reports_days.action_street_days_report"
+                sequence="30"
+                />
+
+</odoo>

@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data >
+        <!-- Formato Agroruedas -->
+        <record id="paperformat_agroruedas" model="report.paperformat">
+            <field name="name">Factura Agroruedas</field>
+            <!-- <field name="default" eval="True"/> -->
+            <field name="format">custom</field>
+            <field name="page_height">230</field> 
+            <field name="page_width">216</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">30</field>
+            <field name="margin_bottom">30</field>
+            <field name="margin_left">10</field>
+            <field name="margin_right">10</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">20</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <!-- Formato Supercauchos -->
+        <record id="paperformat_supercauchos" model="report.paperformat">
+            <field name="name">Factura Supercauchos</field>
+            <!-- <field name="default" eval="True"/> -->
+            <field name="format">custom</field>
+            <field name="page_height">150</field> 
+            <field name="page_width">210</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">35</field>
+            <field name="margin_bottom">20</field>
+            <field name="margin_left">10</field>
+            <field name="margin_right">10</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">20</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <!-- Formato Multirepuestos -->
+        <record id="paperformat_multirepuestos" model="report.paperformat">
+            <field name="name">Factura Multirepuestos</field>
+            <!-- <field name="default" eval="True"/> -->
+            <field name="format">custom</field>
+            <field name="page_height">225</field> 
+            <field name="page_width">210</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">45</field>
+            <field name="margin_bottom">30</field>
+            <field name="margin_left">10</field>
+            <field name="margin_right">10</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">20</field>
+            <field name="dpi">90</field>
+        </record>
+    </data>
+</odoo>

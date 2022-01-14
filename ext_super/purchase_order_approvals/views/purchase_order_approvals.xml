@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="0">
+        <!-- Add you code here -->
+        <!-- purchase.order inherit form view -->
+        <record id="purchase_order_view_form_approvals_extend" model="ir.ui.view">
+            <field name="name">purchase.order.inherit.view.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <!-- Add your xpath here -->
+                <xpath expr="//button[@name='button_confirm']" position="before">
+                    <button string="Approval Request" name="approvals_request_purchase" type="object" class="oe_highlight" states="draft"/>
+                    <button string="Approval Request" name="approvals_request_purchase" type="object" class="oe_highlight" states="sent"/>
+                </xpath>
+                <xpath expr="//field[@name='priority']" position="after">
+                    <field name="is_approved" string="Solicitud aprobada" readonly="1"/>
+                    <field name="is_rejected" string="Solicitud rechazada" readonly="1"/>
+                    <field name="approver_ids" widget="many2many_tags" required="1"/>
+                </xpath>
+
+                <xpath expr="//button[@name='button_confirm']" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', ('is_approved', '=', False), ('is_rejected', '=', True)]}</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

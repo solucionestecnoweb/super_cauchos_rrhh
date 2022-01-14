@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data >
+        <!-- Add you code here -->        
+        <report 
+            id="action_account_move_invoice_extend" 
+            model="account.move" 
+            string="Factura Forma Libre/ME" 
+            report_type="qweb-pdf"
+            name="account_move_extend_fields_reports.account_move_invoice_extend" 
+            file="account_move_extend_fields_reports.account_move_invoice_extend" />
+
+
+        <template id="account_move_invoice_extend">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-if="o.company_id.id == 1">
+                        <t t-call="account_move_extend_fields_reports.account_move_invoice_extend_supercauchos"
+                            t-lang="o.partner_id.lang"/>
+                    </t>
+                    <t t-if="o.company_id.id == 8">
+                        <t t-call="account_move_extend_fields_reports.account_move_invoice_extend_multirepuestos"
+                            t-lang="o.partner_id.lang"/>
+                    </t>
+                    <t t-if="o.company_id.id == 9">
+                        <t t-call="account_move_extend_fields_reports.account_move_invoice_extend_agroruedas"
+                            t-lang="o.partner_id.lang"/>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

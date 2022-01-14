@@ -1,0 +1,14 @@
+<odoo> 
+    <data>
+        <record id="view_payment_form_button" model="ir.ui.view">
+            <field name="name">account.payment.form.button</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_draft']" position="after">
+                    <button name="send_email_recipt" string="Enviar Correo con Recibo de Pago" type="object"/>
+                </xpath>  
+            </field>
+        </record>
+    </data>
+</odoo>

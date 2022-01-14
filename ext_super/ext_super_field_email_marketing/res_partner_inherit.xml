@@ -1,0 +1,38 @@
+<odoo>
+  <data>
+
+     <record id="res_partner_inerhit" model="ir.ui.view">
+        <field name="name">res.partner.inerhit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='email']" position="after">
+                <field name="customer_rank" invisible='1'/>
+            </xpath>
+           <xpath expr="//page[@name='sales_purchases']" position="after">
+                <page string="Datos adicionales del cliente" attrs="{'invisible': [('customer_rank', '=', 0)]}">
+                    <group name="general_cli">
+                        <group name="cuadro1">
+                            <field name="razon" string="Razón Social"/>
+                            <field name="canal"/>
+                            <field name="mercado" string="Mercado"/>
+                            <field name="vendedor"/>
+                            <field name="formato"/>
+                            <field name="responsable"/>
+                        </group>
+                        <group name="cuadro2">
+                            <field name="zona"/>
+                            <field name="istagram"/>
+                            <field name="activo"/>
+                            <field name="tipologia" string="Tipología"/>
+                            <field name="tienda"/>
+                            <field name="deposito"/>
+                        </group>
+                    </group>
+                </page>              
+            </xpath>
+        </field>
+    </record>     	 
+
+  </data>
+</odoo>

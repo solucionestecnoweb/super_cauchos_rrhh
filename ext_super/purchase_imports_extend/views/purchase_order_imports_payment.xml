@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="0">
+        <!-- Add you code here -->
+
+        <!-- purchase.order.imports.payment tree view -->
+        <record id="purchase_order_imports_payment_view_tree" model="ir.ui.view">
+            <field name="name">purchase.order.imports.payment.view.tree</field>
+            <field name="model">purchase.order.imports.payment</field>
+            <field name="arch" type="xml">
+                <tree decoration-danger="status_payment == 'not_paid' and alert_field">
+                    <!-- Add your fields here -->
+                    <field name="name" required="1"/>
+                    <field name="import_model" required="1"/>
+                    <field name="import_brand" required="1"/>
+                    <field name="invoice_number" required="1"/>
+                    <field name="import_qty" sum="Total Qty" required="1"/>
+                    <field name="percent_payed" required="1"/>
+                    <field name="import_amount" widget="monetary" sum="Total Amount" required="1"/>
+                    <field name="currency_id" required="1"/>
+                    <field name="payment_date" required="1"/>
+                    <field name="etd" required="1"/>
+                    <field name="eta" required="1"/>
+                    <field name="status" required="1"/>
+                    <field name="status_payment" required="1"/>
+                    <field name="alert_field" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- purchase.order.imports.payment form view -->
+        <record id="purchase_order_imports_payment_view_form" model="ir.ui.view">
+            <field name="name">purchase.order.imports.payment.view.form</field>
+            <field name="model">purchase.order.imports.payment</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <field name="status_payment" widget="statusbar" string="confirm"  statusbar_visible="paid,not_paid" required="1" options="{'clickable': '1'}"/>
+                        <field name="alert_field" invisible="1"/>                        
+                    </header>
+                    <sheet>
+                        <group string="Payment Imports Data"> 
+                            <group>    
+                                <field name="name" required="1"/>
+                                <field name="import_model" required="1"/>
+                                <field name="import_brand" required="1"/>
+                                <field name="invoice_number" required="1"/>
+                                <field name="import_qty" sum="Total Qty" required="1"/>
+                                <field name="percent_payed" required="1"/>
+                            </group>
+                            <group>                            
+                                <field name="import_amount" widget="monetary" sum="Total Amount" required="1"/>
+                                <field name="currency_id" required="1"/>
+                                <field name="payment_date" required="1"/>
+                                <field name="etd" required="1"/>
+                                <field name="eta" required="1"/>
+                                <field name="status" required="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- purchase.order.imports.payment search view -->
+        <record id="purchase_order_imports_payment_view_search" model="ir.ui.view">
+            <field name="name">purchase.order.imports.payment.view.search</field>
+            <field name="model">purchase.order.imports.payment</field>
+            <field name="arch" type="xml">
+                <search string="Import Payment Schedule Search">
+                    <!-- Add your fields here -->
+                    <field name="name"/>
+                    <field name="invoice_number"/>
+                    <field name="payment_date"/>
+                    <field name="status"/>
+                    <field name="status_payment"/>
+                </search>
+            </field>
+        </record>
+
+    </data>
+</odoo>

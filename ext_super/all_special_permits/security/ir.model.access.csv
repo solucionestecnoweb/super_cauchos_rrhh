@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_order_list_price_product,sale_order_list_price_product,sale.model_sale_order,list_price_product_sale_group,1,0,0,0

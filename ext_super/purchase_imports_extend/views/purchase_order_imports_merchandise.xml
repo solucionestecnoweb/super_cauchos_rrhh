@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- temp.merchandise.transit tree view -->
+    <record id="imports_merchandise_transit_view_tree" model="ir.ui.view">
+        <field name="name">temp.merchandise.transit.view.tree</field>
+        <field name="model">temp.merchandise.transit</field>
+        <field name="arch" type="xml">
+            <tree create="false" delete="false" editable="bottom">
+                <!-- Add your fields here -->
+                <field name="compra_id" readonly="1"/>
+                <field name="cantidad" readonly="1"/>
+                <field name="unidades_id" readonly="1"/>
+                <field name="pr" readonly="1"/>
+                <field name="producto_id" readonly="1"/>
+                <field name="modelo" string="Modelo" readonly="1"/>
+                <field name="precio" widget="monetary" readonly="1"/>
+                <field name="pronto_pago" readonly="1"/>
+                <field name="super_promo" readonly="1"/>
+                <field name="c_apartada" readonly="1"/>
+                <field name="c_disponible" readonly="1"/>
+                <field name="moneda_id" invisible="1"/>
+                <field name="fecha_planeada" readonly="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- temp.merchandise.transit search view -->
+    <record id="imports_merchandise_transit_view_search" model="ir.ui.view">
+        <field name="name">temp.merchandise.transit.view.search</field>
+        <field name="model">temp.merchandise.transit</field>
+        <field name="arch" type="xml">
+            <search>
+                <!-- Add your fields here -->
+            </search>
+        </field>
+    </record>
+
+    <!-- wizard.merchandise.transit form view -->
+    <record id="wizard_merchandise_transit_view_form" model="ir.ui.view">
+        <field name="name">wizard.merchandise.transit.view.form</field>
+        <field name="model">wizard.merchandise.transit</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <group>
+                    <group>
+                        <field name="date_from" string="Desde"/>
+                    </group>
+                    <group>
+                        <field name="date_to" string="Hasta"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="print_pdf" string="Exportar PDF" type="object" class="oe_highlight" />
+                    <button special="cancel" string="Cancelar" class="oe_highlight" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

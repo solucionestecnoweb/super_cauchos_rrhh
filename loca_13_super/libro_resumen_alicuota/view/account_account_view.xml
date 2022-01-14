@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="account_account_inherit_form" model="ir.ui.view">
+        <field name="name">account.account.inherit.form</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_form"/>
+        <field name="arch" type="xml">
+
+			<xpath expr="//field[@name='currency_id']" position="after">
+                <field name="prorreatable" string="Es una cuenta Prorrateable?"/>
+            </xpath>
+            
+        </field>
+    </record>
+
+    <record id="account_group_inherit_form" model="ir.ui.view">
+        <field name="name">account.group.inherit.form</field>
+        <field name="model">account.group</field>
+        <field name="inherit_id" ref="account.view_account_group_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='parent_id']" position="after">
+                <field name="prorreatable" string="Es una cuenta Prorrateable?"/>
+            </xpath>
+            
+        </field>
+    </record>
+
+</odoo>

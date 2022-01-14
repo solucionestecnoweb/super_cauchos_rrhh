@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <report 
+        id="action_merchandise_in_transit" 
+        model="wizard.merchandise.transit" 
+        string="mercancia_en_transito" 
+        report_type="qweb-pdf"
+        name="purchase_imports_extend.merchandise_in_transit" 
+        file="purchase_imports_extend.merchandise_in_transit" 
+        menu="True" 
+        />
+
+    <template id="external_layout_merchandise_in_transit">
+        <div class="header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-3">
+                        <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)" style="max-height: 100px; max-width: 200px;"/><br/>
+                    </div>
+                    <div class="col-6 text-center">
+                        <h3>Mercancía en Tránsito</h3>
+                        <b style="font-size:12px;">Desde: <t t-esc="o.date_from.strftime('%d de %B de %Y')"/> Hasta: <t t-esc="o.date_to.strftime('%d de %B de %Y')"/></b><br/>
+                    </div>
+                    <div class="col-3 text-right">
+                        <b style="font-size:12px;">Página <span class="page" style="font-size:12px;"/> / <span class="topage" style="font-size:12px;"/></b><br/>
+                        <b style="font-size:12px;"><t t-esc="o.date_fix().strftime('%d de %B de %Y %r')"/></b><br/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="article o_report_layout_standard">
+            <t t-raw="0"/>
+        </div>
+
+        <div class="footer">
+        </div>
+    </template>
+
+    <template id="merchandise_in_transit">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="purchase_imports_extend.external_layout_merchandise_in_transit">
+                    <div class="page">
+
+                        <table>
+                            <!-- Cantidad de columnas -->
+                            <colgroup>
+                                <col span="1" style="width: 10%;"/>
+                                <col span="1" style="width: 25%;"/>
+                                <col span="1" style="width: 10%;"/>
+                                <col span="1" style="width: 10%;"/>
+                                <col span="1" style="width: 10%;"/>
+                                <col span="1" style="width: 10%;"/>
+                                <col span="1" style="width: 15%;"/>
+                                <col span="1" style="width: 10%;"/>
+                            </colgroup>
+                            <!-- Fin cantidad de columnas -->
+
+                            <!-- Cabeceras -->
+                            <thead>
+                                <tr>
+                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Cantidad</th>
+                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Descripción</th>
+                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Precio</th>
+                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Promoción Pronto Pago</th>
+                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Promoción Super Promo</th>
+                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Cantidad Apartada por Vendedor</th>
+                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Vendedores</th>
+                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Cantidad Disponible para Apartar</th>
+                                </tr>
+                            </thead>
+                            <!-- Fin cabeceras -->
+                                                        
+                            <tbody>
+                            
+                                <!-- Lineas -->
+                                <t t-foreach="o.line_ids" t-as="item">
+                                    <tr>
+                                        <td class="text-right">
+                                            <span style="font-size:12px;"><t t-esc="item.cantidad" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                        </td>
+                                        <td class="text-center">
+                                            <span style="font-size:12px;"><t t-esc="item.producto_id.display_name"/></span>
+                                        </td>
+                                        <td class="text-right">
+                                            <span style="font-size:12px;"><t t-esc="item.precio" t-options='{"widget": "monetary", "display_currency": item.moneda_id}'/></span>
+                                        </td>
+                                        <td class="text-right">
+                                            <span style="font-size:12px;"><t t-esc="item.pronto_pago"/></span>
+                                        </td>
+                                        <td class="text-center">
+                                            <span style="font-size:12px;"><t t-esc="item.super_promo"/></span>
+                                        </td>
+                                        <td colspan="2" class="text-center">
+                                            <table style="width: 100%;">
+                                                <t t-foreach="item.amount_ids" t-as="line">
+                                                    <tr>
+                                                        <td style="width: 50%;">
+                                                            <span style="font-size:12px;">
+                                                                <t t-esc="line.amount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/><br/>
+                                                            </span>
+                                                        </td>
+                                                        <td style="width: 50%;">
+                                                            <span style="font-size:12px;">
+                                                                <t t-esc="line.seller_id.name"/><br/>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </table>
+                                        </td>
+                                        <td class="text-center">
+                                            <span style="font-size:12px;"><t t-esc="item.c_disponible" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <!-- Fin lineas -->
+
+                            </tbody>     
+                        </table>
+                        
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

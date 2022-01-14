@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="product_template_form_view_maintenance_request">
+        <field name="name">product.template.maintenance.request</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Mantenimiento">
+                    <group string="Mantenimiento">
+                         <field name="maintenance_invoice_policy" widget="radio"/>
+                    </group>
+                    <separator string="Aviso cuando adquiere una pieza de este producto"/>
+                    <field name="maintenance_line_warn" nolabel="1"/>
+                    <field name="maintenance_line_warn_msg" colspan="3" nolabel="1"
+                            attrs="{'required':[('maintenance_line_warn','!=','no-message')],
+                            'readonly':[('maintenance_line_warn','=','no-message')],
+                            'invisible':[('maintenance_line_warn','=','no-message')]}"
+                        />
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_template_form_view" model="ir.ui.view">
+        <field name="name">product.category.inherit.view.form</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="product.product_category_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='parent_id']" position='after'>
+                 <field name="combustible_check" widget="boolean_toggle"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

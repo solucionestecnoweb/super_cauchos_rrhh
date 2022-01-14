@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- account.move.line tree view -->
+    <record id="move_in_invoice_type_payment_view_tree" model="ir.ui.view">
+        <field name="name">account.move.line.in.view.tree</field>
+        <field name="model">account.move.line</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="move_id"/>
+                <field name="date"/>
+                <field name="journal_id"/>
+                <field name="account_id"/>
+                <field name="exp_date_today"/>
+                <field name="delay_1_30"/>
+                <field name="delay_31_60"/>
+                <field name="delay_61_90"/>
+                <field name="delay_91_120"/>
+                <field name="delay_older"/>
+                <field name="delay_total"/>
+                <field name="delay_total_usd"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_move_in_invoice_type_payment" model="ir.actions.act_window">
+        <field name="context">{'search_default_group_by_partner':1}</field>
+        <field name="name">Past Due Accounts Payable</field>
+        <field name="res_model">account.move.line</field>
+        <field name="domain">[
+        ('display_type', 'not in', ('line_section', 'line_note')), 
+        ('move_id.state', '!=', 'cancel'), 
+        ('amount_residual', '!=', 0), 
+        ('account_id.internal_type', '=', 'payable'),
+        ('full_reconcile_id', '=', False), 
+        ('balance', '!=', 0), 
+        ('account_id.reconcile', '=', True),
+        ]</field>
+        <field name="view_id" ref="move_in_invoice_type_payment_view_tree"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="supplier_bills_show_menu"
+        name="Past Due Accounts Payable"
+        action="action_move_in_invoice_type_payment"
+        parent="admin_account_payable_menu"
+        sequence="15"/>
+
+</odoo>

@@ -1,0 +1,111 @@
+<odoo>
+
+    <report id="report_proof_receipt"
+        model="wizard.proof.receipt"
+        name="proof_receipt.proof_receipt_report"
+        file="proof_receipt.proof_receipt_report"
+        string="Reporte Comprobante Mayorizado"
+        />
+
+    <template id="external_layout_proof_receipt_report">
+        <div class="header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-3">
+                        <!-- <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)" style="max-height: 100px; max-width: 150px; margin-top:22px;"/> -->
+                    </div>
+                    <div class="col-6 text-center"><br/>
+                        <b style="font-size:20px;"><t t-esc="o.company_id.name"/></b><br/>
+                        <span style="font-size:14px;">R.I.F. <t t-esc="o.company_id.vat"/></span><br/>
+                        <b style="font-size:20px;">Comprobante Mayorizado</b><br/>
+                        <small style="font-size:12px;">Desde: <t t-esc="o.date_from.strftime('%d/%m/%y')"/> Hasta: <t t-esc="o.date_to.strftime('%d/%m/%y')"/></small><br/>
+                    </div>
+                    <div class="col-3 text-right">
+                        <b style="font-size:12px;">Página <span class="page" style="font-size:12px;"/> de <span class="topage" style="font-size:12px;"/></b><br/>
+                        <b style="font-size:12px;" t-field="o.date_now"></b>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="article o_report_layout_standard">
+            <t t-raw="0"/>
+        </div>
+
+        <div class="footer">
+        </div>
+    </template>
+
+    <template id="proof_receipt_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="proof_receipt.external_layout_proof_receipt_report">
+                    <div class="page">
+                        <table style="width: 100%">
+                            <colgroup>
+                                <col span="1" style="width: 20%;"/>
+                                <col span="1" style="width: 40%;"/>
+                                <col span="1" style="width: 20%;"/>
+                                <col span="1" style="width: 20%;"/>
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                        <span style="font-size:14px;">Código</span>
+                                    </th>
+                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                        <span style="font-size:14px;">Descripción de la cuenta</span>
+                                    </th>
+                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                        <span style="font-size:14px;">Débito</span>
+                                    </th>
+                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                        <span style="font-size:14px;">Crédito</span>
+                                    </th>
+                                </tr>
+                            </thead>
+
+                                    <t t-set="deber" t-value="0" />
+                                    <t t-set="haber" t-value="0" />
+                                    <t t-set="deber_usd" t-value="0" />
+                                    <t t-set="haber_usd" t-value="0" />
+
+                            <tbody>
+                                <t t-foreach="o.line" t-as="item">
+                                    <tr>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                            <span style="font-size:12px;"><t t-esc="item.account_id.code"/></span>
+                                        </td>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                            <span style="font-size:12px;"><t t-esc="item.name"/></span>
+                                        </td>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right">
+                                            <span style="font-size:12px;"><t t-esc="item.total_deber" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                        </td>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5; padding-right: 5;" class="text-right">
+                                            <span style="font-size:12px;"><t t-esc="item.total_haber"  t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                        </td>
+                                    </tr>
+                                    <t t-set="deber" t-value="deber + item.total_deber"/>
+                                    <t t-set="haber" t-value="haber + item.total_haber"/>
+                                    <t t-set="deber_usd" t-value="deber_usd + item.total_deber_usd"/>
+                                    <t t-set="haber_usd" t-value="haber_usd + item.total_haber_usd"/>
+                                </t>
+                                <tr>
+                                    <td colspan="2" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center"><b style="font-size:12px;">Total Bs</b></td>
+                                    <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="deber" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span></td>
+                                    <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="haber" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center"><b style="font-size:12px;">Total $</b></td>
+                                    <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="deber_usd" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span></td>
+                                    <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="haber_usd" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div> 
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

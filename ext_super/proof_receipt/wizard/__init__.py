@@ -1,0 +1,1 @@
+from . import wizard_proof_receipt_inherit

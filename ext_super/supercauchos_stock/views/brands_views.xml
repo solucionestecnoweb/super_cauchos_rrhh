@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+    <record id="product_brand_view_tree" model="ir.ui.view">
+        <field name="name">product.brand.view.tree</field>
+        <field name="model">product.brand</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="product_brand_view_form" model="ir.ui.view">
+        <field name="name">product.brand.view.form</field>
+        <field name="model">product.brand</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group string="Información de Marca" name="general_group">
+                        <group name="first_group">
+                            <field name="name"/>
+                        </group>
+                        <group name="second_group">
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="product_brand_view_search" model="ir.ui.view">
+        <field name="name">product.brand.view.search</field>
+        <field name="model">product.brand</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+            </search>
+        </field>
+    </record>    
+
+    <record id="action_product_brand" model="ir.actions.act_window">
+        <field name="name">Marcas</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.brand</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        action="action_product_brand" 
+        id="menu_product_brand"
+        parent="stock.menu_product_in_config_stock" 
+        sequence="6"/>
+
+    <!-- product.product inherit form view -->
+    <record id="product_product_tree_view" model="ir.ui.view">
+        <field name="name">product.product.inherit.view.form</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_product_tree_view"/>
+        <field name="arch" type="xml">
+            <!-- Add your xpath here -->
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="brand_id"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="0">
+        <!-- Add you code here -->
+
+        <!-- purchase.order.imports.containers tree view -->
+        <record id="purchase_order_imports_containers_view_tree" model="ir.ui.view">
+            <field name="name">purchase.order.imports.containers.view.tree</field>
+            <field name="model">purchase.order.imports.containers</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <!-- Add your fields here -->
+                    <field name="nbl_container"/>
+                    <field name="invoice_number" domain="[('state', '=', 'posted')]"/>
+                    <field name="container_type"/>
+                    <field name="container_brand"/>
+                    <field name="cont" sum="Total Containers"/>
+                    <field name="tires" sum="Total Tires"/>
+                    <field name="agency"/>
+                    <field name="shipping_company"/>
+                    <field name="eta_ven"/>
+                    <field name="harbor"/>
+                    <field name="warehouse"/>
+                    <field name="estate"/>
+                    <field name="vessel"/>
+                    <field name="condition"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- purchase.order.imports.containers search view -->
+        <record id="purchase_order_imports_containers_view_search" model="ir.ui.view">
+            <field name="name">purchase.order.imports.containers.view.search</field>
+            <field name="model">purchase.order.imports.containers</field>
+            <field name="arch" type="xml">
+                <search string="Container Arrival Schedule Search">
+                    <!-- Add your fields here -->
+                    <field name="nbl_container"/>
+                    <field name="invoice_number"/>
+                    <field name="agency"/>
+                    <field name="shipping_company"/>
+                    <field name="harbor"/>
+                    <field name="warehouse"/>
+                    <field name="vessel"/>
+                </search>
+            </field>
+        </record>
+
+    </data>
+</odoo>

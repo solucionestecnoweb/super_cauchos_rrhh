@@ -1,0 +1,178 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data >
+        <!-- Add you code here -->        
+        <report 
+            id="action_purchase_order_budget_extend" 
+            model="purchase.order" 
+            string="Presupuestos" 
+            report_type="qweb-pdf"
+            name="purchase_report_supercauchos.purchase_order_budget_extend" 
+            file="purchase_report_supercauchos.purchase_order_budget_extend" />
+
+        <template id="external_layout_purchase_order_budget_extend">
+            <div class="header">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-5">
+                            <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)" style="max-height: 100px; max-width: 200px;"/>
+                        </div>
+                        <div class="col-2">
+                        </div>
+                        <div class="col-5 text-right">
+                            <span style="font-size:12px;"><t t-esc="o._date_now_purchase().strftime('%d/%m/%Y %r')"/></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-6 border border-dark">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <span>Proveedor</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b><t t-esc="o.partner_id.name"/></b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <br/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>Usuario Solicitante</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b><t t-esc="o.env.user.partner_id.name"/></b>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-6 border border-dark">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <b>Nro. de Presupuesto <t t-esc="o.name"/></b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>Emisión</span> <b><t t-esc="o.date_order.strftime('%d/%m/%Y')"/></b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>Vencimiento</span> <b t-if="o.date_end"><t t-esc="o.date_end.strftime('%d/%m/%Y')"/></b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <br/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b>Prioridad </b>
+                                        <t t-if="o.priority == 'very_low'">
+                                            <b>Muy Baja</b>
+                                        </t>
+                                        <t t-elif="o.priority== 'low'">
+                                            <b>Baja</b>
+                                        </t>
+                                        <t t-elif="o.priority== 'meddium'">
+                                            <b>Media</b>
+                                        </t>
+                                        <t t-else="">
+                                            <b>Alta</b>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article o_report_layout_standard">
+                <t t-raw="0"/>
+            </div>
+
+            <div class="footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 border border-dark">
+                            <b>Notas</b> <br/>
+                            <span t-if="o.notes"><t t-esc="o.notes"/><br/><br/></span> <span t-else=""><br/><br/><br/></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template id="purchase_order_budget_extend">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="purchase_report_supercauchos.external_layout_purchase_order_budget_extend" t-lang="o.partner_id.lang">
+                        <div class="page">
+                            <br/><br/><br/><br/>
+                            <table style="width: 100%;">
+
+                                <!-- Cantidad de columnas -->
+                                <colgroup>
+                                    <col span="1" style="width: 20%;"/>
+                                    <col span="1" style="width: 60%;"/>
+                                    <col span="1" style="width: 20%;"/>
+                                </colgroup>
+                                <!-- Fin Cantidad de columnas -->
+
+                                <!-- Cabeceras -->
+                                <thead>
+                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca;">Código</th>
+                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca;">Descripción</th>
+                                    <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca;">Cant.</th>
+                                </thead>
+                                <!-- Fin Cabeceras -->
+                                
+                                <!-- Variables totales -->
+                                <t t-set="subtotal" t-value="0"/>
+                                <t t-set="discount" t-value="0"/>
+                                <t t-set="net_amount" t-value="0"/>
+                                <t t-set="iva_exempt" t-value="0"/>
+                                <t t-set="iva_8" t-value="0"/>
+                                <t t-set="iva_16" t-value="0"/>
+                                <t t-set="iva_24" t-value="0"/>
+                                <!-- Fin variables totales -->
+
+                                <!-- Lineas -->
+                                <tbody>
+                                    <t t-foreach="o.order_line" t-as="item">
+                                        <tr>
+                                            <td class="text-center">
+                                                <span><t t-esc="item.product_id.default_code"/></span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span><t t-esc="item.name"/></span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span><t t-esc="item.product_qty" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>     
+                                <!-- Fin lineas -->
+
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

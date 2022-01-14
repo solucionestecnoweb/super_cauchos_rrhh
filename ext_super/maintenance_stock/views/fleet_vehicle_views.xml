@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="fleet_vehicle_inherit" model="ir.ui.view">
+        <field name="name">fleet_vehicle_inherit</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group/group[5]" position="after">
+                <group string="Datos de Mantenimiento">
+                    <field name="ultimo_mantenimiento"/>
+                    <field name="frecuencia_Mantenimiento"/>
+                    <field name="proximo_mantenimiento"/>
+                    <field name="technician_user_id"/>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <div>
+                    <label for="type_vehicle" class="oe_edit_only"/>
+                    <h3>
+                        <field name="type_vehicle"/>
+                    </h3>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="fleet_vehicle_log_fuel_form">
+        <field name="name">fleet.vehicle.log.fuel.form</field>
+        <field name="model">fleet.vehicle.log.fuel</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_log_fuel_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vehicle_id']" position="after">
+                <field name="fuel_types"/>
+                <field name="warehouse_id"/>
+                <field name="company_id" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='liter']" position="replace">
+                <field name="cistern_lts" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='price_per_liter']" position="replace">
+                <field name="vehicle_consume"/>
+            </xpath>
+            <xpath expr="//field[@name='amount']" position="replace">
+                <field name="cistern_lts_ava" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='vendor_id']" position="after">
+                <field name="price_per_liter"/>
+                <field name="amount"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="fleet_vehicle_log_fuel_tree">
+        <field name="name">fleet.vehicle.log.fuel.tree</field>
+        <field name="model">fleet.vehicle.log.fuel</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_log_fuel_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vehicle_id']" position="after">
+                <field name="fuel_types"/>
+            </xpath>
+            <xpath expr="//field[@name='liter']" position="replace">
+                <field name="liter" invisible="1"/>
+                <field name="cistern_lts"/>
+            </xpath>
+            <xpath expr="//field[@name='price_per_liter']" position="replace">
+                <field name="vehicle_consume"/>
+                <field name="price_per_liter"/>
+            </xpath>
+            <xpath expr="//field[@name='amount']" position="replace">
+                <field name="cistern_lts_ava"/>
+                <field name="amount"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <menuitem name="Peticiones de Mantenimiento"
+              id="meunu_servicios_internos_vehiculos"
+              sequence="20"
+              parent="fleet.fleet_vehicles"
+              action="maintenance.hr_equipment_request_action"
+    />
+</odoo>

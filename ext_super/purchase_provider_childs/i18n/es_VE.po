@@ -1,0 +1,140 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* purchase_provider_childs
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-15 19:58+0000\n"
+"PO-Revision-Date: 2021-04-15 19:58+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: purchase_provider_childs
+#: model:ir.model.fields,field_description:purchase_provider_childs.field_res_partner_category__bank_ids
+msgid " Bank Accounts"
+msgstr " Cuentas de Banco"
+
+#. module: purchase_provider_childs
+#: model:ir.model.fields,field_description:purchase_provider_childs.field_res_partner__provider_childs_ids
+#: model:ir.model.fields,field_description:purchase_provider_childs.field_res_partner_category__provider_childs_ids
+#: model:ir.model.fields,field_description:purchase_provider_childs.field_res_users__provider_childs_ids
+msgid " Sub Provider"
+msgstr " Sub Proveedores"
+
+#. module: purchase_provider_childs
+#: model_terms:ir.ui.view,arch_db:purchase_provider_childs.sub_provider_view_extend_res_partner
+msgid "Address"
+msgstr "Dirección"
+
+#. module: purchase_provider_childs
+#: model_terms:ir.ui.view,arch_db:purchase_provider_childs.sub_provider_view_extend_res_partner
+msgid "Avatar"
+msgstr ""
+
+#. module: purchase_provider_childs
+#: model_terms:ir.ui.view,arch_db:purchase_provider_childs.sub_provider_view_extend_res_partner
+msgid "City"
+msgstr "Ciudad"
+
+#. module: purchase_provider_childs
+#: model:ir.model,name:purchase_provider_childs.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: purchase_provider_childs
+#: model_terms:ir.ui.view,arch_db:purchase_provider_childs.sub_provider_view_extend_res_partner
+msgid "Contact / Address"
+msgstr "Contacto / Dirección"
+
+#. module: purchase_provider_childs
+#: model_terms:ir.ui.view,arch_db:purchase_provider_childs.sub_provider_view_extend_res_partner
+msgid "Country"
+msgstr "País"
+
+#. module: purchase_provider_childs
+#: model_terms:ir.ui.view,arch_db:purchase_provider_childs.sub_provider_view_extend_res_partner
+msgid "Delivery"
+msgstr "Entrega"
+
+#. module: purchase_provider_childs
+#: model_terms:ir.ui.view,arch_db:purchase_provider_childs.sub_provider_view_extend_res_partner
+msgid "Internal notes..."
+msgstr "Notas internas..."
+
+#. module: purchase_provider_childs
+#: model_terms:ir.ui.view,arch_db:purchase_provider_childs.sub_provider_view_extend_res_partner
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: purchase_provider_childs
+#: model_terms:ir.ui.view,arch_db:purchase_provider_childs.sub_provider_view_extend_res_partner
+msgid "Logo"
+msgstr ""
+
+#. module: purchase_provider_childs
+#: model_terms:ir.ui.view,arch_db:purchase_provider_childs.sub_provider_view_extend_res_partner
+msgid "Mobile:"
+msgstr "Celular:"
+
+#. module: purchase_provider_childs
+#: model:ir.model,name:purchase_provider_childs.model_res_partner_category
+msgid "Partner Tags"
+msgstr "Etiquetas de empresa"
+
+#. module: purchase_provider_childs
+#: model_terms:ir.ui.view,arch_db:purchase_provider_childs.sub_provider_view_extend_res_partner
+msgid "Phone:"
+msgstr "Teléfono:"
+
+#. module: purchase_provider_childs
+#: model:ir.model.fields,field_description:purchase_provider_childs.field_res_partner__provider_parent_id
+#: model:ir.model.fields,field_description:purchase_provider_childs.field_res_partner_category__provider_parent_id
+#: model:ir.model.fields,field_description:purchase_provider_childs.field_res_users__provider_parent_id
+msgid "Provider"
+msgstr "Proveedor"
+
+#. module: purchase_provider_childs
+#: model_terms:ir.ui.view,arch_db:purchase_provider_childs.sub_provider_view_extend_res_partner
+msgid "Provider Name"
+msgstr "Nombre del Proveedor"
+
+#. module: purchase_provider_childs
+#: model_terms:ir.ui.view,arch_db:purchase_provider_childs.sub_provider_view_extend_res_partner
+msgid "State"
+msgstr "Estado"
+
+#. module: purchase_provider_childs
+#: model_terms:ir.ui.view,arch_db:purchase_provider_childs.sub_provider_view_extend_res_partner
+msgid "Street 2..."
+msgstr "Calle 2..."
+
+#. module: purchase_provider_childs
+#: model_terms:ir.ui.view,arch_db:purchase_provider_childs.sub_provider_view_extend_res_partner
+msgid "Street..."
+msgstr "Calle..."
+
+#. module: purchase_provider_childs
+#: model_terms:ir.ui.view,arch_db:purchase_provider_childs.sub_provider_view_extend_res_partner
+msgid "Sub Providers"
+msgstr "Sub Proveedores"
+
+#. module: purchase_provider_childs
+#: model_terms:ir.ui.view,arch_db:purchase_provider_childs.sub_provider_view_extend_res_partner
+msgid "ZIP"
+msgstr ""
+
+#. module: purchase_provider_childs
+#: model_terms:ir.ui.view,arch_db:purchase_provider_childs.sub_provider_view_extend_res_partner
+msgid "e.g. Mr."
+msgstr "e.j. Señor."
+
+#. module: purchase_provider_childs
+#: model_terms:ir.ui.view,arch_db:purchase_provider_childs.sub_provider_view_extend_res_partner
+msgid "e.g. Sales Director"
+msgstr "e.j. Director de Ventas"

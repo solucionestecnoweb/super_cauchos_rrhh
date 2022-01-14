@@ -1,0 +1,28 @@
+<odoo>
+    
+    <record id="view_form_libro_diario_extended" model="ir.ui.view">
+        <field name="name">view.form.libro.diario.inherit</field>
+        <field name="model">wizard.resumen.iva</field>
+        <field name="inherit_id" ref="l10n_ve_resumen_retenciones.view_retenciones_iva"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="replace">
+                <form string="Reporte Resumen Retenciones IVA">
+                    <group>
+                        <group>
+                            <field name="date_from" required="1" string="Desde"/>
+                            <field name="currency_id" required="1" string="Moneda"/>
+                        </group>
+                        <group>
+                            <field name="date_to" required="1" string="Hasta"/>
+                            <field name="type" required="1" string="Tipo"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="generate_pdf_report" string="Exportar PDF" type="object" class="oe_highlight" />
+                        <button special="cancel" string="Cancelar" class="oe_highlight" />
+                    </footer>
+                </form>
+            </xpath>    
+        </field>
+    </record>
+</odoo>

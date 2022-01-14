@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+acces_purchase_order_importations,purchase.order.importations,model_purchase_order_importations,base.group_user,1,1,1,1
+acces_purchase_order_importations_containers,purchase.order.importations.containers,model_purchase_order_importations_containers,base.group_user,1,1,1,1
+acces_purchase_order_importations_cycle,purchase.order.importations.cycle,model_purchase_order_importations_cycle,base.group_user,1,1,1,1
+acces_purchase_order_importations_traffic,purchase.order.importations.traffic,model_purchase_order_importations_traffic,base.group_user,1,1,1,1
+acces_purchase_order_importations_shipping,purchase.order.importations.shipping,model_purchase_order_importations_shipping,base.group_user,1,1,1,1

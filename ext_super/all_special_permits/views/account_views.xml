@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_account_move_form_hide_duplicate" model="ir.ui.view">
+         <field name="name">account.move.form.hide.duplicate</field>
+         <field name="model">account.move</field>
+         <field name="inherit_id" ref="account.view_move_form"/>
+         <field name="groups_id" eval="[(6, 0,[ref('all_special_permits.hiden_boton_invoice_sale_group')])]"/>
+         <field name="arch" type="xml">
+             <xpath expr="//form" position="attributes">
+                <attribute name="duplicate">false</attribute>
+            </xpath>
+         </field>
+    </record>
+    </data>
+</odoo>

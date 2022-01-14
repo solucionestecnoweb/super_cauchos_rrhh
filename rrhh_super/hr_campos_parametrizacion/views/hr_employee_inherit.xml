@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="hr_employee_inherit" model="ir.ui.view">
+            <field name="name">hr.employee.inherit</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
+                    <page string="Datos del Uniforme" name="page_eALy2">
+                        <group name="group_eALy2">
+                            <group name="group_eALy2_left">
+                                <field name="zapatos" string="Zapatos:"/>
+                                <field name="camisas" string="Camisa:"/>
+                            </group>
+                            <group name="group_eALy2_right">
+                                <field name="pantalon" string="Pantalón">%</field>
+                                <field name="chemise" string="Chemise"/>
+                            </group>
+                        </group>
+                    </page>
+                    
+                    <page string="Control de días de Vacaciones" name="page_eALy1">
+                        <separator string="Control dias de Vacaciónes"/>
+                        <group name="group_eALy1">
+                            <group name="group_eALy1_left">
+                                <field name="dias_vacaciones" string="Dias de disfrutes por tiempo de servicios"/>
+                                <field name="tiempo_antiguedad" string="Años de antiguedad:"/>
+                            </group>
+                            <group name="group_eALy1_right">
+                                <field name="dias_totales_disfrutados" string="Dias solicitados totales a disfrutar:"/>
+                                <field name="dias_restantes_disfrutar"/>
+                            </group>
+                        </group>
+                    </page>
+                    <page string="Información de Prestaciones Sociales" name="page_eALy0">
+                        <group name="group_eALy0">
+                            <group name="group_eALy0_left">
+                                <field name="acumulado" string="Acumulado en prestaciones Sociales:" widget="monetary" options="{'currency_field': 'custom_currency_id'}"/>
+                                <field name="disponible" string="75% Disponible:" widget="monetary" options="{'currency_field': 'custom_currency_id'}"/>
+                                <field name="acumulado_gps" string="Acumulado dias adicionales gps" options="{'currency_field': 'custom_currency_id'}"/>
+                                <field name="salario_integral_diario"/>
+                            </group>
+                            <group name="group_eALy0_right">
+                                <field name="tasa_int" string="Ultima tasa de Interes BCV (%):">%</field>
+                                <field name="acumulado_int" string="Monto Acumulado Intereses:" widget="monetary" options="{'currency_field': 'custom_currency_id'}"/>
+                                <field name="custom_currency_id" invisible="1"/>
+                                <field name="tiempo_antiguedad_dias" string="Timpo antiguedad en dias" readonly="1"/>
+                                <field name="tiempo_fraccion_dias" string="Dias fraccionados del empleado" readonly="1"/>
+                                <field name="tiempo_fraccion_meses" string="Meses fraccionados del empleado" readonly="1"/>
+                            </group>
+                        </group>
+                    </page>
+
+                </xpath>
+                <xpath expr="//field[@name='certificate']" position="before">
+                    <field name="grado_instruccion" string="Grado de Instrucción"/>
+                    <field name="profesion" string="Profesión"/>
+                </xpath>
+
+                <!--xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside"-->
+                <xpath expr="//page[@name='personal_information']" position="after">
+                    <page string="Grupo Familiar" name="studio_page_q7DRg">
+                      <group name="studio_group_q7DRg">
+                        <field name="grupo_familiar_ids" nolabel="1" readonly="False">
+                        <tree string="Grupo Familiar" editable="buttom">
+                            <field name="identificador" string="Cédula"/>
+                            <field name="name" string="Nombre"/>
+                            <field name="name2" string="Apellido"/>
+                            <field name="fecha_nac" string="Fecha Nacimiento"/>
+                            <field name="edad" string="Edad"/>
+                            <field name="sexo" string="Género"/>
+                            <field name="parentesco" string="Parentesco"/>
+                            <field name="nro_telefono" string="Teléfono contacto"/>
+                        </tree>
+                        </field>
+                        <!--group name="studio_group_q7DRg_left"/>
+                        <group name="studio_group_q7DRg_right"/-->
+                      </group>
+                    </page>
+
+                    <page string="Cursos" name="studio_page_q7DRgg">
+                      <group name="studio_group_q7DRgg">
+                        <field name="cursos_ids" nolabel="1" readonly="False">
+                        <tree string="Cursos" editable="buttom">
+                            <field name="name" string="Curso"/>
+                            <field name="institucion" string="Instituto"/>
+                            <field name="fecha" string="Fecha"/>
+                            <field name="duracion" string="Duración"/>
+                            <field name="contacto" string="Contacto"/>
+                            <field name="nro_telefono" string="Teléfonos"/>  
+                        </tree>
+                        </field>
+                        <!--group name="studio_group_q7DRg_left"/>
+                        <group name="studio_group_q7DRg_right"/-->
+                      </group>
+                    </page>
+                </xpath>
+
+                <xpath expr="//field[@name='identification_id']" position="attributes">
+                    <attribute name="string">Cedula</attribute>
+                </xpath>
+                <xpath expr="//field[@name='identification_id']" position="before">
+                    <field name="tipo_contrinbuyente" string="Tipo"/>
+                </xpath>
+                <xpath expr="//field[@name='identification_id']" position="after">
+                    <field name="rif" string="Rif"/>
+                </xpath>
+
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='personal_information']/group[1]/group[1]/field[@name='address_home_id']" position="move"/>
+                </xpath>
+
+                <xpath expr="//field[@name='private_email']" position="before">
+                    <field name="direccion" string="Dirección Domicilio"/>
+                </xpath>
+
+
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,51 @@
+<odoo>
+    
+    <!-- wizard.proof.receipt form view -->
+    <record id="wizard_proof_receipt_view_form" model="ir.ui.view">
+        <field name="name">wizard.proof.receipt.view.form</field>
+        <field name="model">wizard.proof.receipt</field>
+        <field name="arch" type="xml">
+            <form string="Comprobante Mayorizado">
+                <field invisible="1" name="state"/>
+                <div states="choose">
+                    <group >
+                        <group >
+                            <field name="date_from" required="1" string="Desde"/>
+                        </group>
+                        <group >
+                            <field name="date_to" required="1" string="Hasta"/>
+                        </group>
+                    </group>
+                </div>
+                <div states="get">
+                    <group>
+                        <field name="name" colspan="4" invisible="1"/>
+                        <field name="report" filename="name" colspan="4"/>
+                    </group>
+                </div>
+                <footer states="choose">
+                    <button name="generate_xls_report" string="Exportar XLS" type="object" class="oe_highlight" />
+                    <button name="generate_pdf_report" string="Exportar PDF" type="object" class="oe_highlight" />
+                    <button special="cancel" string="Cancelar" class="oe_highlight" />
+                </footer>
+                <footer states="get">
+                    <button special="cancel" string="Cancelar" class="oe_highlight" />
+                </footer>
+            </form>           
+        </field>
+    </record>
+    <record id="action_proof_receipt" model="ir.actions.act_window">
+        <field name="name">Comprobante Mayorizado</field>
+        <field name="res_model">wizard.proof.receipt</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="wizard_proof_receipt_view_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem   name="Comprobante Mayorizado" 
+                parent="account.menu_finance_reports" 
+                id="proof_receipt_menu" 
+                action="action_proof_receipt"
+                sequence="13"
+                />
+</odoo>

@@ -1,0 +1,331 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_payment_plan_reports
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-07-25 23:15+0000\n"
+"PO-Revision-Date: 2021-07-25 23:15+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_payment_plan_reports
+#: code:addons/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#: code:addons/extra-addons/oasis/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#, python-format
+msgid " To "
+msgstr " Hasta "
+
+#. module: account_payment_plan_reports
+#: model_terms:ir.ui.view,arch_db:account_payment_plan_reports.external_layout_payment_plan_report
+msgid ""
+"<b style=\"font-size:12px;\">Page <span class=\"page\" style=\"font-"
+"size:12px;\"/> / <span class=\"topage\" style=\"font-size:12px;\"/></b><br/>"
+msgstr ""
+"<b style=\"font-size:12px;\">Página <span class=\"page\" style=\"font-"
+"size:12px;\"/> / <span class=\"topage\" style=\"font-size:12px;\"/></b><br/>"
+
+#. module: account_payment_plan_reports
+#: model_terms:ir.ui.view,arch_db:account_payment_plan_reports.external_layout_payment_plan_report
+msgid ""
+"<br/>\n"
+"                            <b style=\"font-size:20px;\">Payment Planning</b><br/>"
+msgstr ""
+"<br/>\n"
+"                            <b style=\"font-size:20px;\">Planificación de Pago</b><br/>"
+
+#. module: account_payment_plan_reports
+#: model_terms:ir.ui.view,arch_db:account_payment_plan_reports.external_layout_payment_plan_report
+msgid "<span style=\"font-size: 12px;\">Reviewed By: </span>"
+msgstr "<span style=\"font-size: 12px;\">Revisado Por: </span>"
+
+#. module: account_payment_plan_reports
+#: code:addons/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#: code:addons/extra-addons/oasis/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#: model_terms:ir.ui.view,arch_db:account_payment_plan_reports.payment_plan_report
+#, python-format
+msgid "Amount to Cancel $"
+msgstr "Monto a Cancelar $"
+
+#. module: account_payment_plan_reports
+#: code:addons/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#: code:addons/extra-addons/oasis/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#: model_terms:ir.ui.view,arch_db:account_payment_plan_reports.payment_plan_report
+#, python-format
+msgid "Amount to Cancel Bs."
+msgstr "Monto a Cancelar Bs."
+
+#. module: account_payment_plan_reports
+#: code:addons/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#: code:addons/extra-addons/oasis/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#: model_terms:ir.ui.view,arch_db:account_payment_plan_reports.payment_plan_report
+#, python-format
+msgid "Base"
+msgstr ""
+
+#. module: account_payment_plan_reports
+#: model_terms:ir.ui.view,arch_db:account_payment_plan_reports.payment_plan_report
+msgid "Bs."
+msgstr ""
+
+#. module: account_payment_plan_reports
+#: model_terms:ir.ui.view,arch_db:account_payment_plan_reports.wizard_payment_plan
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: account_payment_plan_reports
+#: model:ir.model.fields,field_description:account_payment_plan_reports.field_wizard_payment_plan__company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: account_payment_plan_reports
+#: model:ir.model.fields,field_description:account_payment_plan_reports.field_wizard_payment_plan__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: account_payment_plan_reports
+#: model:ir.model.fields,field_description:account_payment_plan_reports.field_wizard_payment_plan__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: account_payment_plan_reports
+#: code:addons/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#: code:addons/extra-addons/oasis/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#: model_terms:ir.ui.view,arch_db:account_payment_plan_reports.payment_plan_report
+#, python-format
+msgid "Currency Transf. $"
+msgstr "Transf. Moneda $"
+
+#. module: account_payment_plan_reports
+#: model:ir.model.fields,field_description:account_payment_plan_reports.field_wizard_payment_plan__date_from
+msgid "Date From"
+msgstr "Desde"
+
+#. module: account_payment_plan_reports
+#: model:ir.model.fields,field_description:account_payment_plan_reports.field_wizard_payment_plan__date_now
+msgid "Date Now"
+msgstr "Ahora"
+
+#. module: account_payment_plan_reports
+#: model:ir.model.fields,field_description:account_payment_plan_reports.field_wizard_payment_plan__date_to
+msgid "Date To"
+msgstr "Hasta"
+
+#. module: account_payment_plan_reports
+#: model:ir.model.fields,field_description:account_payment_plan_reports.field_wizard_payment_plan__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: account_payment_plan_reports
+#: code:addons/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#: code:addons/extra-addons/oasis/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#: model_terms:ir.ui.view,arch_db:account_payment_plan_reports.payment_plan_report
+#, python-format
+msgid "Doc Date"
+msgstr "Fecha de Doc"
+
+#. module: account_payment_plan_reports
+#: code:addons/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#: code:addons/extra-addons/oasis/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#: model_terms:ir.ui.view,arch_db:account_payment_plan_reports.payment_plan_report
+#, python-format
+msgid "Exempt"
+msgstr "Exento"
+
+#. module: account_payment_plan_reports
+#: model_terms:ir.ui.view,arch_db:account_payment_plan_reports.wizard_payment_plan
+msgid "Export PDF"
+msgstr "Exportar PDF"
+
+#. module: account_payment_plan_reports
+#: model_terms:ir.ui.view,arch_db:account_payment_plan_reports.wizard_payment_plan
+msgid "Export XLS"
+msgstr "Exportar EXCEL"
+
+#. module: account_payment_plan_reports
+#: model:ir.model.fields,field_description:account_payment_plan_reports.field_wizard_payment_plan__name
+msgid "File Name"
+msgstr "Nombre del Archivo"
+
+#. module: account_payment_plan_reports
+#: code:addons/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#: code:addons/extra-addons/oasis/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#, python-format
+msgid "From "
+msgstr "Desde "
+
+#. module: account_payment_plan_reports
+#: model_terms:ir.ui.view,arch_db:account_payment_plan_reports.external_layout_payment_plan_report
+msgid "From:"
+msgstr "Desde:"
+
+#. module: account_payment_plan_reports
+#: model:ir.model.fields,field_description:account_payment_plan_reports.field_wizard_payment_plan__id
+msgid "ID"
+msgstr ""
+
+#. module: account_payment_plan_reports
+#: code:addons/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#: code:addons/extra-addons/oasis/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#: model_terms:ir.ui.view,arch_db:account_payment_plan_reports.payment_plan_report
+#, python-format
+msgid "IVA"
+msgstr ""
+
+#. module: account_payment_plan_reports
+#: code:addons/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#: code:addons/extra-addons/oasis/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#: model_terms:ir.ui.view,arch_db:account_payment_plan_reports.payment_plan_report
+#, python-format
+msgid "Item"
+msgstr ""
+
+#. module: account_payment_plan_reports
+#: model:ir.model.fields,field_description:account_payment_plan_reports.field_wizard_payment_plan____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: account_payment_plan_reports
+#: model:ir.model.fields,field_description:account_payment_plan_reports.field_wizard_payment_plan__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: account_payment_plan_reports
+#: model:ir.model.fields,field_description:account_payment_plan_reports.field_wizard_payment_plan__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: account_payment_plan_reports
+#: model_terms:ir.ui.view,arch_db:account_payment_plan_reports.external_layout_payment_plan_report
+msgid "Made By:"
+msgstr "Hecho Por:"
+
+#. module: account_payment_plan_reports
+#: code:addons/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#: code:addons/extra-addons/oasis/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#, python-format
+msgid "Made By: "
+msgstr "Hecho Por: "
+
+#. module: account_payment_plan_reports
+#: code:addons/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#: code:addons/extra-addons/oasis/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#: model_terms:ir.ui.view,arch_db:account_payment_plan_reports.payment_plan_report
+#, python-format
+msgid "Paid / Observation"
+msgstr "Pagado / Observación"
+
+#. module: account_payment_plan_reports
+#: code:addons/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#: code:addons/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#: code:addons/extra-addons/oasis/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#: code:addons/extra-addons/oasis/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#, python-format
+msgid "Payment Planning"
+msgstr "Planificación de Pago"
+
+#. module: account_payment_plan_reports
+#: code:addons/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#: code:addons/extra-addons/oasis/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#, python-format
+msgid "Payment Planning "
+msgstr "Planificación de Pago "
+
+#. module: account_payment_plan_reports
+#: model:ir.actions.act_window,name:account_payment_plan_reports.action_payment_plan
+#: model:ir.ui.menu,name:account_payment_plan_reports.payment_plan_menu
+#: model_terms:ir.ui.view,arch_db:account_payment_plan_reports.wizard_payment_plan
+msgid "Payment Planning Report"
+msgstr "Reporte de Planificación de Pago"
+
+#. module: account_payment_plan_reports
+#: model:ir.model.fields,field_description:account_payment_plan_reports.field_wizard_payment_plan__report
+msgid "Prepared file"
+msgstr "Archivo Preparado"
+
+#. module: account_payment_plan_reports
+#: code:addons/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#: code:addons/extra-addons/oasis/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#: model_terms:ir.ui.view,arch_db:account_payment_plan_reports.payment_plan_report
+#, python-format
+msgid "Purchase Num"
+msgstr "Nro Compra"
+
+#. module: account_payment_plan_reports
+#: code:addons/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#: code:addons/extra-addons/oasis/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#, python-format
+msgid "Reviewed By: "
+msgstr "Revisado Por: "
+
+#. module: account_payment_plan_reports
+#: code:addons/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#: code:addons/extra-addons/oasis/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#: model_terms:ir.ui.view,arch_db:account_payment_plan_reports.payment_plan_report
+#, python-format
+msgid "Specs"
+msgstr "Especificaciones"
+
+#. module: account_payment_plan_reports
+#: model:ir.model.fields,field_description:account_payment_plan_reports.field_wizard_payment_plan__state
+msgid "State"
+msgstr "Estado"
+
+#. module: account_payment_plan_reports
+#: code:addons/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#: code:addons/extra-addons/oasis/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#: model_terms:ir.ui.view,arch_db:account_payment_plan_reports.payment_plan_report
+#, python-format
+msgid "Supplier"
+msgstr "Proveedor"
+
+#. module: account_payment_plan_reports
+#: model_terms:ir.ui.view,arch_db:account_payment_plan_reports.external_layout_payment_plan_report
+msgid "To:"
+msgstr "Hasta:"
+
+#. module: account_payment_plan_reports
+#: code:addons/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#: code:addons/extra-addons/oasis/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#: model_terms:ir.ui.view,arch_db:account_payment_plan_reports.payment_plan_report
+#, python-format
+msgid "Total"
+msgstr ""
+
+#. module: account_payment_plan_reports
+#: model_terms:ir.ui.view,arch_db:account_payment_plan_reports.payment_plan_report
+msgid "Total Payment"
+msgstr "Total Pagos"
+
+#. module: account_payment_plan_reports
+#: code:addons/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#: code:addons/extra-addons/oasis/account_payment_plan_reports/wizards/wizard_payment_plan.py:0
+#, python-format
+msgid "Total Payment "
+msgstr "Total Pagos "
+
+#. module: account_payment_plan_reports
+#: model:ir.model.fields.selection,name:account_payment_plan_reports.selection__wizard_payment_plan__state__choose
+msgid "choose"
+msgstr ""
+
+#. module: account_payment_plan_reports
+#: model:ir.model.fields.selection,name:account_payment_plan_reports.selection__wizard_payment_plan__state__get
+msgid "get"
+msgstr ""
+
+#. module: account_payment_plan_reports
+#: model:ir.actions.report,name:account_payment_plan_reports.action_payment_plan_report
+msgid "payment_plan_report"
+msgstr "reporte_planificacion_pago"
+
+#. module: account_payment_plan_reports
+#: model:ir.model,name:account_payment_plan_reports.model_wizard_payment_plan
+msgid "wizard.payment.plan"
+msgstr ""

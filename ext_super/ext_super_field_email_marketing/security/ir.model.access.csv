@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+res_mercado,res.mercado,model_res_mercado,base.group_user,1,1,1,1
+res_tipologia,res.tipologia,model_res_tipologia,base.group_user,1,1,1,1
+res_formato,res.formato,model_res_formato,base.group_user,1,1,1,1

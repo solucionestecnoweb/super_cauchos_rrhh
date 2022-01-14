@@ -1,0 +1,1 @@
+from . import wizard_daily_sales_closing_report

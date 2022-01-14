@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <report
+            id="action_vat_declaration_payment"
+            model="wizard.vat.declaration.payment"
+            string="vat_declaration_payment_report"
+            report_type="qweb-pdf"
+            name="vat_declaration_payment.vat_declaration_payment_report"
+            file="vat_declaration_payment.vat_declaration_payment_report"
+            menu="True"
+            />
+
+        <template id="external_layout_vat_declaration_payment">
+
+            <div class="header">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-3">
+                            <!-- <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)" style="max-height: 100px; max-width: 150px; margin-top:22px;"/> -->
+                        </div>
+                        <div class="col-6 text-center"><br/>
+                            <b style="font-size:20px;">Summary for VAT Declaration and Payment</b><br/>
+                            <small style="font-size:12px;">From: <t t-esc="o.date_from.strftime('%d/%m/%y')"/> To: <t t-esc="o.date_to.strftime('%d/%m/%y')"/></small><br/>
+                        </div>
+                        <div class="col-3 text-right">
+                            <b style="font-size:12px;">Page <span class="page" style="font-size:12px;"/> / <span class="topage" style="font-size:12px;"/></b><br/>
+                            <b style="font-size:12px;" t-field="o.date_now"></b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article o_report_layout_standard">
+                <t t-raw="0"/>
+            </div>
+
+            <div class="footer">
+                <div class="text-center" style="border-top: 1px solid black;">
+                    
+                </div>
+            </div>
+        </template>
+
+        <template id="vat_declaration_payment_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="vat_declaration_payment.external_layout_vat_declaration_payment">
+                        
+                        <div class="page">
+                            <table style="width: 100%;">
+                                <colgroup>
+                                    <col span="1" style="width: 10%;"/>
+                                    <col span="1" style="width: 10%;"/>
+                                    <col span="1" style="width: 10%;"/>
+                                    <col span="1" style="width: 10%;"/>
+                                    <col span="1" style="width: 10%;"/>
+                                    <col span="1" style="width: 10%;"/>
+                                    <col span="1" style="width: 10%;"/>
+                                    <col span="1" style="width: 10%;"/>
+                                    <col span="1" style="width: 10%;"/>
+                                    <col span="1" style="width: 10%;"/>
+                                </colgroup>
+                                <thead>
+                                    <tr style="background-color: #cacaca">
+                                        <th colspan="3" class="text-center" style="display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Total Purchases</span>
+                                        </th>
+                                        <th colspan="2" class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Purchases</span>
+                                        </th>
+                                        <th colspan="3" class="text-center" style="display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Total Sales</span>
+                                        </th>
+                                        <th colspan="2" class="text-center" style="display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Sales</span>
+                                        </th>
+                                    </tr>
+                                    <tr style="background-color: #cacaca">
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Date</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">VAT Included</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Tax Base</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">VAT Withheld</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">VAT</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">VAT Included</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Tax Base</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">VAT Withheld</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">VAT</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Difference</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+
+                                    <!-- Total Purchase -->
+                                    <t t-set="total_purchase_included" t-value="0"/>
+                                    <t t-set="total_purchase_base" t-value="0"/>
+                                    <t t-set="total_purchase_withheld" t-value="0"/>
+                                    <t t-set="total_purchase_vat" t-value="0"/>
+                                    <!-- Total Purchase -->
+                                    
+                                    <!-- Total Sales -->
+                                    <t t-set="total_sale_included" t-value="0"/>
+                                    <t t-set="total_sale_base" t-value="0"/>
+                                    <t t-set="total_sale_withheld" t-value="0"/>
+                                    <t t-set="total_sale_vat" t-value="0"/>
+                                    <!-- Total Sales -->
+
+                                    <!-- Temporal Values -->
+                                    <t t-set="total_diff" t-value="0"/>
+                                    <!-- Temporal Values -->
+
+                                <tbody>
+
+                                    <t t-foreach="o.lines_ids" t-as="item">
+                                        <tr>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center">
+                                                <span style="font-size:12px;"><t t-esc="item.date.strftime('%d/%m/%y')"/></span>
+                                            </td>
+
+                                            <!-- Purchase -->
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right">
+                                                <span style="font-size:12px;"><t t-esc="item.p_vat_included" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span>
+                                            </td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right">
+                                                <span style="font-size:12px;"><t t-esc="item.p_tax_base" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span>
+                                            </td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right">
+                                                <span style="font-size:12px;"><t t-esc="item.p_vat_withheld" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span>
+                                            </td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right">
+                                                <span style="font-size:12px;"><t t-esc="item.p_vat" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span>
+                                            </td>
+                                            <t t-set="total_purchase_included" t-value="total_purchase_included + item.p_vat_included"/>
+                                            <t t-set="total_purchase_base" t-value="total_purchase_base + item.p_tax_base"/>
+                                            <t t-set="total_purchase_withheld" t-value="total_purchase_withheld + item.p_vat_withheld"/>
+                                            <t t-set="total_purchase_vat" t-value="total_purchase_vat + item.p_vat"/>
+                                            <!-- Purchase End -->
+
+                                            <!-- Sales -->
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right">
+                                                <span style="font-size:12px;"><t t-esc="item.s_vat_included" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span>
+                                            </td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right">
+                                                <span style="font-size:12px;"><t t-esc="item.s_tax_base" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span>
+                                            </td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right">
+                                                <span style="font-size:12px;"><t t-esc="item.s_vat_withheld" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span>
+                                            </td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right">
+                                                <span style="font-size:12px;"><t t-esc="item.s_vat" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span>
+                                            </td>
+                                            <t t-set="total_sale_included" t-value="total_sale_included + item.s_vat_included"/>
+                                            <t t-set="total_sale_base" t-value="total_sale_base + item.s_tax_base"/>
+                                            <t t-set="total_sale_withheld" t-value="total_sale_withheld + item.s_vat_withheld"/>
+                                            <t t-set="total_sale_vat" t-value="total_sale_vat + item.s_vat"/>
+                                            <!-- Sales End -->
+
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right">
+                                                <span style="font-size:12px;"><t t-esc="item.difference" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span>
+                                            </td>
+                                            <t t-set="total_diff" t-value="total_diff + item.difference"/>
+                                        </tr>
+
+                                    </t>
+                                        <tr>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-center"><b style="font-size:12px;">Total</b></td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="total_purchase_included" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="total_purchase_base" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="total_purchase_withheld" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="total_purchase_vat" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="total_sale_included" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="total_sale_base" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="total_sale_withheld" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="total_sale_vat" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                            <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="total_diff" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                        </tr>
+                                </tbody>
+                            </table>
+
+                            <br/>
+
+                            <!-- Total Credits -->
+                            <t t-set="import_base" t-value="0"/>
+                            <t t-set="import_credit" t-value="0"/>
+                            <t t-set="national_base" t-value="0"/>
+                            <t t-set="national_credit" t-value="0"/>
+                            <t t-set="total_base" t-value="0"/>
+                            <t t-set="total_credit" t-value="0"/>
+                            <t t-set="total_iva_with" t-value="0"/>
+                            <t t-set="total_iva_exempt" t-value="0"/>
+                            <t t-set="total_purchase" t-value="0"/>
+                            <!-- Total Credits -->
+
+                            <!-- Getting Values -->
+                            <t t-foreach="o.credit_values()" t-as="item">
+                                <t t-if="item.supplier_type == 'national'">
+                                    <t t-set="national_base" t-value="national_base + item.base"/>
+                                    <t t-set="national_credit" t-value="national_credit + item.credit"/>
+                                </t>
+                                <t t-else="">
+                                    <t t-set="import_base" t-value="import_base + item.base"/>
+                                    <t t-set="import_credit" t-value="import_credit + item.credit"/>
+                                </t>
+                                <t t-set="total_base" t-value="total_base + item.base"/>
+                                <t t-set="total_credit" t-value="total_credit + item.credit"/>
+                                <t t-set="total_iva_with" t-value="total_iva_with + item.iva_with"/>
+                                <t t-set="total_iva_exempt" t-value="total_iva_exempt + item.iva_exempt"/>
+                                <t t-set="total_purchase" t-value="total_purchase + item.base + item.iva_exempt"/>
+                            </t>
+                            <!-- Getting Values -->
+
+                            <table style="width: 100%;">
+                                <colgroup>
+                                    <col span="1" style="width: 50%;"/>
+                                    <col span="1" style="width: 25%;"/>
+                                    <col span="1" style="width: 25%;"/>
+                                </colgroup>
+                                <thead>
+                                    <tr style="background-color: #cacaca">
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Credits of the Period</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Tax Base</span>
+                                        </th>
+                                        <th class="text-center" style="display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Credit</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-left"><b style="font-size:12px;">Purchases from Import Suppliers</b></td>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="import_base" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="import_credit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom: 2px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-left"><b style="font-size:12px;">Purchases from National Suppliers</b></td>
+                                        <td style="border-bottom: 2px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="national_base" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                        <td style="border-bottom: 2px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="national_credit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-left"><b style="font-size:12px;">Total Taxable Base and Tax Credits</b></td>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="total_base" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="total_credit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom: 2px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-left"><b style="font-size:12px;">Total VAT Withheld to Pay</b></td>
+                                        <td style="border-bottom: 2px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"></td>
+                                        <td style="border-bottom: 2px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="total_iva_with" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-left"><b style="font-size:12px;">Purchase of Exempt Products</b></td>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="total_iva_exempt" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-left"><b style="font-size:12px;">Total Net Purchases</b></td>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="total_purchase" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <br/>
+
+                            <!-- Total Debits -->
+                            <t t-set="exempt_base" t-value="0"/>
+                            <t t-set="exempt_debit" t-value="0"/>
+                            <t t-set="export_base" t-value="0"/>
+                            <t t-set="export_debit" t-value="0"/>
+                            <t t-set="taxpayer_base" t-value="0"/>
+                            <t t-set="taxpayer_debit" t-value="0"/>
+                            <t t-set="consumers_base" t-value="0"/>
+                            <t t-set="consumers_debit" t-value="0"/>
+                            <t t-set="total_base" t-value="0"/>
+                            <t t-set="total_debit" t-value="0"/>
+                            <t t-set="total_iva_with" t-value="0"/>
+                            <t t-set="total_tax" t-value="0"/>
+                            <t t-set="total_iva_exempt" t-value="0"/>
+                            <t t-set="total_sales" t-value="0"/>
+                            <!-- Total Debits -->
+
+                            <!-- Getting Values -->
+                            <!-- <t t-foreach="o.credit_values()" t-as="item">
+                                <t t-if="item.supplier_type == 'national'">
+                                    <t t-set="national_base" t-value="national_base + item.base"/>
+                                    <t t-set="national_debit" t-value="national_debit + item.credit"/>
+                                </t>
+                                <t t-else="">
+                                    <t t-set="export_base" t-value="export_base + item.base"/>
+                                    <t t-set="export_debit" t-value="export_debit + item.credit"/>
+                                </t>
+                                <t t-set="total_base" t-value="total_base + item.base"/>
+                                <t t-set="total_debit" t-value="total_debit + item.credit"/>
+                                <t t-set="total_iva_with" t-value="total_iva_with + item.iva_with"/>
+                                <t t-set="total_iva_exempt" t-value="total_iva_exempt + item.iva_exempt"/>
+                                <t t-set="total_sales" t-value="total_sales + item.base + item.iva_exempt"/>
+                            </t> -->
+                            <!-- Getting Values -->
+
+                            <table style="width: 100%;">
+                                <colgroup>
+                                    <col span="1" style="width: 50%;"/>
+                                    <col span="1" style="width: 25%;"/>
+                                    <col span="1" style="width: 25%;"/>
+                                </colgroup>
+                                <thead>
+                                    <tr style="background-color: #cacaca">
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Debits of the Period</span>
+                                        </th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Tax Base</span>
+                                        </th>
+                                        <th class="text-center" style="display: table-cell; vertical-align: middle;">
+                                            <span style="font-size:14px;">Debit</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-left"><b style="font-size:12px;">Sales to Exempt Customers</b></td>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="exempt_base" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="exempt_debit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-left"><b style="font-size:12px;">Sales to Export Clients</b></td>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="export_base" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="export_debit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-left"><b style="font-size:12px;">Sales to Taxpayers</b></td>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="taxpayer_base" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="taxpayer_debit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom: 2px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-left"><b style="font-size:12px;">Sales to Final Consumers</b></td>
+                                        <td style="border-bottom: 2px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="consumers_base" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                        <td style="border-bottom: 2px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="consumers_debit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-left"><b style="font-size:12px;">Total Tax Base and Tax Debits</b></td>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="total_base" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="total_debit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom: 2px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-left"><b style="font-size:12px;">Total VAT Withheld Receivable</b></td>
+                                        <td style="border-bottom: 2px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"></td>
+                                        <td style="border-bottom: 2px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="total_iva_with" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom: 2px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-left"><b style="font-size:12px;">Total Tax to Pay</b></td>
+                                        <td style="border-bottom: 2px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"></td>
+                                        <td style="border-bottom: 2px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="total_tax" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-left"><b style="font-size:12px;">Sale of Exempt Products</b></td>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="total_iva_exempt" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle;" class="text-left"><b style="font-size:12px;">Total Net Sales</b></td>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"><span style="font-size:12px;"><t t-esc="total_sales" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span></td>
+                                        <td style="border-bottom: 1px solid #cacaca; display: table-cell; vertical-align: middle; padding-right: 5;" class="text-right"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+</odoo>

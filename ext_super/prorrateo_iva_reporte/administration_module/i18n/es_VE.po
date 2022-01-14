@@ -1,0 +1,653 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* administration_module
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-08-31 02:57+0000\n"
+"PO-Revision-Date: 2021-08-31 02:57+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: administration_module
+#: code:addons/administration_module/wizard/wizard_in_invoice.py:0
+#: code:addons/administration_module/wizard/wizard_out_invoice.py:0
+#: code:addons/extra-addons/oasis/administration_module/wizard/wizard_in_invoice.py:0
+#: code:addons/extra-addons/oasis/administration_module/wizard/wizard_out_invoice.py:0
+#, python-format
+msgid " To "
+msgstr " Hasta "
+
+#. module: administration_module
+#: code:addons/administration_module/wizard/wizard_in_invoice.py:0
+#: code:addons/administration_module/wizard/wizard_out_invoice.py:0
+#: code:addons/extra-addons/oasis/administration_module/wizard/wizard_in_invoice.py:0
+#: code:addons/extra-addons/oasis/administration_module/wizard/wizard_out_invoice.py:0
+#: model:ir.model.fields,field_description:administration_module.field_account_move_line__delay_1_30
+#: model_terms:ir.ui.view,arch_db:administration_module.in_invoice_report
+#: model_terms:ir.ui.view,arch_db:administration_module.out_invoice_report
+#, python-format
+msgid "1 - 30"
+msgstr ""
+
+#. module: administration_module
+#: code:addons/administration_module/wizard/wizard_in_invoice.py:0
+#: code:addons/administration_module/wizard/wizard_out_invoice.py:0
+#: code:addons/extra-addons/oasis/administration_module/wizard/wizard_in_invoice.py:0
+#: code:addons/extra-addons/oasis/administration_module/wizard/wizard_out_invoice.py:0
+#: model:ir.model.fields,field_description:administration_module.field_account_move_line__delay_31_60
+#: model_terms:ir.ui.view,arch_db:administration_module.in_invoice_report
+#: model_terms:ir.ui.view,arch_db:administration_module.out_invoice_report
+#, python-format
+msgid "31 - 60"
+msgstr ""
+
+#. module: administration_module
+#: code:addons/administration_module/wizard/wizard_in_invoice.py:0
+#: code:addons/administration_module/wizard/wizard_out_invoice.py:0
+#: code:addons/extra-addons/oasis/administration_module/wizard/wizard_in_invoice.py:0
+#: code:addons/extra-addons/oasis/administration_module/wizard/wizard_out_invoice.py:0
+#: model:ir.model.fields,field_description:administration_module.field_account_move_line__delay_61_90
+#: model_terms:ir.ui.view,arch_db:administration_module.in_invoice_report
+#: model_terms:ir.ui.view,arch_db:administration_module.out_invoice_report
+#, python-format
+msgid "61 - 90"
+msgstr ""
+
+#. module: administration_module
+#: code:addons/administration_module/wizard/wizard_in_invoice.py:0
+#: code:addons/administration_module/wizard/wizard_out_invoice.py:0
+#: code:addons/extra-addons/oasis/administration_module/wizard/wizard_in_invoice.py:0
+#: code:addons/extra-addons/oasis/administration_module/wizard/wizard_out_invoice.py:0
+#: model:ir.model.fields,field_description:administration_module.field_account_move_line__delay_91_120
+#: model_terms:ir.ui.view,arch_db:administration_module.in_invoice_report
+#: model_terms:ir.ui.view,arch_db:administration_module.out_invoice_report
+#, python-format
+msgid "91 - 120"
+msgstr ""
+
+#. module: administration_module
+#: model_terms:ir.ui.view,arch_db:administration_module.external_layout_in_invoice_report
+#: model_terms:ir.ui.view,arch_db:administration_module.external_layout_out_invoice_report
+msgid ""
+"<b style=\"font-size:12px;\">Page <span class=\"page\" style=\"font-"
+"size:12px;\"/> / <span class=\"topage\" style=\"font-size:12px;\"/></b><br/>"
+msgstr ""
+"<b style=\"font-size:12px;\">Página <span class=\"page\" style=\"font-"
+"size:12px;\"/> / <span class=\"topage\" style=\"font-size:12px;\"/></b><br/>"
+
+#. module: administration_module
+#: model_terms:ir.ui.view,arch_db:administration_module.external_layout_in_invoice_report
+msgid ""
+"<br/>\n"
+"                            <b style=\"font-size:20px;\">Past Due Accounts Payable</b><br/>"
+msgstr ""
+"<br/>\n"
+"                            <b style=\"font-size:20px;\">Cuentas Vencidas por Pagar</b><br/>"
+
+#. module: administration_module
+#: model_terms:ir.ui.view,arch_db:administration_module.external_layout_out_invoice_report
+msgid ""
+"<br/>\n"
+"                            <b style=\"font-size:20px;\">Past Due Accounts Receivable</b><br/>"
+msgstr ""
+"<br/>\n"
+"                            <b style=\"font-size:20px;\">Cuentas Vencidas por Cobrar</b><br/>"
+
+#. module: administration_module
+#: code:addons/administration_module/wizard/wizard_in_invoice.py:0
+#: code:addons/administration_module/wizard/wizard_out_invoice.py:0
+#: code:addons/extra-addons/oasis/administration_module/wizard/wizard_in_invoice.py:0
+#: code:addons/extra-addons/oasis/administration_module/wizard/wizard_out_invoice.py:0
+#: model_terms:ir.ui.view,arch_db:administration_module.in_invoice_report
+#: model_terms:ir.ui.view,arch_db:administration_module.out_invoice_report
+#, python-format
+msgid "Account"
+msgstr "Cuenta"
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_account_payable_menu
+msgid "Accounts Payable"
+msgstr "Cuentas por Pagar"
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_account_receivable_menu
+msgid "Accounts Receivable"
+msgstr "Cuentas por Cobrar"
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.administration_module_menu
+msgid "Administration"
+msgstr "Administración"
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_average_days_menu
+msgid "Average Days"
+msgstr "Días Promedio"
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_average_days_report_menu
+msgid "Average Days Report"
+msgstr "Reporte de Días Promedio"
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_bank_cash_menu
+msgid "Bank and Cash"
+msgstr "Banco y Caja"
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_billing_menu
+msgid "Billing"
+msgstr "Facturación"
+
+#. module: administration_module
+#: model_terms:ir.ui.view,arch_db:administration_module.wizard_in_invoice
+#: model_terms:ir.ui.view,arch_db:administration_module.wizard_out_invoice
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_collection_menu
+msgid "Collections"
+msgstr "Cobranzas"
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_collections_closing_report_menu
+msgid "Collections Closing Report"
+msgstr "Reporte de Cierre de Cobranzas"
+
+#. module: administration_module
+#: model:ir.model.fields,field_description:administration_module.field_wizard_in_invoice__company_id
+#: model:ir.model.fields,field_description:administration_module.field_wizard_out_invoice__company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_conciliation_menu
+msgid "Conciliation"
+msgstr "Conciliación"
+
+#. module: administration_module
+#: model:ir.model.fields,field_description:administration_module.field_wizard_in_invoice__create_uid
+#: model:ir.model.fields,field_description:administration_module.field_wizard_out_invoice__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: administration_module
+#: model:ir.model.fields,field_description:administration_module.field_wizard_in_invoice__create_date
+#: model:ir.model.fields,field_description:administration_module.field_wizard_out_invoice__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_credit_promotion_pago_menu
+msgid "Credit Note Promotion"
+msgstr "Promociones de Nota de Crédito"
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_customer_credit_notes_menu
+msgid "Credit Notes"
+msgstr "Notas de Crédito"
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_current_assets_menu
+msgid "Current Assets"
+msgstr "Activos Circulantes"
+
+#. module: administration_module
+#: code:addons/administration_module/wizard/wizard_out_invoice.py:0
+#: code:addons/extra-addons/oasis/administration_module/wizard/wizard_out_invoice.py:0
+#: model_terms:ir.ui.view,arch_db:administration_module.out_invoice_report
+#, python-format
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_customer_invoices_menu
+msgid "Customer Invoices"
+msgstr "Facturas de Cliente"
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_customer_menu
+msgid "Customers"
+msgstr "Clientes"
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_daily_sales_close_menu
+msgid "Daily Sales Close"
+msgstr "Cierre de Ventas Diario"
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_daily_sales_close_report_menu
+msgid "Daily Sales Close Report"
+msgstr "Reporte de Cierre de Ventas Diario"
+
+#. module: administration_module
+#: code:addons/administration_module/wizard/wizard_in_invoice.py:0
+#: code:addons/administration_module/wizard/wizard_out_invoice.py:0
+#: code:addons/extra-addons/oasis/administration_module/wizard/wizard_in_invoice.py:0
+#: code:addons/extra-addons/oasis/administration_module/wizard/wizard_out_invoice.py:0
+#: model_terms:ir.ui.view,arch_db:administration_module.in_invoice_report
+#: model_terms:ir.ui.view,arch_db:administration_module.out_invoice_report
+#, python-format
+msgid "Date"
+msgstr "Fecha"
+
+#. module: administration_module
+#: model:ir.model.fields,field_description:administration_module.field_wizard_in_invoice__date_from
+#: model:ir.model.fields,field_description:administration_module.field_wizard_out_invoice__date_from
+msgid "Date From"
+msgstr "Desde"
+
+#. module: administration_module
+#: model:ir.model.fields,field_description:administration_module.field_wizard_in_invoice__date_now
+#: model:ir.model.fields,field_description:administration_module.field_wizard_out_invoice__date_now
+msgid "Date Now"
+msgstr "Ahora"
+
+#. module: administration_module
+#: model:ir.model.fields,field_description:administration_module.field_wizard_in_invoice__date_to
+#: model:ir.model.fields,field_description:administration_module.field_wizard_out_invoice__date_to
+msgid "Date To"
+msgstr "Hasta"
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_customer_debit_notes_menu
+msgid "Debit Notes"
+msgstr "Notas de Débito"
+
+#. module: administration_module
+#: model:ir.model.fields,field_description:administration_module.field_wizard_in_invoice__display_name
+#: model:ir.model.fields,field_description:administration_module.field_wizard_out_invoice__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_exchange_transactions_menu
+msgid "Exchange Transactions"
+msgstr "Transacciones de Intercambio"
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_exchange_transactions_report_menu
+msgid "Exchange Transactions Report"
+msgstr "Reporte de Transacciones de Intercambio"
+
+#. module: administration_module
+#: code:addons/administration_module/wizard/wizard_in_invoice.py:0
+#: code:addons/administration_module/wizard/wizard_out_invoice.py:0
+#: code:addons/extra-addons/oasis/administration_module/wizard/wizard_in_invoice.py:0
+#: code:addons/extra-addons/oasis/administration_module/wizard/wizard_out_invoice.py:0
+#: model:ir.model.fields,field_description:administration_module.field_account_move_line__exp_date_today
+#: model_terms:ir.ui.view,arch_db:administration_module.in_invoice_report
+#: model_terms:ir.ui.view,arch_db:administration_module.out_invoice_report
+#, python-format
+msgid "Exp. Date"
+msgstr "Fecha Exp."
+
+#. module: administration_module
+#: model_terms:ir.ui.view,arch_db:administration_module.view_account_move_line_filter_extend
+msgid "Expired Accounts"
+msgstr "Cuentas Vencidas"
+
+#. module: administration_module
+#: model_terms:ir.ui.view,arch_db:administration_module.wizard_in_invoice
+#: model_terms:ir.ui.view,arch_db:administration_module.wizard_out_invoice
+msgid "Export PDF"
+msgstr "Exportar PDF"
+
+#. module: administration_module
+#: model_terms:ir.ui.view,arch_db:administration_module.wizard_in_invoice
+#: model_terms:ir.ui.view,arch_db:administration_module.wizard_out_invoice
+msgid "Export XLS"
+msgstr "Exportar EXCEL"
+
+#. module: administration_module
+#: model:ir.model.fields,field_description:administration_module.field_wizard_in_invoice__name
+#: model:ir.model.fields,field_description:administration_module.field_wizard_out_invoice__name
+msgid "File Name"
+msgstr "Nombre del archivo"
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_followup_levels_menu
+msgid "Follow up Levels"
+msgstr "Niveles de Seguimiento"
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_followup_report_menu
+msgid "Follow up Report"
+msgstr "Reporte de Seguimiento"
+
+#. module: administration_module
+#: code:addons/administration_module/wizard/wizard_in_invoice.py:0
+#: code:addons/administration_module/wizard/wizard_out_invoice.py:0
+#: code:addons/extra-addons/oasis/administration_module/wizard/wizard_in_invoice.py:0
+#: code:addons/extra-addons/oasis/administration_module/wizard/wizard_out_invoice.py:0
+#, python-format
+msgid "From "
+msgstr "Desde "
+
+#. module: administration_module
+#: model_terms:ir.ui.view,arch_db:administration_module.external_layout_in_invoice_report
+#: model_terms:ir.ui.view,arch_db:administration_module.external_layout_out_invoice_report
+msgid "From:"
+msgstr "Desde: "
+
+#. module: administration_module
+#: model:ir.model.fields,field_description:administration_module.field_wizard_in_invoice__id
+#: model:ir.model.fields,field_description:administration_module.field_wizard_out_invoice__id
+msgid "ID"
+msgstr ""
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_internal_transactions_menu
+msgid "Internal Transactions"
+msgstr "Transacciones Internas"
+
+#. module: administration_module
+#: code:addons/administration_module/wizard/wizard_in_invoice.py:0
+#: code:addons/administration_module/wizard/wizard_out_invoice.py:0
+#: code:addons/extra-addons/oasis/administration_module/wizard/wizard_in_invoice.py:0
+#: code:addons/extra-addons/oasis/administration_module/wizard/wizard_out_invoice.py:0
+#: model_terms:ir.ui.view,arch_db:administration_module.in_invoice_report
+#: model_terms:ir.ui.view,arch_db:administration_module.out_invoice_report
+#, python-format
+msgid "Journal"
+msgstr "Diario"
+
+#. module: administration_module
+#: model:ir.model,name:administration_module.model_account_move_line
+msgid "Journal Item"
+msgstr "Apunte contable"
+
+#. module: administration_module
+#: model:ir.model.fields,field_description:administration_module.field_wizard_in_invoice____last_update
+#: model:ir.model.fields,field_description:administration_module.field_wizard_out_invoice____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: administration_module
+#: model:ir.model.fields,field_description:administration_module.field_wizard_in_invoice__write_uid
+#: model:ir.model.fields,field_description:administration_module.field_wizard_out_invoice__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: administration_module
+#: model:ir.model.fields,field_description:administration_module.field_wizard_in_invoice__write_date
+#: model:ir.model.fields,field_description:administration_module.field_wizard_out_invoice__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_municipal_customer_withholding_menu
+msgid "Municipal Customer Withholding"
+msgstr "Retención Municipal a Clientes"
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_municipal_withholding_suppliers_menu
+msgid "Municipal Withholding of Suppliers"
+msgstr "Retención Municipal a Proveedores"
+
+#. module: administration_module
+#: code:addons/administration_module/wizard/wizard_in_invoice.py:0
+#: code:addons/administration_module/wizard/wizard_out_invoice.py:0
+#: code:addons/extra-addons/oasis/administration_module/wizard/wizard_in_invoice.py:0
+#: code:addons/extra-addons/oasis/administration_module/wizard/wizard_out_invoice.py:0
+#: model:ir.model.fields,field_description:administration_module.field_account_move_line__delay_older
+#: model_terms:ir.ui.view,arch_db:administration_module.in_invoice_report
+#: model_terms:ir.ui.view,arch_db:administration_module.out_invoice_report
+#, python-format
+msgid "Older"
+msgstr "Más Antiguos"
+
+#. module: administration_module
+#: model:ir.actions.act_window,name:administration_module.action_move_in_invoice_type_payment
+#: model:ir.ui.menu,name:administration_module.supplier_bills_show_menu
+msgid "Past Due Accounts Payable"
+msgstr "Cuentas Vencidas por Pagar"
+
+#. module: administration_module
+#: code:addons/administration_module/wizard/wizard_in_invoice.py:0
+#: code:addons/administration_module/wizard/wizard_in_invoice.py:0
+#: code:addons/extra-addons/oasis/administration_module/wizard/wizard_in_invoice.py:0
+#: code:addons/extra-addons/oasis/administration_module/wizard/wizard_in_invoice.py:0
+#: model:ir.actions.act_window,name:administration_module.action_in_invoice
+#: model:ir.ui.menu,name:administration_module.in_invoice_menu
+#: model_terms:ir.ui.view,arch_db:administration_module.wizard_in_invoice
+#, python-format
+msgid "Past Due Accounts Payable Report"
+msgstr "Reporte de Cuentas Vencidas por Pagar"
+
+#. module: administration_module
+#: code:addons/administration_module/wizard/wizard_in_invoice.py:0
+#: code:addons/extra-addons/oasis/administration_module/wizard/wizard_in_invoice.py:0
+#, python-format
+msgid "Past Due Accounts Payable Report "
+msgstr "Reporte de Cuentas Vencidas por Cobrar "
+
+#. module: administration_module
+#: model:ir.actions.act_window,name:administration_module.action_move_out_invoice_type_payment
+#: model:ir.ui.menu,name:administration_module.customer_invoice_show_menu
+msgid "Past Due Accounts Receivable"
+msgstr "Cuentas Vencidas por Cobrar"
+
+#. module: administration_module
+#: code:addons/administration_module/wizard/wizard_out_invoice.py:0
+#: code:addons/administration_module/wizard/wizard_out_invoice.py:0
+#: code:addons/extra-addons/oasis/administration_module/wizard/wizard_out_invoice.py:0
+#: code:addons/extra-addons/oasis/administration_module/wizard/wizard_out_invoice.py:0
+#: model:ir.actions.act_window,name:administration_module.action_out_invoice
+#: model:ir.ui.menu,name:administration_module.out_invoice_menu
+#: model_terms:ir.ui.view,arch_db:administration_module.wizard_out_invoice
+#, python-format
+msgid "Past Due Accounts Receivable Report"
+msgstr "Reporte de Cuentas Vencidas por Cobrar"
+
+#. module: administration_module
+#: code:addons/administration_module/wizard/wizard_out_invoice.py:0
+#: code:addons/extra-addons/oasis/administration_module/wizard/wizard_out_invoice.py:0
+#, python-format
+msgid "Past Due Accounts Receivable Report "
+msgstr "Reporte de Cuentas Vencidas por Pagar "
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_payment_plan_report_menu
+msgid "Payment Plan Report"
+msgstr "Reporte de Planificación de Pago"
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_reconciliation_authorization_menu
+msgid "Payment Reconciliation Authorization"
+msgstr "Autorización de Conciliación de Pagos"
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_account_customer_payment_menu
+#: model:ir.ui.menu,name:administration_module.admin_account_supplier_payment_menu
+#: model:ir.ui.menu,name:administration_module.admin_billing_customer_payment_menu
+msgid "Payment Record / Payment Receipt"
+msgstr "Registro de pago / Recibo de pago"
+
+#. module: administration_module
+#: model:ir.model.fields,field_description:administration_module.field_wizard_in_invoice__report
+#: model:ir.model.fields,field_description:administration_module.field_wizard_out_invoice__report
+msgid "Prepared file"
+msgstr "Archivo Preparado"
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_customer_products_menu
+#: model:ir.ui.menu,name:administration_module.admin_supplier_products_menu
+msgid "Products"
+msgstr "Productos"
+
+#. module: administration_module
+#: model:ir.actions.act_window,name:administration_module.action_admin_isrl_vendors_retention
+msgid "Retención de ISLR Proveedores"
+msgstr ""
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_retention_islr_customers_menu
+msgid "Retention of ISLR to Customers"
+msgstr "Retención de ISLR a Clientes"
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_sale_orders_menu
+msgid "Sale Orders"
+msgstr "Pedidos de Venta"
+
+#. module: administration_module
+#: model:ir.model.fields,field_description:administration_module.field_account_move_line__seller_id
+#: model_terms:ir.ui.view,arch_db:administration_module.view_account_move_line_filter_extend
+msgid "Seller"
+msgstr "Vendedor"
+
+#. module: administration_module
+#: model:ir.model.fields,field_description:administration_module.field_account_move_line__seller_true
+msgid "Seller True"
+msgstr ""
+
+#. module: administration_module
+#: model:ir.model.fields,field_description:administration_module.field_wizard_in_invoice__state
+#: model:ir.model.fields,field_description:administration_module.field_wizard_out_invoice__state
+msgid "State"
+msgstr "Estado"
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_cash_flow_menu
+msgid "Statement of Cash Flows"
+msgstr "Estado de Flujos de Efectivo"
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_street_days_menu
+msgid "Street Days"
+msgstr "Días en Calle"
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_street_days_report_menu
+msgid "Street Days Report"
+msgstr "Reporte de Días en Calle"
+
+#. module: administration_module
+#: code:addons/administration_module/wizard/wizard_in_invoice.py:0
+#: code:addons/extra-addons/oasis/administration_module/wizard/wizard_in_invoice.py:0
+#: model:ir.ui.menu,name:administration_module.admin_supplier_menu
+#: model_terms:ir.ui.view,arch_db:administration_module.in_invoice_report
+#, python-format
+msgid "Supplier"
+msgstr "Proveedor"
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_supplier_credit_notes_menu
+msgid "Supplier Credit Notes"
+msgstr "Notas de Crédito Proveedores"
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_supplier_debit_notes_menu
+msgid "Supplier Debit Notes"
+msgstr "Notas de Débito Proveedores"
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_supplier_invoice_menu
+msgid "Supplier Invoice"
+msgstr "Facturas de Proveedor"
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_treasury_supplier_payment_menu
+msgid "Supplier Payment"
+msgstr "Pago a Proveedores"
+
+#. module: administration_module
+#: model_terms:ir.ui.view,arch_db:administration_module.external_layout_in_invoice_report
+#: model_terms:ir.ui.view,arch_db:administration_module.external_layout_out_invoice_report
+msgid "To:"
+msgstr "Hasta:"
+
+#. module: administration_module
+#: code:addons/administration_module/wizard/wizard_in_invoice.py:0
+#: code:addons/administration_module/wizard/wizard_out_invoice.py:0
+#: code:addons/extra-addons/oasis/administration_module/wizard/wizard_in_invoice.py:0
+#: code:addons/extra-addons/oasis/administration_module/wizard/wizard_out_invoice.py:0
+#: model:ir.model.fields,field_description:administration_module.field_account_move_line__delay_total
+#: model_terms:ir.ui.view,arch_db:administration_module.in_invoice_report
+#: model_terms:ir.ui.view,arch_db:administration_module.out_invoice_report
+#, python-format
+msgid "Total"
+msgstr ""
+
+#. module: administration_module
+#: model_terms:ir.ui.view,arch_db:administration_module.in_invoice_report
+#: model_terms:ir.ui.view,arch_db:administration_module.out_invoice_report
+msgid "Total..."
+msgstr ""
+
+#. module: administration_module
+#: code:addons/administration_module/wizard/wizard_in_invoice.py:0
+#: code:addons/administration_module/wizard/wizard_out_invoice.py:0
+#: code:addons/extra-addons/oasis/administration_module/wizard/wizard_in_invoice.py:0
+#: code:addons/extra-addons/oasis/administration_module/wizard/wizard_out_invoice.py:0
+#: model_terms:ir.ui.view,arch_db:administration_module.in_invoice_report
+#: model_terms:ir.ui.view,arch_db:administration_module.out_invoice_report
+#, python-format
+msgid "Totals..."
+msgstr "Totales..."
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_treasury_menu
+msgid "Treasury"
+msgstr "Tesorería"
+
+#. module: administration_module
+#: model_terms:ir.ui.view,arch_db:administration_module.view_account_move_line_filter_extend
+msgid "Unexpired Accounts"
+msgstr "Cuentas sin Vencer"
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_vat_supplier_retention_menu
+msgid "VAT Supplier Retention"
+msgstr "Rentención de IVA a Proveedores"
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_withholding_islr_suppliers_menu
+msgid "Withholding ISLR from Suppliers"
+msgstr "Retención de ISLR a Proveedores"
+
+#. module: administration_module
+#: model:ir.ui.menu,name:administration_module.admin_withhilding_vat_customers_menu
+msgid "Withholding VAT from Customers"
+msgstr "Rentención de IVA a Clientes"
+
+#. module: administration_module
+#: model:ir.model.fields.selection,name:administration_module.selection__wizard_in_invoice__state__choose
+#: model:ir.model.fields.selection,name:administration_module.selection__wizard_out_invoice__state__choose
+msgid "choose"
+msgstr ""
+
+#. module: administration_module
+#: model:ir.model.fields.selection,name:administration_module.selection__wizard_in_invoice__state__get
+#: model:ir.model.fields.selection,name:administration_module.selection__wizard_out_invoice__state__get
+msgid "get"
+msgstr ""
+
+#. module: administration_module
+#: model:ir.actions.report,name:administration_module.action_in_invoice_report
+msgid "in_invoice_report"
+msgstr "reporte_factura_proveedor"
+
+#. module: administration_module
+#: model:ir.actions.report,name:administration_module.action_out_invoice_report
+msgid "out_invoice_report"
+msgstr "reporte_factura_cliente"
+
+#. module: administration_module
+#: model:ir.model,name:administration_module.model_wizard_in_invoice
+msgid "wizard.in.invoice"
+msgstr ""
+
+#. module: administration_module
+#: model:ir.model,name:administration_module.model_wizard_out_invoice
+msgid "wizard.out.invoice"
+msgstr ""

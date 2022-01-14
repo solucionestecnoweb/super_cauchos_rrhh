@@ -1,0 +1,322 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* closing_report
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-08-31 03:55+0000\n"
+"PO-Revision-Date: 2021-08-31 03:55+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: closing_report
+#: model_terms:ir.ui.view,arch_db:closing_report.closing_report
+msgid "<b style=\"font-size:12px;\">Totals...</b>"
+msgstr "<b style=\"font-size:12px;\">Totales...</b>"
+
+#. module: closing_report
+#: model_terms:ir.ui.view,arch_db:closing_report.external_layout_closing_report
+msgid ""
+"<br/>\n"
+"                            <b style=\"font-size:12px; text-align:center;\">Page <span class=\"page\" style=\"font-size:12px;\"/> / <span class=\"topage\" style=\"font-size:12px;\"/></b><br/>"
+msgstr ""
+"<br/>\n"
+"                            <b style=\"font-size:12px; text-align:center;\">Página <span class=\"page\" style=\"font-size:12px;\"/> / <span class=\"topage\" style=\"font-size:12px;\"/></b><br/>"
+
+#. module: closing_report
+#: model_terms:ir.ui.view,arch_db:closing_report.external_layout_closing_report
+msgid ""
+"<br/>\n"
+"                            <b style=\"font-size:20px;\">Collections Closing</b><br/>"
+msgstr ""
+"<br/>\n"
+"                            <b style=\"font-size:20px;\">Reporte de Cierre de Cobranzas</b><br/>"
+
+#. module: closing_report
+#: model_terms:ir.ui.view,arch_db:closing_report.closing_report
+msgid "<span style=\"font-size:14px;\">Bill</span>"
+msgstr "<span style=\"font-size:14px;\">Factura</span>"
+
+#. module: closing_report
+#: model_terms:ir.ui.view,arch_db:closing_report.closing_report
+msgid "<span style=\"font-size:14px;\">Customer</span>"
+msgstr "<span style=\"font-size:14px;\">Cliente</span>"
+
+#. module: closing_report
+#: model_terms:ir.ui.view,arch_db:closing_report.closing_report
+msgid "<span style=\"font-size:14px;\">Date</span>"
+msgstr "<span style=\"font-size:14px;\">Fecha</span>"
+
+#. module: closing_report
+#: model_terms:ir.ui.view,arch_db:closing_report.closing_report
+msgid "<span style=\"font-size:14px;\">Detail</span>"
+msgstr "<span style=\"font-size:14px;\">Detalle</span>"
+
+#. module: closing_report
+#: model_terms:ir.ui.view,arch_db:closing_report.closing_report
+msgid "<span style=\"font-size:14px;\">Payment in Bs ME</span>"
+msgstr "<span style=\"font-size:14px;\">Pago en Bs ME</span>"
+
+#. module: closing_report
+#: model_terms:ir.ui.view,arch_db:closing_report.closing_report
+msgid "<span style=\"font-size:14px;\">Payment in Bs</span>"
+msgstr "<span style=\"font-size:14px;\">Pago en Bs</span>"
+
+#. module: closing_report
+#: model_terms:ir.ui.view,arch_db:closing_report.closing_report
+msgid "<span style=\"font-size:14px;\">Payment in Cash $</span>"
+msgstr "<span style=\"font-size:14px;\">Pago en Efectivo $</span>"
+
+#. module: closing_report
+#: model_terms:ir.ui.view,arch_db:closing_report.closing_report
+msgid "<span style=\"font-size:14px;\">Payment in Transfer $</span>"
+msgstr "<span style=\"font-size:14px;\">Pago en Transferencia $</span>"
+
+#. module: closing_report
+#: model_terms:ir.ui.view,arch_db:closing_report.closing_report
+msgid "<span style=\"font-size:14px;\">Rate</span>"
+msgstr "<span style=\"font-size:14px;\">Tasa</span>"
+
+#. module: closing_report
+#: model:ir.model.fields,field_description:closing_report.field_account_payment__amount_bs
+msgid "Amount Bs"
+msgstr "Monto Bs"
+
+#. module: closing_report
+#: model:ir.model.fields,field_description:closing_report.field_account_payment__amount_currency
+msgid "Amount Currency"
+msgstr "Monto Convertido"
+
+#. module: closing_report
+#: model:ir.model.fields,field_description:closing_report.field_account_payment__amount_currency_cash
+msgid "Amount Currency Cash"
+msgstr "Monto Convertido Efectivo"
+
+#. module: closing_report
+#: model:ir.model.fields,field_description:closing_report.field_account_payment__amount_currency_transfer
+msgid "Amount Currency Transfer"
+msgstr "Monto Convertido Transferencia"
+
+#. module: closing_report
+#: code:addons/closing_report/wizards/wizards_closing_report.py:0
+#: code:addons/extra-addons/oasis/closing_report/wizards/wizards_closing_report.py:0
+#, python-format
+msgid "Bill"
+msgstr "Factura"
+
+#. module: closing_report
+#: model_terms:ir.ui.view,arch_db:closing_report.wizard_closing_report
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: closing_report
+#: model:ir.ui.menu,name:closing_report.closing_report_report_menu
+msgid "Collections Closing"
+msgstr "Cierre de Cobranzas"
+
+#. module: closing_report
+#: code:addons/closing_report/wizards/wizards_closing_report.py:0
+#: code:addons/closing_report/wizards/wizards_closing_report.py:0
+#: code:addons/extra-addons/oasis/closing_report/wizards/wizards_closing_report.py:0
+#: code:addons/extra-addons/oasis/closing_report/wizards/wizards_closing_report.py:0
+#: model_terms:ir.ui.view,arch_db:closing_report.wizard_closing_report
+#, python-format
+msgid "Collections Closing Report"
+msgstr "Reporte de Cierre de Cobranzas"
+
+#. module: closing_report
+#: code:addons/closing_report/wizards/wizards_closing_report.py:0
+#: code:addons/extra-addons/oasis/closing_report/wizards/wizards_closing_report.py:0
+#, python-format
+msgid "Collections Closing Report "
+msgstr "Reporte de Cierre de Cobranzas "
+
+#. module: closing_report
+#: model:ir.model.fields,field_description:closing_report.field_closing_report__company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: closing_report
+#: model:ir.model.fields,field_description:closing_report.field_closing_report__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: closing_report
+#: model:ir.model.fields,field_description:closing_report.field_closing_report__create_date
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: closing_report
+#: model:ir.model.fields,field_description:closing_report.field_account_payment__currency_bs_id
+#: model:ir.model.fields,field_description:closing_report.field_closing_report__currency_bs_id
+msgid "Currency Bs"
+msgstr "Moneda Bs"
+
+#. module: closing_report
+#: model:ir.model.fields,field_description:closing_report.field_account_payment__currency_usd_id
+#: model:ir.model.fields,field_description:closing_report.field_closing_report__currency_usd_id
+msgid "Currency Usd"
+msgstr "Moneda USD"
+
+#. module: closing_report
+#: code:addons/closing_report/wizards/wizards_closing_report.py:0
+#: code:addons/extra-addons/oasis/closing_report/wizards/wizards_closing_report.py:0
+#, python-format
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: closing_report
+#: code:addons/closing_report/wizards/wizards_closing_report.py:0
+#: code:addons/extra-addons/oasis/closing_report/wizards/wizards_closing_report.py:0
+#, python-format
+msgid "Date"
+msgstr "Fecha"
+
+#. module: closing_report
+#: model:ir.model.fields,field_description:closing_report.field_closing_report__date_from
+msgid "Date From"
+msgstr "Fecha Desde"
+
+#. module: closing_report
+#: model:ir.model.fields,field_description:closing_report.field_closing_report__date_now
+msgid "Date Now"
+msgstr "Fecha Actual"
+
+#. module: closing_report
+#: model:ir.model.fields,field_description:closing_report.field_closing_report__date_to
+msgid "Date To"
+msgstr "Fecha Hasta"
+
+#. module: closing_report
+#: code:addons/closing_report/wizards/wizards_closing_report.py:0
+#: code:addons/extra-addons/oasis/closing_report/wizards/wizards_closing_report.py:0
+#, python-format
+msgid "Detail"
+msgstr "Detalle"
+
+#. module: closing_report
+#: model:ir.model.fields,field_description:closing_report.field_closing_report__display_name
+msgid "Display Name"
+msgstr "Mostrar Nombre"
+
+#. module: closing_report
+#: model_terms:ir.ui.view,arch_db:closing_report.wizard_closing_report
+msgid "Export PDF"
+msgstr "Exportar PDF"
+
+#. module: closing_report
+#: model_terms:ir.ui.view,arch_db:closing_report.wizard_closing_report
+msgid "Export XLS"
+msgstr "Exportar XLS"
+
+#. module: closing_report
+#: model:ir.model.fields,field_description:closing_report.field_closing_report__name
+msgid "File Name"
+msgstr "Nombre del Archivo"
+
+#. module: closing_report
+#: model_terms:ir.ui.view,arch_db:closing_report.external_layout_closing_report
+msgid "From:"
+msgstr "Desde:"
+
+#. module: closing_report
+#: model:ir.model.fields,field_description:closing_report.field_closing_report__id
+msgid "ID"
+msgstr ""
+
+#. module: closing_report
+#: model:ir.model.fields,field_description:closing_report.field_closing_report____last_update
+msgid "Last Modified on"
+msgstr "Última Modificación en"
+
+#. module: closing_report
+#: model:ir.model.fields,field_description:closing_report.field_closing_report__write_uid
+msgid "Last Updated by"
+msgstr "Última Actualización por"
+
+#. module: closing_report
+#: model:ir.model.fields,field_description:closing_report.field_closing_report__write_date
+msgid "Last Updated on"
+msgstr "Última Actualización en"
+
+#. module: closing_report
+#: code:addons/closing_report/wizards/wizards_closing_report.py:0
+#: code:addons/extra-addons/oasis/closing_report/wizards/wizards_closing_report.py:0
+#, python-format
+msgid "Payment in Bs"
+msgstr "Pago en Bs"
+
+#. module: closing_report
+#: code:addons/closing_report/wizards/wizards_closing_report.py:0
+#: code:addons/extra-addons/oasis/closing_report/wizards/wizards_closing_report.py:0
+#, python-format
+msgid "Payment in Bs ME"
+msgstr "Pago en Bs ME"
+
+#. module: closing_report
+#: code:addons/closing_report/wizards/wizards_closing_report.py:0
+#: code:addons/extra-addons/oasis/closing_report/wizards/wizards_closing_report.py:0
+#, python-format
+msgid "Payment in Cash $"
+msgstr "Pago en Efectivo $"
+
+#. module: closing_report
+#: code:addons/closing_report/wizards/wizards_closing_report.py:0
+#: code:addons/extra-addons/oasis/closing_report/wizards/wizards_closing_report.py:0
+#, python-format
+msgid "Payment in Transfer $"
+msgstr "Pago en Transferencia $"
+
+#. module: closing_report
+#: model:ir.model,name:closing_report.model_account_payment
+msgid "Payments"
+msgstr "Pagos"
+
+#. module: closing_report
+#: model:ir.model.fields,field_description:closing_report.field_closing_report__report
+msgid "Prepared file"
+msgstr "Archivo Preparado"
+
+#. module: closing_report
+#: code:addons/closing_report/wizards/wizards_closing_report.py:0
+#: code:addons/extra-addons/oasis/closing_report/wizards/wizards_closing_report.py:0
+#: model:ir.model.fields,field_description:closing_report.field_account_payment__rate
+#, python-format
+msgid "Rate"
+msgstr "Tasa"
+
+#. module: closing_report
+#: model:ir.model.fields,field_description:closing_report.field_closing_report__state
+msgid "State"
+msgstr "Estado"
+
+#. module: closing_report
+#: model_terms:ir.ui.view,arch_db:closing_report.external_layout_closing_report
+msgid "To:"
+msgstr "Hasta:"
+
+#. module: closing_report
+#: model:ir.model.fields.selection,name:closing_report.selection__closing_report__state__choose
+msgid "choose"
+msgstr ""
+
+#. module: closing_report
+#: model:ir.actions.report,name:closing_report.action_closing_report
+msgid "closing report"
+msgstr "reporte cierre"
+
+#. module: closing_report
+#: model:ir.model,name:closing_report.model_closing_report
+msgid "closing.report"
+msgstr ""
+
+#. module: closing_report
+#: model:ir.model.fields.selection,name:closing_report.selection__closing_report__state__get
+msgid "get"
+msgstr ""

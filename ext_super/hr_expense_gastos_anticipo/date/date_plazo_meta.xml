@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+
+        <record id="account_payment_term_15days" model="crm.plazo.meta">
+            <field name="name">15 Días</field>
+            <field name="note">Payment terms: 15 Días</field>
+            <field name="valor_dias">15</field>
+        </record>
+
+        <record id="account_payment_term_21days" model="crm.plazo.meta">
+            <field name="name">21 Días</field>
+            <field name="note">Payment terms: 21 Days</field>
+            <field name="valor_dias">21</field>
+        </record>
+
+        <record id="account_payment_term_30days" model="crm.plazo.meta">
+            <field name="name">30 Días</field>
+            <field name="note">Payment terms: 30 Days</field>
+            <field name="valor_dias">30</field>
+        </record>
+
+        <record id="account_payment_term_45days" model="crm.plazo.meta">
+            <field name="name">45 Días</field>
+            <field name="note">Payment terms: 45 Days</field>
+            <field name="valor_dias">45</field>
+        </record>
+
+        <record id="account_payment_term_2months" model="crm.plazo.meta">
+            <field name="name">2 Meses</field>
+            <field name="note">Payment terms: 2 Months</field>
+            <field name="valor_dias">60</field>
+        </record>
+
+        <record id="account_payment_term_4months" model="crm.plazo.meta">
+            <field name="name">4 Meses</field>
+            <field name="note">Payment terms: 4 Months</field>
+            <field name="valor_dias">120</field>
+        </record>
+
+    </data>
+</odoo>

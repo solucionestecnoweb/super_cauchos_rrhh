@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_maintenance_line_request,maintenance.line.request,model_maintenance_line_request,,1,1,1,1
+acces_fleet_vehicle_log_assignment_control,fleet.vehicle.log.assignment.control,model_fleet_vehicle_log_assignment_control,base.group_user,1,1,1,1

@@ -1,0 +1,195 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="0">
+        <!-- Add you code here -->
+        <report 
+            id="action_sale_order_extend" 
+            model="sale.order" 
+            string="Ordenes de Ventas" 
+            report_type="qweb-pdf"
+            name="sale_report_supercauchos.sale_order_extend" 
+            file="sale_report_supercauchos.sale_order_extend" 
+            menu="True" 
+            />
+
+        <template id="external_layout_sale_order_extend">
+            <div class="header">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-8">
+                            <img t-if="res_company.logo" t-att-src="'data:image/png;base64,%s' % to_text(res_company.logo)" style="max-height: 100px; max-width: 200px;"/><br/>
+                            <b style="font-size:12px;">Nombre y Apellido o Razón Social: <t t-esc="o.partner_id.name"/></b><br/>
+                            <b style="font-size:12px;">C.I. / R.I.F: <t t-esc="o.rif"/></b><br/>
+                            <b style="font-size:12px;">Domicilio Fiscal: <t t-esc="o.partner_id.street"/> <t t-esc="o.partner_id.city"/> <t t-esc="o.partner_id.state_id.name"/></b><br/>
+                        </div>
+                        <div class="col-4 text-center">
+                            <span style="font-size:12px;">Tasa <t t-esc="o.rate" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></span><br/>
+                            <b style="font-size:16px;">Pedido ME <t t-esc="o.name"/></b><br/>
+                            <span style="font-size:12px;">Emisión: <t t-esc="o.date_order"/></span><br/>
+                            <span style="font-size:12px;">Vencimiento: <t t-esc="o.validity_date"/></span><br/>
+                            <span style="font-size:12px;">Vendedor: <t t-esc="o.seller_id.name"/></span><br/>
+                            <span style="font-size:12px;">Cond. de Pago: <t t-esc="o.payment_condition_id.name"/></span>                                
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article o_report_layout_standard">
+                <t t-raw="0"/>
+            </div>
+
+            <div class="footer">
+                <div class="container" style="border-top: 1px solid black;">
+                    <div class="row">
+                        <div class="col-6">
+                            <b style="font-size:12px;">Notas</b> <br/>
+                            <span style="font-size:12px;" t-if="o.note"><t t-esc="o.note"/><br/></span> <span style="font-size:12px;" t-else=""><br/><br/><br/><br/></span>
+                        </div>
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-7 text-right">
+                                    <span style="font-size:12px;">Base Imponible</span> <br/>
+                                    <span style="font-size:12px;">Sub Total</span> <br/>
+                                    <span style="font-size:12px;">Descuento</span> <br/>
+                                    <span style="font-size:12px;">Total</span>
+                                </div>
+                                <div class="col-5 text-right">
+                                    <b style="font-size:12px;"><t t-esc="o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></b><br/>
+                                    <b style="font-size:12px;"><t t-esc="subtotal" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></b><br/>
+                                    <b style="font-size:12px;"><t t-esc="total_discount * (-1)" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></b><br/>
+                                    <b style="font-size:12px;"><t t-esc="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template id="sale_order_extend">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="sale_report_supercauchos.external_layout_sale_order_extend">
+                        <div class="page">
+                            
+                            <br/><br/>
+                            <table>
+                                <!-- Cantidad de columnas -->
+                                <colgroup>
+                                    <col span="1" style="width: 10%;"/>
+                                    <col span="1" style="width: 24%;"/>
+                                    <col span="1" style="width: 10%;"/>
+                                    <col span="1" style="width: 10%;"/>
+                                    <col span="1" style="width: 8%;"/>
+                                    <col span="1" style="width: 10%;"/>
+                                    <col span="1" style="width: 10%;"/>
+                                    <col span="1" style="width: 8%;"/>
+                                    <col span="1" style="width: 10%;"/>
+                                </colgroup>
+                                <!-- Fin cantidad de columnas -->
+
+                                <!-- Cabeceras -->
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Codigo</th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Descripción</th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Deposito</th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Cantidad</th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Filler</th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Precio Unit.</th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">% de Descuento</th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">FillerT</th>
+                                        <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle; background-color: #cacaca; font-size:14px;">Total</th>
+                                    </tr>
+                                </thead>
+                                <!-- Fin cabeceras -->
+                                
+                                <!-- Variables totales -->
+                                <t t-set="total_qty" t-value="0"/>
+                                <t t-set="fillert" t-value="0"/>
+                                <t t-set="subtotal" t-value="0"/>
+                                <t t-set="total_discount" t-value="0"/>
+                                <!-- Fin variables totales -->
+                                
+                                <tbody>
+                                    <!-- Lineas -->
+                                    <t t-foreach="o.order_line" t-as="item">
+                                        <t t-if="item.display_type == 'line_section'">
+                                            <tr>
+                                                <td name="td_section_line" colspan="99">
+                                                    <span t-field="item.name"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-elif="item.display_type == 'line_note'">
+                                            <tr>
+                                                <td name="td_note_line" colspan="99">
+                                                    <span t-field="item.name"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-else="">
+                                            <tr>
+                                                <td class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.product_id.default_code"/></span>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.name"/></span>
+                                                </td>
+                                                <td class="text-center">
+                                                    <span style="font-size:12px;"><t t-esc="item.product_id.warehouse_id.name"/></span>
+                                                </td>
+                                                <td class="text-right">
+                                                    <span style="font-size:12px;"><t t-esc="item.product_uom_qty" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                                <td class="text-right">
+                                                    <span style="font-size:12px;"><t t-esc="item.product_id.filler" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                                <td class="text-right">
+                                                    <span style="font-size:12px;"><t t-esc="item.price_unit" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                                <td class="text-right">
+                                                    <span style="font-size:12px;"><t t-esc="item.discount" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                                <td class="text-right">
+                                                    <span style="font-size:12px;"><t t-esc="item.product_id.filler * item.product_uom_qty" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                </td>
+                                                <td class="text-right">
+                                                    <span style="font-size:12px;"><t t-esc="item.price_subtotal" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></span>
+                                                </td>
+                                            </tr>
+                                            <t t-set="amount" t-value="item.price_unit * item.product_uom_qty"/>
+                                            <t t-set="subtotal" t-value="subtotal + amount"/>
+                                            <t t-set="total_discount" t-value="total_discount + ((amount * item.discount) / 100)"/>
+                                            <t t-set="total_qty" t-value="total_qty + item.product_uom_qty"/>
+                                            <t t-set="fillert" t-value="fillert + (item.product_uom_qty * item.product_id.filler)"/>
+                                        </t>
+                                    </t>
+                                    <!-- Fin lineas -->
+
+                                    <!-- Totales -->
+                                    <tr>
+                                        <td colspan="2"></td>
+                                        <td class="text-right">
+                                            <b style="font-size:12px;">Subtotal</b>
+                                        </td>
+                                        <td class="text-right">
+                                            <span style="font-size:12px;"><t t-esc="total_qty" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                        </td>
+                                        <td colspan="3"></td>
+                                        <td class="text-right">
+                                            <span style="font-size:12px;"><t t-esc="fillert" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                        </td>
+                                    </tr>
+                                    <!-- Fin totales -->
+                                </tbody>     
+                            </table>
+                            
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- product.product inherit form view -->
+        <record id="product_normal_form_view_extend" model="ir.ui.view">
+            <field name="name">product.product.inherit.view.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <!-- Add your xpath here -->
+                <xpath expr="//page[@name='invoicing']" position="after">
+                    <page name="prices_list" string="Prices List">
+                        <field name="prices_list_item_ids">
+                            <tree>
+                                <field name="pricelist_id"/>
+                                <field name="min_quantity"/>
+                                <field name="fixed_price"/>
+                                <field name="currency_id"/>
+                                <field name="date_start"/>
+                                <field name="date_end"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        
+        <!-- product.template inherit form view -->
+        <record id="product_template_only_form_view_extend" model="ir.ui.view">
+            <field name="name">product.template.inherit.view.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <!-- Add your xpath here -->
+                <xpath expr="//page[@name='invoicing']" position="after">
+                    <page name="prices_list" string="Prices List">
+                        <field name="prices_list_item_ids">
+                            <tree>
+                                <field name="pricelist_id"/>
+                                <field name="product_id"/>
+                                <field name="min_quantity"/>
+                                <field name="fixed_price"/>
+                                <field name="currency_id"/>
+                                <field name="date_start"/>
+                                <field name="date_end"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

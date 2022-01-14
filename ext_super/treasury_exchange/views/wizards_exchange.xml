@@ -1,0 +1,52 @@
+<odoo>
+
+    <data noupdate="0">
+        <record id="wizard_exchange" model="ir.ui.view">
+            <field name="name">Asistente de Reporte de Transacciones de Cambio</field>
+            <field name="model">transaction.exchange</field>
+            <field name="arch" type="xml">
+                <form string="Reporte de Transacciones de Cambio">
+                    <field invisible="1" name="state"/>
+                    <div states="choose">
+                        <group >
+                            <group >
+                                <field name="date_from" required="1"/>
+                            </group>
+                            <group >
+                                <field name="date_to" required="1"/>
+                            </group>
+                        </group>
+                    </div>
+                    <div states="get">
+                        <group>
+                            <field name="name" colspan="4" invisible="1"/>
+                            <field name="report" filename="name" colspan="4"/>
+                        </group>
+                    </div>
+                    <footer states="choose">
+                        <button name="generate_xls_report" string="Exportar XLS" type="object" class="oe_highlight" />
+                        <button special="cancel" string="Cancelar" class="oe_highlight" />
+                    </footer>
+                    <footer states="get">
+                        <button special="cancel" string="Cancel" class="oe_highlight" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_exchange_report" model="ir.actions.act_window">
+            <field name="name">Reporte de Transacciones de Cambio</field>
+            <field name="res_model">transaction.exchange</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_exchange"/>
+            <field name="target">new</field>
+        </record>
+        
+        <menuitem   name="Reporte de Transacciones de Cambio" 
+                    parent="treasury_exchange.menu_transactions"
+                    id="report_menu" 
+                    action="treasury_exchange.action_exchange_report"
+                    sequence="2"
+                    />
+    </data>
+
+</odoo>

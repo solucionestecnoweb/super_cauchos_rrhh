@@ -1,0 +1,408 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* vat_declaration_payment
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-09-29 15:55+0000\n"
+"PO-Revision-Date: 2021-09-29 15:55+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.external_layout_vat_declaration_payment
+msgid ""
+"<b style=\"font-size:12px;\">Page <span class=\"page\" style=\"font-"
+"size:12px;\"/> / <span class=\"topage\" style=\"font-size:12px;\"/></b><br/>"
+msgstr ""
+"<b style=\"font-size:12px;\">Página <span class=\"page\" style=\"font-"
+"size:12px;\"/> / <span class=\"topage\" style=\"font-size:12px;\"/></b><br/>"
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.vat_declaration_payment_report
+msgid "<b style=\"font-size:12px;\">Purchase of Exempt Products</b>"
+msgstr "<b style=\"font-size:12px;\">Compra de Productos Exentos</b>"
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.vat_declaration_payment_report
+msgid "<b style=\"font-size:12px;\">Purchases from Import Suppliers</b>"
+msgstr "<b style=\"font-size:12px;\">Compras a Proveedores de Importaciones</b>"
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.vat_declaration_payment_report
+msgid "<b style=\"font-size:12px;\">Purchases from National Suppliers</b>"
+msgstr "<b style=\"font-size:12px;\">Compras a Proveedores Nacionales</b>"
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.vat_declaration_payment_report
+msgid "<b style=\"font-size:12px;\">Sale of Exempt Products</b>"
+msgstr "<b style=\"font-size:12px;\">Venta de Productos Exentos</b>"
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.vat_declaration_payment_report
+msgid "<b style=\"font-size:12px;\">Sales to Exempt Customers</b>"
+msgstr "<b style=\"font-size:12px;\">Ventas a Clientes Exentos</b>"
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.vat_declaration_payment_report
+msgid "<b style=\"font-size:12px;\">Sales to Export Clients</b>"
+msgstr "<b style=\"font-size:12px;\">Ventas a Clientes de Exportación</b>"
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.vat_declaration_payment_report
+msgid "<b style=\"font-size:12px;\">Sales to Final Consumers</b>"
+msgstr "<b style=\"font-size:12px;\">Ventas a Consumidores Finales</b>"
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.vat_declaration_payment_report
+msgid "<b style=\"font-size:12px;\">Sales to Taxpayers</b>"
+msgstr "<b style=\"font-size:12px;\">Ventas a Contribuyentes</b>"
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.vat_declaration_payment_report
+msgid "<b style=\"font-size:12px;\">Total Net Purchases</b>"
+msgstr "<b style=\"font-size:12px;\">Total Compras Netas</b>"
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.vat_declaration_payment_report
+msgid "<b style=\"font-size:12px;\">Total Net Sales</b>"
+msgstr "<b style=\"font-size:12px;\">Total Ventas Netas</b>"
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.vat_declaration_payment_report
+msgid "<b style=\"font-size:12px;\">Total Tax Base and Tax Debits</b>"
+msgstr "<b style=\"font-size:12px;\">Total Base Imponible y Débitos Fiscales</b>"
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.vat_declaration_payment_report
+msgid "<b style=\"font-size:12px;\">Total Tax to Pay</b>"
+msgstr "<b style=\"font-size:12px;\">Total Impuesto a Pagar</b>"
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.vat_declaration_payment_report
+msgid "<b style=\"font-size:12px;\">Total Taxable Base and Tax Credits</b>"
+msgstr "<b style=\"font-size:12px;\">Total Base Imponible y Créditos Fiscales</b>"
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.vat_declaration_payment_report
+msgid "<b style=\"font-size:12px;\">Total VAT Withheld Receivable</b>"
+msgstr "<b style=\"font-size:12px;\">Total I.V.A. Retenido x Cobrar</b>"
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.vat_declaration_payment_report
+msgid "<b style=\"font-size:12px;\">Total VAT Withheld to Pay</b>"
+msgstr "<b style=\"font-size:12px;\">Total I.V.A. Retenido x Pagar</b>"
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.vat_declaration_payment_report
+msgid "<b style=\"font-size:12px;\">Total</b>"
+msgstr ""
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.external_layout_vat_declaration_payment
+msgid ""
+"<br/>\n"
+"                            <b style=\"font-size:20px;\">Summary for VAT Declaration and Payment</b><br/>"
+msgstr ""
+"<br/>\n"
+"                            <b style=\"font-size:20px;\">Resumen para Declaración y Pago del IVA</b><br/>"
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.vat_declaration_payment_report
+msgid "<span style=\"font-size:14px;\">Credit</span>"
+msgstr "<span style=\"font-size:14px;\">Crédito</span>"
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.vat_declaration_payment_report
+msgid "<span style=\"font-size:14px;\">Credits of the Period</span>"
+msgstr "<span style=\"font-size:14px;\">Créditos del Periodo</span>"
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.vat_declaration_payment_report
+msgid "<span style=\"font-size:14px;\">Date</span>"
+msgstr "<span style=\"font-size:14px;\">Fecha</span>"
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.vat_declaration_payment_report
+msgid "<span style=\"font-size:14px;\">Debit</span>"
+msgstr "<span style=\"font-size:14px;\">Débito</span>"
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.vat_declaration_payment_report
+msgid "<span style=\"font-size:14px;\">Debits of the Period</span>"
+msgstr "<span style=\"font-size:14px;\">Débitos del Periodo</span>"
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.vat_declaration_payment_report
+msgid "<span style=\"font-size:14px;\">Difference</span>"
+msgstr "<span style=\"font-size:14px;\">Diferencia</span>"
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.vat_declaration_payment_report
+msgid "<span style=\"font-size:14px;\">Purchases</span>"
+msgstr "<span style=\"font-size:14px;\">Compras</span>"
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.vat_declaration_payment_report
+msgid "<span style=\"font-size:14px;\">Sales</span>"
+msgstr "<span style=\"font-size:14px;\">Ventas</span>"
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.vat_declaration_payment_report
+msgid "<span style=\"font-size:14px;\">Tax Base</span>"
+msgstr "<span style=\"font-size:14px;\">Base Imponible</span>"
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.vat_declaration_payment_report
+msgid "<span style=\"font-size:14px;\">Total Purchases</span>"
+msgstr "<span style=\"font-size:14px;\">Total Compras</span>"
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.vat_declaration_payment_report
+msgid "<span style=\"font-size:14px;\">Total Sales</span>"
+msgstr "<span style=\"font-size:14px;\">Total Ventas</span>"
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.vat_declaration_payment_report
+msgid "<span style=\"font-size:14px;\">VAT Included</span>"
+msgstr "<span style=\"font-size:14px;\">IVA Incluido</span>"
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.vat_declaration_payment_report
+msgid "<span style=\"font-size:14px;\">VAT Withheld</span>"
+msgstr "<span style=\"font-size:14px;\">I.V.A. Ret.</span>"
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.vat_declaration_payment_report
+msgid "<span style=\"font-size:14px;\">VAT</span>"
+msgstr "<span style=\"font-size:14px;\">IVA</span>"
+
+#. module: vat_declaration_payment
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_temporal_credits_amounts__base
+msgid "Base"
+msgstr ""
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.wizard_vat_declaration_payment
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: vat_declaration_payment
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_wizard_vat_declaration_payment__company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: vat_declaration_payment
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_temporal_credits_amounts__create_uid
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_vat_declaration_payment__create_uid
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_wizard_vat_declaration_payment__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: vat_declaration_payment
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_temporal_credits_amounts__create_date
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_vat_declaration_payment__create_date
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_wizard_vat_declaration_payment__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: vat_declaration_payment
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_temporal_credits_amounts__credit
+msgid "Credit"
+msgstr "Crédito"
+
+#. module: vat_declaration_payment
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_wizard_vat_declaration_payment__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: vat_declaration_payment
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_wizard_vat_declaration_payment__date_from
+msgid "Date From"
+msgstr "Desde"
+
+#. module: vat_declaration_payment
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_wizard_vat_declaration_payment__date_now
+msgid "Date Now"
+msgstr "Ahora"
+
+#. module: vat_declaration_payment
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_wizard_vat_declaration_payment__date_to
+msgid "Date To"
+msgstr "Hasta"
+
+#. module: vat_declaration_payment
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_vat_declaration_payment__difference
+msgid "Difference"
+msgstr "Diferencia"
+
+#. module: vat_declaration_payment
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_temporal_credits_amounts__display_name
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_vat_declaration_payment__display_name
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_wizard_vat_declaration_payment__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.wizard_vat_declaration_payment
+msgid "Export PDF"
+msgstr "Exportar PDF"
+
+#. module: vat_declaration_payment
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_wizard_vat_declaration_payment__name
+msgid "File Name"
+msgstr "Nombre del Archivo"
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.external_layout_vat_declaration_payment
+msgid "From:"
+msgstr "Desde:"
+
+#. module: vat_declaration_payment
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_temporal_credits_amounts__id
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_vat_declaration_payment__id
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_wizard_vat_declaration_payment__id
+msgid "ID"
+msgstr ""
+
+#. module: vat_declaration_payment
+#: model:ir.model.fields.selection,name:vat_declaration_payment.selection__temporal_credits_amounts__supplier_type__international
+msgid "International"
+msgstr "Internacional"
+
+#. module: vat_declaration_payment
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_temporal_credits_amounts__iva_exempt
+msgid "Iva Exempt"
+msgstr "IVA Exento"
+
+#. module: vat_declaration_payment
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_temporal_credits_amounts__iva_with
+msgid "Iva With"
+msgstr "IVA Ret"
+
+#. module: vat_declaration_payment
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_temporal_credits_amounts____last_update
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_vat_declaration_payment____last_update
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_wizard_vat_declaration_payment____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: vat_declaration_payment
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_temporal_credits_amounts__write_uid
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_vat_declaration_payment__write_uid
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_wizard_vat_declaration_payment__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: vat_declaration_payment
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_temporal_credits_amounts__write_date
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_vat_declaration_payment__write_date
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_wizard_vat_declaration_payment__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: vat_declaration_payment
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_wizard_vat_declaration_payment__lines_ids
+msgid "Lines"
+msgstr "Lineas"
+
+#. module: vat_declaration_payment
+#: model:ir.model.fields.selection,name:vat_declaration_payment.selection__temporal_credits_amounts__supplier_type__national
+msgid "National"
+msgstr "Nacional"
+
+#. module: vat_declaration_payment
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_wizard_vat_declaration_payment__report
+msgid "Prepared file"
+msgstr "Archivo Preparado"
+
+#. module: vat_declaration_payment
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_wizard_vat_declaration_payment__state
+msgid "State"
+msgstr "Estado"
+
+#. module: vat_declaration_payment
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_temporal_credits_amounts__supplier_type
+msgid "Supplier Type"
+msgstr "Tipo de Proveedor"
+
+#. module: vat_declaration_payment
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_vat_declaration_payment__p_tax_base
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_vat_declaration_payment__s_tax_base
+msgid "Tax Base"
+msgstr "Base Imponible"
+
+#. module: vat_declaration_payment
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.external_layout_vat_declaration_payment
+msgid "To:"
+msgstr "Hasta:"
+
+#. module: vat_declaration_payment
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_vat_declaration_payment__p_vat
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_vat_declaration_payment__s_vat
+msgid "VAT"
+msgstr "IVA"
+
+#. module: vat_declaration_payment
+#: model:ir.ui.menu,name:vat_declaration_payment.vat_declaration_payment_menu
+#: model_terms:ir.ui.view,arch_db:vat_declaration_payment.wizard_vat_declaration_payment
+msgid "VAT Declaration and Payment Report"
+msgstr "Reporte de Declaración y Pago de IVA"
+
+#. module: vat_declaration_payment
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_vat_declaration_payment__p_vat_included
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_vat_declaration_payment__s_vat_included
+msgid "VAT Included"
+msgstr "IVA Incluido"
+
+#. module: vat_declaration_payment
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_vat_declaration_payment__p_vat_withheld
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_vat_declaration_payment__s_vat_withheld
+msgid "VAT Withheld"
+msgstr "IVA Retenido"
+
+#. module: vat_declaration_payment
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_vat_declaration_payment__wizard_id
+msgid "Wizard"
+msgstr "Asistente"
+
+#. module: vat_declaration_payment
+#: model:ir.model.fields.selection,name:vat_declaration_payment.selection__wizard_vat_declaration_payment__state__choose
+msgid "choose"
+msgstr ""
+
+#. module: vat_declaration_payment
+#: model:ir.model.fields,field_description:vat_declaration_payment.field_vat_declaration_payment__date
+msgid "date"
+msgstr "Fecha"
+
+#. module: vat_declaration_payment
+#: model:ir.model.fields.selection,name:vat_declaration_payment.selection__wizard_vat_declaration_payment__state__get
+msgid "get"
+msgstr ""
+
+#. module: vat_declaration_payment
+#: model:ir.model,name:vat_declaration_payment.model_temporal_credits_amounts
+msgid "temporal.credits.amounts"
+msgstr ""
+
+#. module: vat_declaration_payment
+#: model:ir.model,name:vat_declaration_payment.model_vat_declaration_payment
+msgid "vat.declaration.payment"
+msgstr ""
+
+#. module: vat_declaration_payment
+#: model:ir.actions.report,name:vat_declaration_payment.action_vat_declaration_payment
+msgid "vat_declaration_payment_report"
+msgstr ""
+
+#. module: vat_declaration_payment
+#: model:ir.model,name:vat_declaration_payment.model_wizard_vat_declaration_payment
+msgid "wizard.vat.declaration.payment"
+msgstr ""

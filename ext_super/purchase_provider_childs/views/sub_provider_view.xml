@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="0">
+        <!-- Add you code here -->
+        <!-- res.partner inherit form view -->
+        <record id="sub_provider_view_extend_res_partner" model="ir.ui.view">
+            <field name="name">res.partner.inherit.view.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <!-- Add your xpath here -->
+                <xpath expr="//page[@name='other_client_data']" position="after">
+                    <page string="Sub Providers" name="sub_providers">
+                        <field name="provider_childs_ids" mode="kanban" context="{'provider_parent_id': active_id, 'default_street': street, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_lang': lang, 'default_user_id': user_id, 'default_type': 'other'}">
+                            <kanban>
+                                <field name="id"/>
+                                <field name="color"/>
+                                <field name="name"/>
+                                <field name="title"/>
+                                <field name="type"/>
+                                <field name="email"/>
+                                <field name="provider_parent_id"/>
+                                <field name="is_company"/>
+                                <field name="function"/>
+                                <field name="phone"/>
+                                <field name="street"/>
+                                <field name="street2"/>
+                                <field name="zip"/>
+                                <field name="city"/>
+                                <field name="country_id"/>
+                                <field name="mobile"/>
+                                <field name="state_id"/>
+                                <field name="image_128"/>
+                                <field name="lang"/>
+                                <!-- fields in form x2many view to diminish requests -->
+                                <field name="comment"/>
+                                <field name="display_name"/>
+                                <templates>
+                                    <t t-name="kanban-box">
+                                        <t t-set="color" t-value="kanban_color(record.color.raw_value)"/>
+                                        <div t-att-class="color + (record.title.raw_value == 1 ? ' oe_kanban_color_alert' : '') + ' oe_kanban_global_click'">
+                                            <div class="o_kanban_image">
+                                                <img alt="" t-if="record.image_128.raw_value" t-att-src="kanban_image('res.partner', 'image_128', record.id.raw_value)"/>
+                                                <t t-if="!record.image_128.raw_value">
+                                                    <img alt="Delivery" t-if="record.type.raw_value === 'delivery'" t-att-src="_s + &quot;/base/static/img/truck.png&quot;"/>
+                                                    <img alt="Invoice" t-if="record.type.raw_value === 'invoice'" t-att-src="_s + &quot;/base/static/img/money.png&quot;"/>
+                                                    <t t-if="record.type.raw_value !== 'invoice' &amp;&amp; record.type.raw_value !== 'delivery'">
+                                                        <img alt="Logo" t-if="record.is_company.raw_value === true" t-att-src="_s + &quot;/base/static/img/company_image.png&quot;"/>
+                                                        <img alt="Avatar" t-if="record.is_company.raw_value === false" t-att-src="_s + &quot;/base/static/img/avatar_grey.png&quot;"/>
+                                                    </t>
+                                                </t>
+                                            </div>
+                                            <div class="oe_kanban_details">
+                                                <field name="name"/>
+                                                <div t-if="record.function.raw_value"><field name="function"/></div>
+                                                <div t-if="record.email.raw_value"><field name="email" widget="email"/></div>
+                                                <div t-if="record.type.raw_value != 'contact'">
+                                                    <div>
+                                                        <field name="zip"/>
+                                                        <field name="city"/>
+                                                    </div>
+                                                    <field t-if="record.state_id.raw_value" name="state_id"/>
+                                                    <field name="country_id"/>
+                                                </div>
+                                                <div t-if="record.phone.raw_value">Phone: <field name="phone" widget="phone"/></div>
+                                                <div t-if="record.mobile.raw_value">Mobile: <field name="mobile" widget="phone"/></div>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </templates>
+                            </kanban>
+                            <form string="Contact / Address">
+                                <sheet>
+                                    <!-- provider_parent_id and type fields needed in attrs in base_address_city module which overwrites
+                                    _fields_view_get() of partner. It would be better to put those fields there but the web client
+                                    dosen't support when a field is displayed several times in the same view.-->
+                                    <field name="type" required="1" widget="radio" options="{'horizontal': true}"/>
+                                    <field name="provider_parent_id" invisible="1"/>
+                                    <hr/>
+                                    <group col="12">
+                                        <group colspan="5">
+                                            <field name="name" string="Provider Name" attrs="{'required' : [('type', '=', 'contact')]}"/>
+                                            <field name="title" placeholder="e.g. Mr." attrs="{'invisible': [('type','!=', 'contact')]}"/>
+                                            <field name="function" placeholder="e.g. Sales Director" attrs="{'invisible': [('type','!=', 'contact')]}"/>
+                                            <label for="street" string="Address" attrs="{'invisible': [('type','=', 'contact')]}"/>
+                                            <div attrs="{'invisible': [('type','=', 'contact')]}">
+                                                <div class="o_address_format" name="div_address">
+                                                    <field name="street" placeholder="Street..." class="o_address_street"/>
+                                                    <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                                                    <field name="city" placeholder="City" class="o_address_city"/>
+                                                    <field name="state_id" class="o_address_state" placeholder="State" options="{&quot;no_open&quot;: True}" context="{'country_id': country_id, 'zip': zip}"/>
+                                                    <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                                    <field name="country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                                                </div>
+                                            </div>
+                                            <field name="comment" placeholder="Internal notes..."/>
+                                        </group>
+                                        <group colspan="5">
+                                            <field name="email" widget="email"/>
+                                            <field name="phone" widget="phone"/>
+                                            <field name="mobile" widget="phone"/>
+                                            <field name="company_id" invisible="1"/>
+                                        </group>
+                                        <group colspan="1">
+                                            <field name="image_1920" widget="image" class="oe_avatar" nolabel="1" options="{'image_preview': 'image_128'}"/>
+                                        </group>
+                                        <field name="bank_ids" nolabel="1">
+                                            <tree editable="bottom">
+                                                <field name="bank_id"/>
+                                                <field name="acc_number"/>
+                                                <field name="acc_holder_name" invisible="1"/>
+                                            </tree>
+                                        </field>
+                                    </group>
+                                    <field name="lang" invisible="True"/>
+                                    <field name="user_id" invisible="True"/>
+                                </sheet>
+                            </form>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

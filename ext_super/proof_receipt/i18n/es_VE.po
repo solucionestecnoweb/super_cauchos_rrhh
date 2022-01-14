@@ -1,0 +1,165 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* daily_book
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0+e-20210627\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-08-12 19:02+0000\n"
+"PO-Revision-Date: 2021-08-12 19:02+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: daily_book
+#: model_terms:ir.ui.view,arch_db:daily_book.daily_book_report
+msgid "<b style=\"font-size:12px;\">Total General</b>"
+msgstr ""
+
+#. module: daily_book
+#: model_terms:ir.ui.view,arch_db:daily_book.external_layout_daily_book_report
+msgid ""
+"<br/>\n"
+"                            <b style=\"font-size:20px;\">SUPERCAUCHO CHAKAO, C.A.</b><br/>\n"
+"                            <small style=\"font-size:12px;\">R.I.F J412204190</small><br/>\n"
+"                            <b style=\"font-size:20px;\">DIARIO LEGAL</b><br/>"
+msgstr ""
+
+#. module: daily_book
+#: model_terms:ir.ui.view,arch_db:daily_book.external_layout_daily_book_report
+msgid ""
+"<br/><br/><br/><br/><br/>\n"
+"                            <b style=\"font-size:12px;\">Página<span class=\"page\" style=\"font-size:12px;\"/>de<span class=\"topage\" style=\"font-size:12px;\"/></b><br/>"
+msgstr ""
+
+#. module: daily_book
+#: model_terms:ir.ui.view,arch_db:daily_book.daily_book_report
+msgid "<span style=\"font-size:14px;\">Crédito</span>"
+msgstr ""
+
+#. module: daily_book
+#: model_terms:ir.ui.view,arch_db:daily_book.daily_book_report
+msgid "<span style=\"font-size:14px;\">Código</span>"
+msgstr ""
+
+#. module: daily_book
+#: model_terms:ir.ui.view,arch_db:daily_book.daily_book_report
+msgid "<span style=\"font-size:14px;\">Descripción de la cuenta</span>"
+msgstr ""
+
+#. module: daily_book
+#: model_terms:ir.ui.view,arch_db:daily_book.daily_book_report
+msgid "<span style=\"font-size:14px;\">Débito</span>"
+msgstr ""
+
+#. module: daily_book
+#: code:addons/daily_book/wizard/wizard_daily_book_inherit.py:0
+#, python-format
+msgid "Account Description"
+msgstr "Descripción de la cuenta"
+
+#. module: daily_book
+#: code:addons/daily_book/wizard/wizard_daily_book_inherit.py:0
+#, python-format
+msgid "Code"
+msgstr "Código"
+
+#. module: daily_book
+#: code:addons/daily_book/wizard/wizard_daily_book_inherit.py:0
+#, python-format
+msgid "Credit"
+msgstr "Crédito"
+
+#. module: daily_book
+#: code:addons/daily_book/wizard/wizard_daily_book_inherit.py:0
+#: code:addons/daily_book/wizard/wizard_daily_book_inherit.py:0
+#: model_terms:ir.ui.view,arch_db:daily_book.view_form_libro_diario_extended
+#, python-format
+msgid "Daily Book"
+msgstr "Libro Diario"
+
+#. module: daily_book
+#: code:addons/daily_book/wizard/wizard_daily_book_inherit.py:0
+#, python-format
+msgid "Daily Book "
+msgstr "Libro Diario"
+
+#. module: daily_book
+#: model:ir.model.fields,field_description:daily_book.field_wizard_libro_diario__date_now
+msgid "Date Now"
+msgstr "Fecha Actual"
+
+#. module: daily_book
+#: model_terms:ir.ui.view,arch_db:daily_book.view_form_libro_diario_extended
+msgid "Date form"
+msgstr "Desde"
+
+#. module: daily_book
+#: model_terms:ir.ui.view,arch_db:daily_book.view_form_libro_diario_extended
+msgid "Date to"
+msgstr "Hasta"
+
+#. module: daily_book
+#: code:addons/daily_book/wizard/wizard_daily_book_inherit.py:0
+#, python-format
+msgid "Debit"
+msgstr "Débito"
+
+#. module: daily_book
+#: model_terms:ir.ui.view,arch_db:daily_book.view_form_libro_diario_extended
+msgid "Export PDF"
+msgstr "Exportar PDF"
+
+#. module: daily_book
+#: model_terms:ir.ui.view,arch_db:daily_book.view_form_libro_diario_extended
+msgid "Export XLS"
+msgstr "Exportar XLS"
+
+#. module: daily_book
+#: model:ir.model.fields,field_description:daily_book.field_wizard_libro_diario__name
+msgid "File Name"
+msgstr "Nombre del Archivo"
+
+#. module: daily_book
+#: model:ir.model,name:daily_book.model_wizard_libro_diario
+msgid "Libro Diario"
+msgstr ""
+
+#. module: daily_book
+#: model:ir.model.fields,field_description:daily_book.field_wizard_libro_diario__report
+msgid "Prepared file"
+msgstr "Archivo preparado"
+
+#. module: daily_book
+#: model:ir.model.fields,field_description:daily_book.field_wizard_libro_diario__state
+msgid "State"
+msgstr ""
+
+#. module: daily_book
+#: model:ir.model.fields.selection,name:daily_book.selection__wizard_libro_diario__state__choose
+msgid "choose"
+msgstr ""
+
+#. module: daily_book
+#: model_terms:ir.ui.view,arch_db:daily_book.view_form_libro_diario_extended
+msgid "form"
+msgstr ""
+
+#. module: daily_book
+#: model:ir.model.fields.selection,name:daily_book.selection__wizard_libro_diario__state__get
+msgid "get"
+msgstr ""
+
+#. module: daily_book
+#: model_terms:ir.ui.view,arch_db:daily_book.view_form_libro_diario_extended
+msgid "new"
+msgstr ""
+
+#. module: daily_book
+#: model_terms:ir.ui.view,arch_db:daily_book.view_form_libro_diario_extended
+msgid "wizard.libro.diario"
+msgstr "Asistente Libro "

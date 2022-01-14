@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data> 
+
+        <template id="report_pago">
+            <t t-call="web.html_container">
+              <t t-call="web.basic_layout" >
+                
+                <div class="page">
+                    <t t-foreach="range(2)" t-as="i">
+                        <table width="100%">
+                            <tr>
+                                <td style="width:30%;text-align:left;">
+                                    <t t-if="docs.company_id.logo">  
+                                        <img t-attf-src="data:image/*;base64,{{docs.company_id.logo}}" style="width:auto; height:80px;"/>
+                                    </t>
+
+                                </td>
+                                <td align="right">
+                                    <div>
+                                        Fecha: <t t-esc="docs.payment_date"/><br/>
+                                        Recibo nro: <t t-esc="docs.nro_recibo"/>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="font-size:13px;">
+                                    <t t-esc="docs.company_id.street"/><br/>
+                                    <t t-esc="docs.company_id.street2"/><br/>
+                                    <t t-esc="docs.company_id.city"/>
+                                    <t t-esc="docs.company_id.zip"/>
+                                </td>
+                            </tr>
+                            <tr><td></td></tr>
+                            <tr align="center"><td colspan="2"><h3>Recibo de Anticipo</h3></td></tr>
+                            <tr>
+                                <td style="font-size:13px;">
+                                    Hemos entregado a: <t t-esc="docs.employee_id.name"/> <br/>
+                                    Cedula: <t t-esc="docs.employee_id.identification_id"/><br/>
+                                    La cantidad de: <t t-esc="docs.get_literal_amount(docs.amount)"/> <t t-esc="docs.currency_id.name"/>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <br/>
+
+                        <table style="width: 100%;">
+                            <thead>
+                                <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Tipo de Pago</th>
+                                <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Método de Pago</th>
+                                <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Monto Entregado</th>
+                                <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Nro de Referencia</th>
+                            </thead>
+                            <tr align="center">
+                                <td class="text-center border border-dark" style="font-size:14px;">
+                                    Entrega de Anticipos
+                                </td>
+                                <td class="text-center border border-dark" style="font-size:14px;">
+                                    <t t-esc="docs.payment_method_id.name"/>
+                                </td>
+                                <td class="text-center border border-dark" style="font-size:14px;">
+                                    <t t-esc="docs.amount"/> <t t-esc="docs.currency_id.name"/>
+                                </td>
+                                <td class="text-center border border-dark" style="font-size:14px;">
+                                    <t t-esc="docs.nro_ref"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <br/><br/>
+                        <div style="margin-top: 60px;">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-5 text-center">
+                                        <span style="font-size:12px;">Realizado por: <t t-esc="docs.create_uid.name"/></span><br/>
+                                    </div>
+                                    <div class="col-4 text-center">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-2">
+                                                </div>
+                                                <div class="col-10 border-top border-dark text-center">
+                                                    <span style="font-size:12px;">Firma conforme</span><br/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br/> <br/> <br/><br/> 
+                    </t>
+                    
+                </div>
+              </t>
+          </t>
+      </template>
+
+        <report
+            id="recibo_pago_anticipo"
+            model="account.gasto.anticipo"
+            string="Recibo de Pago Anticipo"
+            report_type="qweb-pdf"
+            name="hr_expense_gastos_anticipo.report_pago"
+            file="hr_expense_gastos_anticipo.report_pago"
+        />
+
+    </data>
+</odoo>

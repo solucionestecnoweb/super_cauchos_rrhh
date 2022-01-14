@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- Add you code here -->
+    <record id="wizard_legal_ledger" model="ir.ui.view">
+        <field name="name">Asistente de Reporte de Libro Mayor Legal</field>
+        <field name="model">wizard.legal.ledger</field>
+        <field name="arch" type="xml">
+            <form string="Libro Mayor Legal">
+                <field invisible="1" name="state"/>
+                <div states="choose">
+                    <group >
+                        <group >
+                            <field name="date_from" string="Desde" required="1"/>
+                            <field name="currency_id" string="Moneda" required="1"/>
+                        </group>
+                        <group >
+                            <field name="date_to" string="Hasta" required="1"/>
+                        </group>
+                    </group>
+                </div>
+                <div states="get">
+                    <group>
+                        <field name="name" colspan="4" invisible="1"/>
+                        <field name="report" filename="name" colspan="4"/>
+                    </group>
+                </div>
+                <footer states="choose">
+                    <button name="generate_xls_report" string="Exportar EXCEL" type="object" class="oe_highlight" />
+                    <button name="print_pdf" string="Exportar PDF" type="object" class="oe_highlight" />
+                    <button special="cancel" string="Cancelar" class="oe_highlight" />
+                </footer>
+                <footer states="get">
+                    <button special="cancel" string="Cancelar" class="oe_highlight" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_legal_ledger" model="ir.actions.act_window">
+        <field name="name">Libro Mayor Legal</field>
+        <field name="res_model">wizard.legal.ledger</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="wizard_legal_ledger"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem   name="Libro Mayor Legal" 
+                parent="account.menu_finance_reports" 
+                id="legal_ledger_menu" 
+                action="action_legal_ledger"
+                sequence="12"
+                />
+</odoo>

@@ -1,0 +1,71 @@
+<odoo>
+    <data>
+
+    <record id="vista_from_pago_employee" model="ir.ui.view">
+        <field name="name">vista.from.pago_cli</field>
+        <field name="model">hr.ext.payment</field>
+        <field name="arch" type="xml">
+            <form string="Registro de Pago ">
+                <header>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,paid" readonly="True"/>
+                        <button name="pagar" string="Registrar Pago" type="object" attrs="{'invisible': [('state','=','paid')]}"/>
+                        <button name="cancel" string="Cancelar" type="object"/>
+                        <!-- attrs="{'invisible': [('manual', '=',False)]}"-->
+                </header>
+                <sheet>
+                    <group name="central">
+                        <group> 
+                            <field name="name" string="Nro de Transacción" readonly="1"/>
+                            <field name="employee_id" string="Empleado a pagar" attrs="{'readonly': [('state', '!=','draft')]}"/>
+                            <field name="company_id" string="Compañia" readonly="1"/>
+                            <field name="account_journal_id" string="Diario"  attrs="{'readonly': [('state', '!=','draft')]}"/>   
+                            <div class="address_format">
+                                <h5>Monto adeudado</h5>
+                                <field name="monto_pendiente" readonly="1"/> 
+                                <field name="moneda_venta" readonly="1"/>   
+                            </div>  
+                            <field name="informe_id" readonly="0"/>    
+                        </group>
+                        <group>
+                            <field name="fecha" string="Fecha de pago" attrs="{'readonly': [('state', '!=','draft')]}"/>
+                            <field name="monto" string="Monto a cancelar" attrs="{'readonly': [('state', '!=','draft')]}"/>
+                            <field name="monto_signed" invisible="1"/>
+                            <field name="currency_id" string="Moneda" attrs="{'readonly': [('state', '!=','draft')]}"/>
+                            <field name="tasa" attrs="{'readonly': [('state', '!=','draft')]}"/>
+                            <field name="motivo" string="Motivo del pago" required="1"/>
+                            <field name="asiento_move_id" string="Asiento del Pago" readonly="1"/>
+
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="vista_tree_pago_employee" model="ir.ui.view">
+        <field name="name">vista.tree.pago.cli</field>
+        <field name="model">hr.ext.payment</field>
+        <field name="arch" type="xml">
+            <tree string="Registro de Pago" >
+                <field name="name" string="Nro Transacción"/>
+                
+                <field name="employee_id" string="Empleado"/>
+                <field name="fecha" string="Fecha Registro"></field>
+                <field name="company_id" string="Compañia"/>
+                <field name="monto_signed" string="Monto pagado (Bs)"></field>
+                <field name="monto_signed_uds" string="Monto Pagado ($)"/>
+                <field name="state" string="Status" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="caja_pago_employee" model="ir.actions.act_window">
+        <field name="name">Registro de pago</field>
+        <field name="res_model">hr.ext.payment</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="vista_tree_pago_employee"></field>
+    </record>
+
+</data>
+
+</odoo>

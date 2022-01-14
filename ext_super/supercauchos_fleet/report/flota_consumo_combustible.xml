@@ -1,0 +1,181 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+        <!-- Add you code here -->
+
+        <record id="paperformat_lista_horizontal" model="report.paperformat">
+
+            <field name="default" eval="True"/>
+            <field name="name">Lista Horizontal</field>
+            <field name="format">custom</field>
+            <field name="page_height">279</field>
+            <field name="page_width">216</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">30</field>
+            <field name="margin_bottom">10</field>
+            <field name="margin_left">10</field>
+            <field name="margin_right">10</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">20</field>
+            <field name="dpi">90</field>
+          </record>
+        
+        <report
+            id="action_flota_consumo_combustible"
+            model="fleet.wizard.fuel"
+            string="reporte_consumo_combustible"
+            report_type="qweb-pdf"
+            name="supercauchos_fleet.flota_consumo_combustible"
+            file="supercauchos_fleet.flota_consumo_combustible"
+            paperformat="supercauchos_fleet.paperformat_lista_horizontal"            
+            menu="True"
+            />
+
+        <template id="external_layout_flota_consumo_combustible">
+
+            <div class="header">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="col-xs-3">
+                                <img t-if="res_company.logo" t-att-src="'data:image/png;base64,%s' % to_text(res_company.logo)" style="max-height: 100px; max-width: 150px; margin-top:22px;"/>
+                            </div>
+                            <div class="col-xs-9 text-right" style="margin-top:22px;" name="moto"/>
+                        </div>
+                        <div t-if="res_company.logo or res_company.report_header" class="row zero_min_height">
+                            <div class="col-xs-12">
+                                <div style="border-bottom: 1px solid black;"/>
+                            </div>
+                        </div>
+                        <div class="col-4 text-center"><br/>
+                            <b style="font-size:20px;">Consumo de Combustible</b><br/>
+                        </div>
+                        <div class="col-4 text-right">
+                            <b style="font-size:12px;">Pagina <span class="page" style="font-size:12px;"/> / <span class="topage" style="font-size:12px;"/></b><br/>
+                            <b style="font-size:12px;" t-field="o.date_now"></b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article o_report_layout_standard">
+                <t t-raw="0"/>
+            </div>
+
+            <div class="footer">
+                <div class="text-center" style="border-top: 1px solid black;">
+                    
+                </div>
+            </div>
+        </template>
+
+        <template id="flota_consumo_combustible">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="supercauchos_fleet.external_layout_flota_consumo_combustible">
+                        
+                        <div class="page">
+                            <table class="table table-sm border border-dark" style="width:100%;">
+                                <thead>
+                                    <tr style="background-color: #3bafff">
+                                        <th class="text-center border-dark border" colspan="100%">Consumo de Combustible por Vehículo Mensual</th>
+                                    </tr>
+                                    <tr style="background-color: #3bafff">
+                                        <th class="text-center border-dark border"> </th>
+                                        <t t-set="busqueda" t-value="o.vehiculos()"/>
+                                        <t t-foreach="busqueda" t-as="item">
+                                            <th class="text-center border-dark border">
+                                                <span style="font-size:14px;"><t t-esc="item.model_id.display_name"/></span>
+                                            </th>
+                                        </t>
+                                        <th class="text-center border-dark border">
+                                            <b style="font-size:14px;">Mes</b>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="busqueda" t-value="o.combustible()"/>
+                                    <t t-set="campos" t-value="o.vehiculos()"/>
+                                    <t t-set="comodin" t-value="1"/>
+
+                                    <!-- Fecha -->
+                                    <t t-foreach="busqueda.sorted(key='date')" t-as="item">
+                                        <t t-set="f_cont" t-value="item.date.month"/>
+
+                                        <!-- Filtro por fechas -->
+                                        <t t-if="comodin == 1 or f_cont != f_cont2">
+
+                                            <t t-set="comodin" t-value="0"/>
+                                            <t t-set="f_cont2" t-value="item.date.month"/>
+                                            <t t-set="t_mes" t-value="0.0"/>
+
+                                            <tr>
+                                                <td class="text-center border-dark border" style="background-color: #3bafff">
+                                                    <b><span style="font-size:12px;"><t t-esc="item.date.strftime('%B')"/></span></b>
+                                                </td>
+
+                                                <!-- Vehiculo -->
+                                                <t t-foreach="campos" t-as="line">
+                                                    <t t-set="vehicle" t-value="line.id"/>
+                                                    <t t-set="t_auto" t-value="0.0"/>
+
+                                                    <!-- Filtro por fechas -->
+                                                    <t t-foreach="busqueda.sorted(key='vehicle_id')" t-as="lines">
+                                                        <t t-if="lines.vehicle_id.id == vehicle and lines.date.month == f_cont2">
+                                                            <t t-set="t_auto" t-value="t_auto + lines.vehicle_consume"/>
+                                                        </t>
+                                                    </t>
+
+                                                    <td class="text-center border-dark border">
+                                                        <span style="font-size:12px;"><t t-esc="t_auto"/></span>
+                                                    </td>
+                                                    <t t-set="t_mes" t-value="t_mes + t_auto"/>
+                                                </t>
+                                                <!-- Fin Vehiculo -->
+
+                                                <td class="text-center border-dark border">
+                                                    <span style="font-size:12px;"><t t-esc="t_mes"/></span>
+                                                </td>
+                                            </tr>
+                                        </t>
+
+                                    </t>
+                                    <!-- Fin Fecha -->
+
+                                    <!-- Totales -->
+                                    <tr style="background-color: #3bafff">
+                                        <td class="text-center border-dark border">
+                                            <b style="font-size:12px;">Total</b>
+                                        </td>
+                                        <t t-set="total_mes" t-value="0.0"/>
+                                        <t t-foreach="campos" t-as="tot_v">
+                                            <t t-set="vehicle" t-value="tot_v.id"/>
+                                            <t t-set="total" t-value="0.0"/>
+
+                                            <t t-foreach="busqueda.sorted(key='vehicle_id')" t-as="tot_f">
+                                                <t t-if="tot_f.vehicle_id.id == vehicle">
+                                                    <t t-set="total" t-value="total + tot_f.vehicle_consume"/>
+                                                </t>
+                                            </t>
+                                            <t t-set="total_mes" t-value="total_mes + total"/>
+
+                                            <td class="text-center border-dark border">
+                                                <b><span style="font-size:12px;"><t t-esc="total"/></span></b>
+                                            </td>
+                                        </t>
+                                        <td class="text-center border-dark border">
+                                            <span style="font-size:12px;"><t t-esc="total_mes"/></span>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>
