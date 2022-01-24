@@ -19,9 +19,16 @@ class HrEmployee(models.Model):
     profesion = fields.Many2one('hr.profesion')
     grupo_familiar_ids = fields.One2many('hr.grupo.familiar', 'employee_id', string='Grupo Familiar')
     cursos_ids = fields.One2many('hr.cursos', 'employee_id', string='Cursos')
+    promocion_ids = fields.One2many('hr.promocion', 'employee_id', string='Promociones')
     rif = fields.Char()
     tipo_contrinbuyente = fields.Selection([('v','V'),('e','E'),('j','J'),('g','G'),('p','P'),('c','C'),])
+
     direccion = fields.Text()
+    country_id = fields.Many2one('res.country')
+    state_id = fields.Many2one('res.country.state')
+    cod_post = fields.Char()
+    municipality_id = fields.Many2one('res.country.state.municipality')
+    parish_id = fields.Many2one('res.country.state.municipality.parish')
 
 class HrNivelInstruccion(models.Model):
 
@@ -48,6 +55,16 @@ class HrCursos(models.Model):
     duracion = fields.Char()
     nro_telefono = fields.Char()
     contacto = fields.Char()
+
+class HrPromosiones(models.Model):
+
+    _name = 'hr.promocion'
+
+    employee_id = fields.Many2one('hr.employee', string='Cursos')
+    job_id = fields.Many2one('hr.job')
+    motivo = fields.Char()
+    fecha = fields.Date()
+    autorizor_id = fields.Many2one('hr.employee')
 
 
 class HrGrupoFamiliar(models.Model):
