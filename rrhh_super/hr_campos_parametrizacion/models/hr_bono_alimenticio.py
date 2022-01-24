@@ -22,18 +22,18 @@ class hr_special_days(models.Model):
             dia_pago=selff.employee_id.contract_id.bono_alimenticio_dia_tasa
             valor_aux=0.000000000000000000000000000001
             if id_moneda_compa!=id_moneda_bono:
-                tasa= selff.env['res.currency.rate'].search([('currency_id','=',id_moneda_bono),('hora','<=',selff.date_to)],order="hora asc") #('hora','>=',selff.date_from)
+                tasa= selff.env['res.currency.rate'].search([('currency_id','=',id_moneda_bono),('name','<=',selff.date_to)],order="name asc") #('hora','>=',selff.date_from)
                 for det_tasa in tasa:
                     if dia_pago=='al' or not dia_pago:
-                        valor_aux=det_tasa.rate_real
+                        valor_aux=det_tasa.rate#rate_real
                     if dia_pago!='al':
-                        fecha_tasa=det_tasa.hora
+                        fecha_tasa=det_tasa.name#hora
                         dia=selff.dia(fecha_tasa)
                         mes=selff.mes(fecha_tasa)
                         ano=selff.ano(fecha_tasa)
                         dia_aux=str(calendar.weekday(ano,mes,dia))
                         if dia_pago==dia_aux:
-                            valor_aux=det_tasa.rate_real
+                            valor_aux=det_tasa.rate#rate_real
                 rate=round(1*valor_aux,2)
                 resultado=monto_bono_alimenticio*rate
             else:

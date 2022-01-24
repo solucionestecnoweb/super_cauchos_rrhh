@@ -48,6 +48,60 @@ class hr_special_days(models.Model):
     dias_utilidades = fields.Integer(compute='_compute_dias_utilidades')
     dias_por_antiguedad = fields.Integer(compute='compute_dias_por_ano_antiguedad')
 
+    # PERMISOS Y AUSENCIAS 
+    dias_permiso_remunerado = fields.Integer(compute='_compute_dias')
+    dias_no_remunerado = fields.Integer(compute='_compute_dias')
+    dias_ausencia_injus = fields.Integer(compute='_compute_dias')
+
+    dias_reposo_medico_lab = fields.Integer(compute='_compute_permiso')
+    dias_reposo_medico = fields.Integer(compute='_compute_permiso')
+    dias_pos_natal = fields.Integer(compute='_compute_permiso')
+    dias_peternidad = fields.Integer(compute='_compute_permiso')
+
+
+    @api.depends('date_from','date_to')
+    def _compute_dias(self):
+        for selff in self:
+            dias_descontar_1=dias_descontar_2=dias_descontar_3=0
+            verifica=selff.env['hr.leave'].search([('employee_id','=',selff.employee_id.id),('state','=','validate'),('request_date_to','<=',selff.date_to),('request_date_from','>=',selff.date_from)])
+            #raise UserError(_('verifica= %s')%verifica)
+            if verifica:
+                for det in verifica:
+                    if det.holiday_status_id.code=='PR':
+                        dias_descontar_1=dias_descontar_1+det.number_of_days
+                    if det.holiday_status_id.code=='PNR':
+                        dias_descontar_2=dias_descontar_2+det.number_of_days
+                    if det.holiday_status_id.code=='ANJ':
+                        dias_descontar_3=dias_descontar_3+det.number_of_days
+
+            selff.dias_permiso_remunerado=dias_descontar_1
+            selff.dias_no_remunerado=dias_descontar_2
+            selff.dias_ausencia_injus=dias_descontar_3
+
+    @api.depends('date_from','date_to')
+    def _compute_permiso(self):
+        for selff in self:
+            dias_descontar_4=0
+            dias_descontar_5=dias_descontar_6=dias_descontar_7=0
+            verifica=selff.env['hr.leave'].search([('employee_id','=',selff.employee_id.id),('state','=','validate'),('request_date_to','>=',selff.date_from)])
+            #raise UserError(_('verifica= %s')%verifica)
+            if verifica:
+                for det in verifica:
+                    if det.holiday_status_id.code=='RML':
+                        dias_descontar_4=dias_descontar_4+det.number_of_days
+                    if det.holiday_status_id.code=='RM':
+                        dias_descontar_5=dias_descontar_5+det.number_of_days
+                    if det.holiday_status_id.code=='DPPN':
+                        dias_descontar_6=dias_descontar_6+det.number_of_days
+                    if det.holiday_status_id.code=='LPP':
+                        dias_descontar_7=dias_descontar_7+det.number_of_days
+
+            selff.dias_reposo_medico_lab=dias_descontar_4
+            selff.dias_reposo_medico=dias_descontar_5
+            selff.dias_pos_natal=dias_descontar_6
+            selff.dias_peternidad=dias_descontar_7
+
+
     @api.depends('employee_id','date_from','date_to')
     def _compute_tiempo_antiguedad(self):
         tiempo=0

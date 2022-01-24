@@ -32,6 +32,24 @@
                         </group>
                     </group>
 
+                    <h3><a><b>Ausencias y Permisos (dias)</b></a></h3>
+                    <newline/>
+                    <group col="4">
+                        <group col="2">
+                            <field name="dias_permiso_remunerado" string="Aus. Remunerada"/>
+                            <field name="dias_no_remunerado" string="Aus. no Remunerada"/>
+                            <field name="dias_ausencia_injus" string="Aus. Injustificada"/>
+
+                        </group>
+                        <group col="2">
+                            <field name="dias_reposo_medico" string="Reposo Medico"/>
+                            <field name="dias_reposo_medico_lab" string="Reposo Médico Laboral"/>
+                            <field name="dias_pos_natal" string="Permiso Pre/Pos Natas"/>
+                            <field name="dias_peternidad" string="Licencia Paternidad"/>
+
+                        </group>
+                    </group>
+
                     <h3><a><b>Tiempo Laborados</b></a></h3>
                     <newline/>
                     <group col="4">
