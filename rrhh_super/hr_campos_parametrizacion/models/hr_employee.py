@@ -24,11 +24,18 @@ class HrEmployee(models.Model):
     tipo_contrinbuyente = fields.Selection([('v','V'),('e','E'),('j','J'),('g','G'),('p','P'),('c','C'),])
 
     direccion = fields.Text()
+    ciudad = fields.Char()
     country_id = fields.Many2one('res.country')
     state_id = fields.Many2one('res.country.state')
     cod_post = fields.Char()
     municipality_id = fields.Many2one('res.country.state.municipality')
     parish_id = fields.Many2one('res.country.state.municipality.parish')
+
+    direccion_trabajo = fields.Char(compute='_compute_direccion')
+
+    @api.onchange('company_id')
+    def _compute_direccion(self):
+        self.direccion_trabajo=self.company_id.street+" "+self.company_id.street2+". "+self.company_id.city+"/"+self.company_id.state_id.name
 
 class HrNivelInstruccion(models.Model):
 

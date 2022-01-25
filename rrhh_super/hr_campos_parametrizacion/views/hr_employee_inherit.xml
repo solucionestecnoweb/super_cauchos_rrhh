@@ -116,6 +116,7 @@
                         <group name="central">
                             <group name="nro_1" string="Dirección">
                                 <field name="direccion" string="Dirección Domicilio"/>
+                                <field name="ciudad" string="Ciudad" placeholder="Ejm: Caracas"/>
                                 <field name="country_id" string="Pais" placeholder="Pais" />
                                 <field name="state_id" string="Estado" placeholder="Estado o Región" domain="[('country_id','=',country_id)]" />
                                 <field name="cod_post" string="Código Postal" />
@@ -146,9 +147,10 @@
                     </page>
                 </xpath>
 
-                <!--xpath expr="//field[@name='company_id']" position="after">
-                    <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='personal_information']/group[1]/group[1]/field[@name='address_home_id']" position="move"/>
-                </xpath-->
+                <xpath expr="//field[@name='address_id']" position="replace">
+                    <field name="direccion_trabajo" string="Dirección Trabájo" />
+                    <!--xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='personal_information']/group[1]/group[1]/field[@name='address_home_id']" position="move"/-->
+                </xpath>
 
             </field>
         </record>
