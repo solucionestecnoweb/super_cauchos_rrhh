@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="company_inherit_view_form" model="ir.ui.view">
+        <field name="name">company.inherit.view.form</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+           
+
+            <xpath expr="//group[@name='social_media']" position="after">
+                    <group string="Configuración Nro de control para facturas/ND/NC" name="nro_control" aling="center">
+                        <field name="confg_nro_control" string="El Nro de control en documentos fiscales se genera en base a:" widget="selection_badge"/>
+                    </group>
+                </xpath>
+        </field>
+    </record>
+</odoo>
