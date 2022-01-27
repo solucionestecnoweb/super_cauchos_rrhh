@@ -52,6 +52,7 @@ class hr_special_days(models.Model):
     dias_permiso_remunerado = fields.Integer(compute='_compute_dias')
     dias_no_remunerado = fields.Integer(compute='_compute_dias')
     dias_ausencia_injus = fields.Integer(compute='_compute_dias')
+    dias_vacaciones_pedidas = fields.Integer(compute='_compute_dias')
 
     dias_reposo_medico_lab = fields.Integer(compute='_compute_permiso')
     dias_reposo_medico = fields.Integer(compute='_compute_permiso')
@@ -62,7 +63,7 @@ class hr_special_days(models.Model):
     @api.depends('date_from','date_to')
     def _compute_dias(self):
         for selff in self:
-            dias_descontar_1=dias_descontar_2=dias_descontar_3=0
+            dias_descontar_1=dias_descontar_2=dias_descontar_3=dias_descontar_0=0
             verifica=selff.env['hr.leave'].search([('employee_id','=',selff.employee_id.id),('state','=','validate'),('request_date_to','<=',selff.date_to),('request_date_from','>=',selff.date_from)])
             #raise UserError(_('verifica= %s')%verifica)
             if verifica:
@@ -73,10 +74,13 @@ class hr_special_days(models.Model):
                         dias_descontar_2=dias_descontar_2+det.number_of_days
                     if det.holiday_status_id.code=='ANJ':
                         dias_descontar_3=dias_descontar_3+det.number_of_days
+                    if det.holiday_status_id.code=='VAC':
+                        dias_descontar_0=dias_descontar_0+det.number_of_days
 
             selff.dias_permiso_remunerado=dias_descontar_1
             selff.dias_no_remunerado=dias_descontar_2
             selff.dias_ausencia_injus=dias_descontar_3
+            selff.dias_vacaciones_pedidas=dias_descontar_0
 
     @api.depends('date_from','date_to')
     def _compute_permiso(self):

@@ -39,6 +39,7 @@
                             <field name="dias_permiso_remunerado" string="Aus. Remunerada"/>
                             <field name="dias_no_remunerado" string="Aus. no Remunerada"/>
                             <field name="dias_ausencia_injus" string="Aus. Injustificada"/>
+                            <field name="dias_vacaciones_pedidas" string="Aus. por Vacaciones"/>
 
                         </group>
                         <group col="2">
@@ -68,6 +69,7 @@
                         </group>
                         <group col="2">
                             <field name="dias_vacaciones" string="Dias a Disfrutar" readonly="1"/>
+                            <field name="dias_vacaciones_pedidas" string="Dias solicitados"/>
                         </group>
                     </group>
 
