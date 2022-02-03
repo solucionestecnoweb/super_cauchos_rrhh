@@ -8,8 +8,10 @@ from . import hr_vacaciones
 from . import hr_indicadores_economicos
 from . import hr_seting_inherit
 from . import hr_prestaciones
-from . import hr_payroll_structure_inherit
+from . import x_hr_payroll_structure_inherit
 from . import hr_employee
 from . import hr_incremento
 from . import hr_salary_rule_inherit
 from . import hr_leave_inherit
+from . import x_hr_payslip_employees # para pagar de forma de lote
+from . import hr_payslip_line

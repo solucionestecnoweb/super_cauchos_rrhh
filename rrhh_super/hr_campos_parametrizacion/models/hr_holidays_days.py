@@ -34,7 +34,8 @@ class hr_special_days(models.Model):
     workdays = fields.Integer('Dias habiles', help='este campo los dias habiles del periodo', compute='_compute_days',
                              store=True, readonly=True)
     holydays = fields.Integer('Dias Festivos', compute='_compute_days', readonly=True)
-    hollydays_str = fields.Integer('Feriados Trabajados', compute='_compute_feriados_laborados')
+    hollydays_str = fields.Integer('Descansos Trabajados', compute='_compute_desfer_laborados')
+    hollydays_ftr = fields.Integer('Feriados Trabajados', compute='_compute_desfer_laborados')
     days_attended = fields.Integer(string='Días asistidos', compute='_compute_days_attended')
     days_inasisti = fields.Integer(string='Dias Inasistidos', compute='_compute_days_inasisti')#odoo 14
 
@@ -49,8 +50,8 @@ class hr_special_days(models.Model):
     dias_por_antiguedad = fields.Integer(compute='compute_dias_por_ano_antiguedad')
 
     # PERMISOS Y AUSENCIAS 
-    dias_permiso_remunerado = fields.Integer(compute='_compute_dias')
-    dias_no_remunerado = fields.Integer(compute='_compute_dias')
+    dias_permiso_remunerado = fields.Float(compute='_compute_dias')
+    dias_no_remunerado = fields.Float(compute='_compute_dias')
     dias_ausencia_injus = fields.Integer(compute='_compute_dias')
     dias_vacaciones_pedidas = fields.Integer(compute='_compute_dias')
 
@@ -72,15 +73,22 @@ class hr_special_days(models.Model):
                         dias_descontar_1=dias_descontar_1+det.number_of_days
                     if det.holiday_status_id.code=='PNR':
                         dias_descontar_2=dias_descontar_2+det.number_of_days
-                    if det.holiday_status_id.code=='ANJ':
-                        dias_descontar_3=dias_descontar_3+det.number_of_days
+                    # Lo activo si registro la ausencia por el modulo de ausencias y no por asistencias
+                    #if det.holiday_status_id.code=='ANJ': # lo 
+                        #dias_descontar_3=dias_descontar_3+det.number_of_days
                     if det.holiday_status_id.code=='VAC':
                         dias_descontar_0=dias_descontar_0+det.number_of_days
 
             selff.dias_permiso_remunerado=dias_descontar_1
             selff.dias_no_remunerado=dias_descontar_2
-            selff.dias_ausencia_injus=dias_descontar_3
             selff.dias_vacaciones_pedidas=dias_descontar_0
+
+            #Lo activo si registro la ausencia por el modulo de ausencias y no por asistencias
+            #selff.dias_ausencia_injus=dias_descontar_3
+
+            #Lo activo si el calculo de la ausencia por el modulo de asistencias
+            total_dias_justifi=selff.dias_permiso_remunerado+selff.dias_vacaciones_pedidas+selff.dias_reposo_medico+selff.dias_reposo_medico_lab+selff.dias_pos_natal+selff.dias_peternidad
+            selff.dias_ausencia_injus=selff.days_inasisti-total_dias_justifi if (selff.days_inasisti-total_dias_justifi)>=0 else 0
 
     @api.depends('date_from','date_to')
     def _compute_permiso(self):
@@ -218,7 +226,7 @@ class hr_special_days(models.Model):
             #self.days_attended=69
 
     #odoo 14
-    @api.depends('date_from','date_to')
+    """@api.depends('date_from','date_to') ### si uso el modulo de ausencias o inasistencias
     def _compute_days_inasisti(self):
         for selff in self:
             dias_descontar=0
@@ -227,12 +235,17 @@ class hr_special_days(models.Model):
             if verifica:
                 for det in verifica:
                     dias_descontar=dias_descontar+det.number_of_days
-            selff.days_inasisti=dias_descontar
+            selff.days_inasisti=dias_descontar"""
+
+    @api.depends('date_from','date_to') ### si uso el modulo de asistencias
+    def _compute_days_inasisti(self):
+        for selff in self:
+            selff.days_inasisti=selff.workdays-selff.days_attended if (selff.workdays-selff.days_attended)>=0 else 0
 
     @api.depends('date_from','date_to','employee_id')
-    def _compute_feriados_laborados(self):
+    def _compute_desfer_laborados(self):
         for selff in self:
-            nro_feriado=nro_dia=0
+            nro_feriado=nro_desc=nro_dia=0
             selff.hollydays_str=nro_feriado
             asistencia=selff.env['hr.attendance'].search([('check_out','<=',selff.date_to),('check_in','>=',selff.date_from),('employee_id','=',selff.employee_id.id)])
             #raise UserError(_('valor= %s')%asistencia)
@@ -243,14 +256,15 @@ class hr_special_days(models.Model):
                     mes=selff.mes(fecha)
                     ano=selff.ano(fecha)
                     nro_dia=calendar.weekday(ano,mes,dia)
-                    if nro_dia==6:# aqui verifica si trabajo el domingo
-                        nro_feriado=nro_feriado+1
+                    if nro_dia==5 or nro_dia==6:# aqui verifica si trabajo el sabado (5) o domingo (6)
+                        nro_desc=nro_desc+1
                     # aqui verifica si trabaja en un dia feriado
                     lista_feriado=selff.env['hr.payroll.hollydays'].search([('date_from','<=',det.check_out),('date_to','>=',det.check_out)])
                     if lista_feriado:
                         for ret in lista_feriado:
                             nro_feriado=nro_feriado+1
-            selff.hollydays_str=nro_feriado
+            selff.hollydays_str=nro_desc
+            selff.hollydays_ftr=nro_feriado
 
     @api.depends('date_from','date_to','employee_id')
     def _compute_horas_extras_diurnas(self):
@@ -348,3 +362,14 @@ class hr_special_days(models.Model):
         if mes==12:
             ultimo=31
         return ultimo
+
+    def float_format(self,valor):
+        #valor=self.base_tax
+        if valor:
+            result = '{:,.2f}'.format(valor)
+            result = result.replace(',','*')
+            result = result.replace('.',',')
+            result = result.replace('*','.')
+        else:
+            result="0,00"
+        return result

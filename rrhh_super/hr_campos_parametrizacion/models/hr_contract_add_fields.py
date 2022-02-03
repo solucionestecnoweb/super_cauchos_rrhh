@@ -96,3 +96,13 @@ class Contract(models.Model):
     ########################33 CAMPO PARA LOS CESTA TICKET ###############################
     cesta_ticket_check = fields.Boolean(default=True, string="Cesta Ticket Bs/Mes")
     cesta_ticket_value = fields.Float(default=3000000)
+    ########################33 CAMPO PARA DESCUENTO HC HOSPITALIZACION Y CIRUJIA ###############################
+    hc_check = fields.Boolean(default=True, string="Descuento Hc")
+    hc_value = fields.Float(default=1)
+    ########################33 CAMPO PARA DESCUENTO PAGOS INDEBIDOS ###############################
+    pag_ind_check = fields.Boolean(default=False, string="Descuento Pago indebido")
+    pag_ind_value = fields.Float(default=0)
+    ########################33 CAMPO PARA ABONOS ADICIONALES ###############################
+    abono_check = fields.Boolean(default=False, string="Abonos adicionales")
+    abono_value = fields.Float(default=0)
+

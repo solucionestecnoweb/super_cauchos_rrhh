@@ -41,6 +41,9 @@
         <field name="model">hr.expense.sheet</field>
         <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_form"/>
         <field name="arch" type="xml">
+            <xpath expr="//header//field[@name='state']" position="replace">
+                    <field name="state" widget="statusbar" statusbar_visible="draft,submit,approve,'post',partially_done,done,cancel"/>
+            </xpath>
 
             <xpath expr="//header//button[@name='action_sheet_move_create']" position="after">
                 <button name="pago_pendiente" type="object" string="Generar Pago Pendiente" attrs="{'invisible': ['|',('state','in',('draft','approve','cancel')),('status_saldo_pendiente','=','paid')]}"/>

@@ -7,8 +7,8 @@
         <field name="name">Formato Recibo Nomina</field>
         <field name="default" eval="True"/>
         <field name="format">custom</field>
-        <field name="page_height">216</field>
-        <field name="page_width">279</field>
+        <field name="page_height">279</field>
+        <field name="page_width">216</field>
         <field name="orientation">Portrait</field>
         <field name="margin_top">40</field>
         <field name="margin_bottom">20</field>
@@ -28,14 +28,14 @@
                       <tr>
                         <td align="left">
                           <t t-if="o.company_id.logo">  
-                              <img t-attf-src="data:image/*;base64,{{o.company_id.logo}}" style="width:auto; height:80px;"/>
+                              <img t-attf-src="data:image/*;base64,{{o.company_id.logo}}" style="width:auto; height:70px;"/>
                           </t>
                         </td>
                       </tr>
                     </table>
                   </div>
                   <div class="page">
-                    <table width="100%" class="table table-sm table-bordered">
+                    <table width="100%" class="table table-sm table-bordered" style="font-size:13px;">
                       <tr>
                         <td align="left" colspan="2">
                           PERIODO DESDE: <span t-field="o.date_from"/>
@@ -53,11 +53,17 @@
                         <td colspan="2" align="right">CARGO: <span t-field="o.employee_id.job_id"/></td>
                       </tr>
                       <tr> 
-                        <td colspan="5" align="left">SUELDO MENSUAL: <span t-field="o.employee_id.contract_id.wage"/></td>
+                        <td colspan="1" align="left">SUELDO MENSUAL: <span t-field="o.employee_id.contract_id.wage"/></td>
+                        <td colspan="1">
+                          SUELDO DIARIO: <span t-esc="o.float_format(o.employee_id.contract_id.wage/30)"/> Bs.
+                        </td>
+                        <td colspan="3">
+                          DPTO:
+                        </td>
                       </tr>
                     </table>
 
-                    <table name="inf_concetos" width="100%" class="table table-bordered">
+                    <table name="inf_concetos" width="100%" class="table table-bordered" style="font-size:13px;">
                       <tbody>
                         <tr align="center">
                           <td>COD. </td>
@@ -105,7 +111,7 @@
                       
                       </table>
 
-                      <table width="100%">
+                      <table width="100%" style="font-size:13px;">
                         <tr>
                         <td colspan="2" align="left">
                           RECIBO CONFIRME

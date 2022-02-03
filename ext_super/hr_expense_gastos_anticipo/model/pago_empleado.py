@@ -104,21 +104,30 @@ class AccountExtPayment(models.Model):
         self.asiento_pago_line(id_move)
         self.asiento_move_id=id_move.id
         self.asiento_move_id.action_post()
-        if self.informe_id:
-            actualiza=self.env['hr.expense.sheet'].search([('id','=',self.informe_id.id)])
-            #raise UserError(_('Tiene %s')%actualiza)
-            if actualiza:
-                for det in actualiza:
-                    self.env['hr.expense.sheet'].browse(det.id).write({
-                        'status_saldo_pendiente':"paid",
-                        'paga_pendiente':True,
-                        })
         if self.company_id.currency_id.id!=self.currency_id.id:
             self.monto_signed=self.monto*self.tasa
             self.monto_signed_uds=self.monto
         else:
             self.monto_signed=self.monto
             self.monto_signed_uds=self.monto/self.tasa
+        if self.informe_id:
+            actualiza=self.env['hr.expense.sheet'].search([('id','=',self.informe_id.id)])
+            #raise UserError(_('Tiene %s')%actualiza)
+            if actualiza:
+                for det in actualiza:
+                    if det.monto_diferencia==self.monto_signed:
+                        self.env['hr.expense.sheet'].browse(det.id).write({
+                            'status_saldo_pendiente':"paid",
+                            'paga_pendiente':True,
+                            'state':"done",
+                            'monto_diferencia':0.0,
+                            'monto_diferencia_uds':0.0,
+                            })
+                    else:
+                        self.env['hr.expense.sheet'].browse(det.id).write({
+                            'monto_diferencia':(det.monto_diferencia-self.monto_signed),
+                            'monto_diferencia_uds':(det.monto_diferencia_uds-self.monto_signed_uds),
+                            })
         """valor=self.sale_ext_order_id.total_adeudado"""
 
         # Descuento cuanto la moneda de pago es igual a la moneda del registro de ventas

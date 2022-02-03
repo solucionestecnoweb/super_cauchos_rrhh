@@ -235,6 +235,15 @@ class HrExpenseSheet(models.Model):
     uds = fields.Char(default=" $")
     paga_pendiente = fields.Boolean(default=False)
     status_saldo_pendiente = fields.Selection([('paid', 'Pagado'),('earring', 'Pendiente')], readonly=True, default='earring', string="Status Saldo Pendiente")
+    state = fields.Selection([
+        ('draft', 'Draft'),
+        ('submit', 'Submitted'),
+        ('approve', 'Approved'),
+        ('post', 'Posted'),
+        ('partially_done', 'Parcialmente Pagado'),
+        ('done', 'Paid'),
+        ('cancel', 'Refused')
+    ], string='Status', index=True, readonly=True, tracking=True, copy=False, default='draft', required=True, help='Expense Report State')
     #asiento_gastos_id = fields.Many2one('account.move')
 
     @api.constrains('state','payment_ids')
@@ -310,8 +319,10 @@ class HrExpenseSheet(models.Model):
             raise UserError(_('Este empleado posee anticipos disponibles. Asocie estos anticipos'))
         if self.monto_diferencia==0:
             self.status_saldo_pendiente='paid'
+            self.state='done'
         else:
             self.status_saldo_pendiente='earring'
+            self.state='partially_done'
         """for rac in self.expense_line_ids:
             if rac.tasa_personalizada==True and rac.currency_id.id!=rac.company_currency_id.id:
                 rac.total_amount_company=rac.total_amount*rac.rate"""
@@ -541,9 +552,9 @@ class AccountGastoAnticipo(models.Model):
 
     move_line_ids = fields.One2many('account.move.line', 'payment_id', readonly=True, copy=False, ondelete='restrict')
     payment_type = fields.Selection([('outbound', 'Entregar Anticipo'), ('inbound', 'Recibir Anticipo')], string='Payment Type',default="outbound", required=True, readonly=True)
-    payment_method_id = fields.Many2one('account.payment.method',domain="[('payment_type', '=', 'inbound')]", string='Metodo de Pago', required=True, readonly=True, states={'draft': [('readonly', False)]})
+    payment_method_id = fields.Many2one('account.payment.method',domain="[('payment_type', '=', 'inbound')]", string='Metodo de Pago', required=False, readonly=True, states={'draft': [('readonly', False)]})
     payment_method_code = fields.Char(related='payment_method_id.code',
-        help="Technical field used to adapt the interface to the payment type selected.", readonly=True)
+        help="Technical field used to adapt the interface to the payment type selected.", readonly=False)
 
     amount = fields.Monetary(string='Monto Real Entregado', required=True, readonly=True, states={'draft': [('readonly', False)]}, tracking=True,track_visibility='onchange')
     currency_id = fields.Many2one('res.currency', string='Currency', required=True, readonly=True, states={'draft': [('readonly', False)]}, default=lambda self: self.env.company.currency_id)
