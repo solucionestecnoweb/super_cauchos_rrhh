@@ -8,11 +8,6 @@
     'author': 'INM&LDR Soluciones Tecnologicas',
     'category': 'stock / message',
     'depends': ['sale', 'stock', 'sale_stock'],
-    #'data': [
-        #'views/sale_order_inherit.xml',
-        #'views/stock_piking_inherit.xml',
-        #'security/ir.models.access.csv',
-    #],
     'installable': True,
     'application': False,
     'auto_install': False,

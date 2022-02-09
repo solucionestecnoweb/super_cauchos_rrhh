@@ -1,7 +1,7 @@
 # -*- coding: utf-8
 
 from odoo import models, fields, api
-from odoo.exceptions import UserError, Warning
+from odoo.exceptions import UserError, ValidationError, Warning
 
 
 class FleetVehicle(models.Model):
@@ -13,16 +13,16 @@ class FleetVehicle(models.Model):
     technician_user_id = fields.Many2one('res.users',string='Técnico asignado')
     type_vehicle = fields.Selection(string='Tipo de Transporte',
                                     selection=[('propio', 'Propio'), ('externo', 'Externo')], default="propio")
+    vehicle_filler = fields.Float(string='Filler del Vehículo')
 
 
-class FlotaCombustible(models.Model):
-    _inherit = "fleet.vehicle.log.fuel"
+class FleetVehicleLogFuel(models.Model):
+    _inherit = 'fleet.vehicle.log.fuel'
 
     @api.model
     def _default_warehouse_id(self):
         company = self.env.company.id
         warehouse_ids = self.env['stock.warehouse'].search([('company_id', '=', company), ('id', '=', 77)], limit=1)
-        print(warehouse_ids)
         return warehouse_ids
 
     fuel_types = fields.Many2one('product.product', string='Tipo de combustible',
@@ -34,6 +34,14 @@ class FlotaCombustible(models.Model):
     lts_cistern = fields.Float(string='Cisterna Litros')
     company_id = fields.Many2one('res.company', string='Company', default=lambda self: self.env.company.id)
     warehouse_id = fields.Many2one('stock.warehouse', string='Bodega', default=_default_warehouse_id, check_company=True)
+    number_petition = fields.Char(string='N°')
+
+    @api.model
+    def create(self, vals):
+        new_id = super(FleetVehicleLogFuel, self).create(vals)
+        seq = self.env['ir.sequence'].get('fleet.vehicle.log.fuel')
+        new_id.number_petition = seq
+        return new_id
 
     @api.onchange('cistern_lts', 'vehicle_consume')
     def _onchange_cistern_lts_ava(self):
@@ -51,13 +59,19 @@ class FlotaCombustible(models.Model):
         if not len(stock_producto) or 0:
             raise Warning("No hay stock para éste poducto")
         else:
-            note = "CONSUMO DE COMBUSTIBLE: {} | DESDE FLOTA POR EL VEHICULO: {} ".format(''.join(self.fuel_types.mapped('name')), self.vehicle_id.name,)
+            note = "CONSUMO DE COMBUSTIBLE: {} | DESDE FLOTA POR EL VEHICULO: {} ".format(''.join(self.fuel_types.mapped('name')), self.vehicle_id.name)
+            picking_type = self.env['stock.picking.type'].search([
+                ('code', '=', 'outgoing'),
+                ('company_id', '=', self.company_id.id),
+                ('warehouse_id', '=', self.warehouse_id.id)], limit=1)
             transfer = self.env['stock.picking'].create({
-                'picking_type_id': self.env['stock.picking.type'].search([('sequence_code', '=', 'OUT')])[0].id,
-                'location_id': stock_producto[0].location_id.id,
+                'picking_type_id': picking_type.id,
+                'origin': self.number_petition,
+                'location_id': self.warehouse_id.view_location_id.id,
                 'location_dest_id': self.env['stock.location'].search([('usage', '=', 'customer')])[0].id,
-                'partner_id': self.env.company.id,
+                'partner_id': self.company_id.partner_id.id,
                 'note': note,
+                'show_check_availability': False
                 })
 
             transfer['move_lines'] = [(0, 0, {
@@ -65,17 +79,16 @@ class FlotaCombustible(models.Model):
                 'quantity_done': self.vehicle_consume,
                 'product_id': self.fuel_types.id,
                 "product_uom": self.fuel_types.product_tmpl_id.uom_id.id,
-                "location_id": stock_producto[0].location_id.id,
+                "location_id": self.warehouse_id.view_location_id.id,
                 "location_dest_id": self.env['stock.location'].search([('usage', '=', 'customer')])[0].id
                 })]
             transfer.action_confirm()
-            #transfer.button_validate()
-
+            
 
 class FlotaAsignaciones(models.Model):
     _name = "fleet.vehicle.log.assignment.control"
 
-    name = fields.Char(string='Referencia')
+    name = fields.Char(string='Referencia', default='Nuevo')
     vehicle_id = fields.Many2one('fleet.vehicle', string='Vehículo')
     driver_id = fields.Many2one('res.partner', string='Conductor')
     date_ini = fields.Date(string='Desde')
@@ -87,6 +100,8 @@ class FlotaAsignaciones(models.Model):
     status = fields.Selection(string='Estado', selection=[
         ('draft', 'Borrador'),
         ('confirmed', 'Confirmado'), ('done', 'Realizado'), ('cancel', 'Cancelado')], default="draft")
+    vehicle_filler = fields.Float(string='Filler del Vehículo', related='vehicle_id.vehicle_filler')
+    loaded_filler = fields.Float(string='Filler Cargado')
 
     @api.onchange('vehicle_id')
     def _onchange_driver(self):
@@ -108,7 +123,7 @@ class FlotaAsignaciones(models.Model):
 
     @api.constrains('status')
     def _compute_name(self):
-        if self.status == 'confirmed' and self.name == False:
+        if self.name == 'Nuevo':
             self.name = self.env['ir.sequence'].next_by_code('assignment.fleet.sequence')
 
     def status_draft(self):
@@ -131,3 +146,22 @@ class FlotaAsignaciones(models.Model):
             ('driver_id', '=', self.driver_id.id)
         ])
         self.vehicle_odometer_ids = flee_odometer_obj
+
+    @api.onchange('stock_picking_ids')
+    def onchange_filler(self):
+        self.calculate_filler()
+        
+    @api.constrains('stock_picking_ids')
+    def constrains_filler(self):
+        self.calculate_filler()
+
+    def calculate_filler(self):
+        self.loaded_filler = 0
+        qty = 0
+        for item in self.stock_picking_ids:
+            qty += item.filler_per
+        if self.vehicle_filler < qty:
+            raise ValidationError(f'El cargamento excede la cantidad máxima de filler del vehículo.\nFiller del vehículo: {self.vehicle_filler:.2f}\nFiller Cargado: {qty:.2f}')
+        else:
+            self.loaded_filler = qty
+

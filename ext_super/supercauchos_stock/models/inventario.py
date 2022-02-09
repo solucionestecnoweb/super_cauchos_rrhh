@@ -15,11 +15,11 @@ import time
 class InventarioProductos(models.Model):
 	_inherit = "product.product"
 
-	# @api.onchange('modelo','iva','type_cauchos','tarps','load_speed','service_in','filler','brand_id','group_id','qty_hq','deote','physical_count')
+	# @api.onchange('modelo','iva','type_cauchos','tarps','load_speed','service_in','filler','brand_id','group_id','qty_hq','deote')
 	# def values_onchange(self):
 	# 	self.update_values()
 
-	# @api.constrains('modelo','iva','type_cauchos','tarps','load_speed','service_in','filler','brand_id','group_id','qty_hq','deote','physical_count')
+	# @api.constrains('modelo','iva','type_cauchos','tarps','load_speed','service_in','filler','brand_id','group_id','qty_hq','deote')
 	# def values_constrains(self):
 	# 	self.update_values()
 
@@ -36,7 +36,6 @@ class InventarioProductos(models.Model):
 	# 	product.group_id = self.group_id.id
 	# 	product.qty_hq = self.qty_hq
 	# 	product.deote = self.deote
-	# 	product.physical_count = self.physical_count
 
 	modelo = fields.Char(string='Modelo')
 	iva = fields.Char(string='I.V.A.')
@@ -49,9 +48,9 @@ class InventarioProductos(models.Model):
 	group_id = fields.Many2one('product.group', string='Grupo')
 	qty_hq = fields.Char(string='Qty Of 40HQ')
 	deote = fields.Date(string='Fecha de Fabricación')
-	physical_count = fields.Float(string='Conteo Físico')
-	rin = fields.Char(string='Rin')
+	rin = fields.Float(string='Rin')
 	medidas = fields.Char(string='Medidas')
+	construction_type = fields.Selection(string='Tipo de Construcción', selection=[('c', 'C'), ('r', 'R'),])
 	stock_inicial = fields.Float(string='Stock Inicial', compute='compute_stock_inicial', store=True)
 	no_despachado = fields.Float(string='No Despachado', compute='compute_no_despachado', store=True)
 
@@ -100,19 +99,19 @@ class InventarioPlantillaProductos(models.Model):
 	group_id = fields.Many2one('product.group', string='Grupo')
 	qty_hq = fields.Char(string='Qty Of 40HQ')
 	deote = fields.Date(string='Fecha de Fabricación')
-	physical_count = fields.Float(string='Conteo Físico')
-	rin = fields.Char(string='Rin')
+	rin = fields.Float(string='Rin')
 	medidas = fields.Char(string='Medidas')
+	construction_type = fields.Selection(string='Tipo de Construcción', selection=[('c', 'C'), ('r', 'R'),])
 	
-	# @api.onchange('modelo','iva','type_cauchos','tarps','load_speed','service_in','filler','brand_id','group_id','qty_hq','deote','physical_count')
+	# @api.onchange('modelo','iva','type_cauchos','tarps','load_speed','service_in','filler','brand_id','group_id','qty_hq','deote')
 	# def values_onchange(self):
 	# 	self.update_values()
 
-	# @api.constrains('modelo','iva','type_cauchos','tarps','load_speed','service_in','filler','brand_id','group_id','qty_hq','deote','physical_count')
+	# @api.constrains('modelo','iva','type_cauchos','tarps','load_speed','service_in','filler','brand_id','group_id','qty_hq','deote')
 	# def values_constrains(self):
 	# 	self.update_values()
 	
-	@api.constrains('modelo','iva','type_cauchos','tarps','load_speed','service_in','filler','brand_id','group_id','qty_hq','deote','physical_count','medidas','rin')
+	@api.constrains('modelo','iva','type_cauchos','tarps','load_speed','service_in','filler','brand_id','group_id','qty_hq','deote','medidas','rin', 'construction_type')
 	def update_values(self):
 		for item in self.product_variant_ids:
 			product = item
@@ -127,9 +126,9 @@ class InventarioPlantillaProductos(models.Model):
 			product.group_id = self.group_id.id
 			product.qty_hq = self.qty_hq
 			product.deote = self.deote
-			product.physical_count = self.physical_count
 			product.rin = self.rin
 			product.medidas = self.medidas
+			product.construction_type = self.construction_type
 
 class MarcasProductos(models.Model):
 	_name = 'product.brand'

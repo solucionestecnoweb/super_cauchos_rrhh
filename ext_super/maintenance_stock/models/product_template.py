@@ -34,10 +34,5 @@ class ProductTemplate(models.Model):
 
 class ProductCategory(models.Model):
     _inherit = "product.category"
-    combustible_check = fields.Boolean('Combustible', help='Marque éste campo si el producto es un combustible')
 
-    def action_combustible_check(self):
-        if not self.combustible_check:
-            self.combustible_check = True
-        else:
-            self.combustible_check = False
+    combustible_check = fields.Boolean('Combustible', help='Marque este campo si el producto es un combustible')

@@ -106,8 +106,9 @@
                         <t t-if="o.partner_type == 'supplier'">
                             <div class="page">
                                 <div class="container">
+                                    <t t-set="currency_bs" t-value="o.env['res.currency'].search([('id', '=', 3)])"/>
                                     <!-- Primera impresión -->
-                                    <div class="container" style="height: 650px;">
+                                    <div class="container" style="height: 600px;">
                                         <div>
                                             <div class="container">
                                                 <div class="row">
@@ -119,6 +120,8 @@
                                                     <div class="col-4 text-center">
                                                         <b style="font-size:12px;">Fecha: <t t-esc="o.current_date_format(o.payment_date)"/></b><br/>
                                                         <b style="font-size:12px;">Recibo N° <t t-esc="o.name"/></b><br/>
+                                                        <b style="font-size:12px;" class="text-right">Tasa: <t t-esc="o.rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></b><br/>
+                                                        <b style="font-size:12px;" class="text-right">Referencia: <t t-esc="o.communication"/></b>
                                                     </div>
                                                 </div>
                                             </div>
@@ -127,7 +130,7 @@
                                                     <div class="col-12">
                                                         <span style="font-size:12px;">Hemos entregado a: <t t-esc="o.partner_id.name"/></span><br/>
                                                         <span style="font-size:12px;">La cantidad de: <t t-esc="o.get_literal_amount(o.amount)"/></span><br/>
-                                                        <span style="font-size:12px;">Por concepto de: <t t-esc="o.payment_concept"/></span><br/>
+                                                        <span style="font-size:12px;">Por concepto de: <t t-esc="o.payment_notes"/></span><br/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -139,8 +142,8 @@
                                                         <b style="font-size:12px;">Total Egreso</b><br/>
                                                     </div>
                                                     <div class="col-4">
-                                                    <b class="border-bottom border-dark" style="font-size:12px;"><t t-esc="o.amount * (-1)" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></b> <br/>
-                                                    <b style="font-size:12px;"><t t-esc="o.amount * (-1)" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></b>
+                                                    <b class="border-bottom border-dark" style="font-size:12px;"><t t-esc="o.amount * (-1)" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/></b> <br/>
+                                                    <b style="font-size:12px;"><t t-esc="o.amount * (-1)" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/></b>
                                                     </div>
                                                     <div class="col-4">
                                                     </div>
@@ -178,8 +181,8 @@
                                                         <tr>
                                                             <td class="text-center" style="font-size:12px;"><t t-esc="item.account_id.name"/></td>
                                                             <td class="text-center" style="font-size:12px;"><t t-esc="item.name"/></td>
-                                                            <td class="text-right" style="font-size:12px; padding-right: 3px;"><t t-esc="item.debit" t-options='{"widget": "float", "decimal_precision": "o.currency_id"}'/></td>
-                                                            <td class="text-right" style="font-size:12px; padding-right: 3px;"><t t-esc="item.credit" t-options='{"widget": "float", "decimal_precision": "o.currency_id"}'/></td>
+                                                            <td class="text-right" style="font-size:12px; padding-right: 3px;"><t t-esc="item.debit" t-options="{'widget': 'monetary', 'display_currency': currency_bs}"/></td>
+                                                            <td class="text-right" style="font-size:12px; padding-right: 3px;"><t t-esc="item.credit" t-options="{'widget': 'monetary', 'display_currency': currency_bs}"/></td>
                                                         </tr>
                                                         <t t-set="total_debit" t-value="total_debit + item.debit"/>
                                                         <t t-set="total_credit" t-value="total_credit + item.credit"/>
@@ -189,12 +192,14 @@
                                                     <tr>
                                                         <td class="text-right" style="font-size:12px;">Totales...</td>
                                                         <td style="font-size:12px;"></td>
-                                                        <td class="text-right" style="font-size:12px; padding-right: 3px;"><t t-esc="total_debit" t-options='{"widget": "float", "decimal_precision": "o.currency_id"}'/></td>
-                                                        <td class="text-right" style="font-size:12px; padding-right: 3px;"><t t-esc="total_credit" t-options='{"widget": "float", "decimal_precision": "o.currency_id"}'/></td>
+                                                        <td class="text-right" style="font-size:12px; padding-right: 3px;"><t t-esc="total_debit" t-options="{'widget': 'monetary', 'display_currency': currency_bs}"/></td>
+                                                        <td class="text-right" style="font-size:12px; padding-right: 3px;"><t t-esc="total_credit" t-options="{'widget': 'monetary', 'display_currency': currency_bs}"/></td>
                                                     </tr>
                                                     <!-- Fin Totales -->
                                                 </tbody>     
                                             </table>
+                                            <br/>
+                                            <span style="font-size:12px;">Anticipo: <t t-if="o.anticipo" t-esc="o.amount" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/> <t t-else="" t-esc="0 + 0" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/></span>
                                         </div>
                                         <div style="margin-top: 60px;">
                                             <div class="container">
@@ -232,6 +237,8 @@
                                                     <div class="col-4 text-center">
                                                         <b style="font-size:12px;">Fecha: <t t-esc="o.current_date_format(o.payment_date)"/></b><br/>
                                                         <b style="font-size:12px;">Recibo N° <t t-esc="o.name"/></b><br/>
+                                                        <b style="font-size:12px;" class="text-right">Tasa: <t t-esc="o.rate" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></b><br/>
+                                                        <b style="font-size:12px;" class="text-right">Referencia: <t t-esc="o.communication"/></b>
                                                     </div>
                                                 </div>
                                             </div>
@@ -240,7 +247,7 @@
                                                     <div class="col-12">
                                                         <span style="font-size:12px;">Hemos entregado a: <t t-esc="o.partner_id.name"/></span><br/>
                                                         <span style="font-size:12px;">La cantidad de: <t t-esc="o.get_literal_amount(o.amount)"/></span><br/>
-                                                        <span style="font-size:12px;">Por concepto de: <t t-esc="o.payment_concept"/></span><br/>
+                                                        <span style="font-size:12px;">Por concepto de: <t t-esc="o.payment_notes"/></span><br/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -252,8 +259,8 @@
                                                         <b style="font-size:12px;">Total Egreso</b><br/>
                                                     </div>
                                                     <div class="col-4">
-                                                    <b class="border-bottom border-dark" style="font-size:12px;"><t t-esc="o.amount * (-1)" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></b> <br/>
-                                                    <b style="font-size:12px;"><t t-esc="o.amount * (-1)" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></b>
+                                                    <b class="border-bottom border-dark" style="font-size:12px;"><t t-esc="o.amount * (-1)" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/></b> <br/>
+                                                    <b style="font-size:12px;"><t t-esc="o.amount * (-1)" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/></b>
                                                     </div>
                                                     <div class="col-4">
                                                     </div>
@@ -291,8 +298,8 @@
                                                         <tr>
                                                             <td class="text-center" style="font-size:12px;"><t t-esc="item.account_id.name"/></td>
                                                             <td class="text-center" style="font-size:12px;"><t t-esc="item.name"/></td>
-                                                            <td class="text-right" style="font-size:12px; padding-right: 3px;"><t t-esc="item.debit" t-options='{"widget": "float", "decimal_precision": "o.currency_id"}'/></td>
-                                                            <td class="text-right" style="font-size:12px; padding-right: 3px;"><t t-esc="item.credit" t-options='{"widget": "float", "decimal_precision": "o.currency_id"}'/></td>
+                                                            <td class="text-right" style="font-size:12px; padding-right: 3px;"><t t-esc="item.debit" t-options="{'widget': 'monetary', 'display_currency': currency_bs}"/></td>
+                                                            <td class="text-right" style="font-size:12px; padding-right: 3px;"><t t-esc="item.credit" t-options="{'widget': 'monetary', 'display_currency': currency_bs}"/></td>
                                                         </tr>
                                                         <t t-set="total_debit" t-value="total_debit + item.debit"/>
                                                         <t t-set="total_credit" t-value="total_credit + item.credit"/>
@@ -302,12 +309,14 @@
                                                     <tr>
                                                         <td class="text-right" style="font-size:12px;">Totales...</td>
                                                         <td style="font-size:12px;"></td>
-                                                        <td class="text-right" style="font-size:12px; padding-right: 3px;"><t t-esc="total_debit" t-options='{"widget": "float", "decimal_precision": "o.currency_id"}'/></td>
-                                                        <td class="text-right" style="font-size:12px; padding-right: 3px;"><t t-esc="total_credit" t-options='{"widget": "float", "decimal_precision": "o.currency_id"}'/></td>
+                                                        <td class="text-right" style="font-size:12px; padding-right: 3px;"><t t-esc="total_debit" t-options="{'widget': 'monetary', 'display_currency': currency_bs}"/></td>
+                                                        <td class="text-right" style="font-size:12px; padding-right: 3px;"><t t-esc="total_credit" t-options="{'widget': 'monetary', 'display_currency': currency_bs}"/></td>
                                                     </tr>
                                                     <!-- Fin Totales -->
                                                 </tbody>     
                                             </table>
+                                            <br/>
+                                            <span style="font-size:12px;">Anticipo: <t t-if="o.anticipo" t-esc="o.amount" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/> <t t-else="" t-esc="0 + 0" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/></span>
                                         </div>
                                         <div style="margin-top: 60px;">
                                             <div class="container">
@@ -340,7 +349,7 @@
                             <div class="page">
                                 <div class="container">
                                     <!-- Primera impresión -->
-                                    <div class="container" style="height: 650px;">
+                                    <div class="container" style="height: 600px;">
                                         <div>
                                             <div class="container">
                                                 <div class="row">

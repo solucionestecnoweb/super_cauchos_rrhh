@@ -7,6 +7,7 @@
         'data/exchange_sequence.xml',
         'views/views.xml',
         'views/wizards_exchange.xml',
-        'security/security.xml'
+        'security/security.xml',
+        'reports/exchange_receipt.xml'
     ]
 }

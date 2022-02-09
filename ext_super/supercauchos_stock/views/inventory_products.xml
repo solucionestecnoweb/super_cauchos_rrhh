@@ -14,6 +14,7 @@
                     <field name="filler"/>
                     <field name="group_id"/>
                     <field name="tarps"/>
+                    <field name="load_speed"/>
                     <field name="rin"/>
                 </xpath>
                 <xpath expr="//field[@name='type']" position="after">
@@ -25,9 +26,8 @@
                 </xpath>
                 <xpath expr="//field[@name='uom_po_id']" position="after">
                     <field name="service_in"/>
-                    <field name="load_speed"/>
-                    <field name="physical_count"/>
                     <field name="medidas"/>
+                    <field name="construction_type"/>
                 </xpath>
             </field>
         </record>
@@ -43,6 +43,7 @@
                     <field name="filler"/>
                     <field name="group_id"/>
                     <field name="tarps"/>
+                    <field name="load_speed"/>
                     <field name="rin"/>
                 </xpath>
                 <xpath expr="//field[@name='type']" position="after">
@@ -51,11 +52,10 @@
                 <xpath expr="//field[@name='barcode']" position="after">
                     <field name="qty_hq"/>
                     <field name="service_in"/>
-                    <field name="load_speed"/>
-                    <field name="physical_count"/>
                     <field name="stock_inicial" invisible="1"/>
                     <field name="no_despachado" invisible="1"/>
                     <field name="medidas"/>
+                    <field name="construction_type"/>
                 </xpath>
             </field>
         </record>

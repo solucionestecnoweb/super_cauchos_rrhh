@@ -56,7 +56,7 @@ class DailySalesReport(models.Model):
     state = fields.Selection([('choose', 'choose'), ('get', 'get')],default='choose')
     report = fields.Binary('Prepared file', filters='.xls', readonly=True)
     name = fields.Char('File Name', size=50)
-    company_id = fields.Many2one('res.company','Company',default=lambda self: self.env.user.company_id.id)
+    company_id = fields.Many2one('res.company','Company',default=lambda self: self.env.company.id)
     total_ids = fields.One2many('daily.sales.journal', 'report_id', string='Reporte')
     partner_ids = fields.Many2many('res.partner', string='Vendedores')
     journal_ids = fields.Many2many('account.journal', string='Diarios')

@@ -1,3 +1,4 @@
+from email.policy import default
 from odoo import api, fields, models, _
 from datetime import datetime, date, timedelta
 import base64
@@ -24,9 +25,9 @@ class PurchaseRequisitions(models.Model):
     
     requisition_lines_ids = fields.One2many(comodel_name='purchase.requisitions.lines', inverse_name='requisition_id', string='Requisition Lines')
     reason = fields.Text(string='Reason for Requisition')
-    state = fields.Selection([ ('draft', 'Draft'), ('confirmed', 'Confirmed'), ('receive', 'Receive'), ('cancel', 'Cancelled'), ('reject', 'Rejected')], default='draft')
-    is_approved = fields.Boolean(default=False)
-    approver_id = fields.Many2one(comodel_name='res.users', string='Approver')
+    state = fields.Selection([ ('draft', 'Draft'), ('confirmed', 'Confirmed'), ('receive', 'Aprobado'), ('reject', 'Rejected'), ('cancel', 'Cancelled')], default='draft')
+    approvals_ids = fields.One2many('approval.request', 'requisition_id', string='Aprobaciones')
+    approver_ids = fields.Many2many('res.users', string='Aprobadores', default=lambda x: x.env['approval.category'].search([('has_requisition', '=', 'required')], limit=1).user_ids.ids)
 
     @api.constrains('state')
     def _compute_name(self):
@@ -46,31 +47,32 @@ class PurchaseRequisitions(models.Model):
 
     def reset_draft(self):
         for item in self:
-            item.state = 'draft'
+            for aproval in item.approvals_ids:
+                if aproval.request_status == 'approved':
+                    raise ValidationError("Esta requisición ya fue aprobada, no puede restablecerse a borrador.")
+                elif aproval.request_status == "refused":
+                    raise ValidationError("Esta requisición ya fue rechazada, no puede restablecerse a borrador.")
+                else:
+                    aproval.request_status = "cancel"
+                    item.state = 'draft'
 
-    def requisition_confirm(self):
+    def validate_requisition(self):
         for item in self:
-            xfind = item.env['approval.request'].search([('requisition_id', '=', item.id)])
-            is_company =  item.env['res.company'].search([('partner_id', '=', item.employee_id.address_id.id)])
-            if len(xfind) > 0:
-                for line in xfind:
-                    if line.request_status == 'approved':
-                        item.is_approved = True
-                    else:
-                        item.is_approved = False
-            elif len(is_company) > 0:
-                item.is_approved = True
-            else:
-                item.is_approved = False
-            if item.is_approved:
-                item.state = 'confirmed'
-            else:
-                raise ValidationError(_("Cannot confirm until an approval request is approved for this requisition."))
+            for aproval in item.approvals_ids:
+                if aproval.request_status == 'approved':
+                    return item.action_approved()
+                elif aproval.request_status == "refused":
+                    return item.requisition_reject()
+                elif aproval.request_status in ['new', 'pending']:
+                    raise ValidationError("La aprobación se encuentra en curso")
+
+            raise ValidationError("La aprobación se encuentra cancelada, solicite una nueva para validar la requisición")
     
-    def action_received(self):
+    def action_approved(self):
         for item in self:
             item.received_date = fields.Date.today()
             item.state = 'receive'
+
     def action_cancel(self):
         for item in self:
             item.state = 'cancel'
@@ -94,35 +96,48 @@ class PurchaseRequisitions(models.Model):
         }
 
     def approvals_request(self):
-        xfind = self.env['approval.request'].search([('requisition_id', '=', self.id), ('request_status', 'not in', ['refused', 'cancel'])])
-        if len(xfind) == 0:
-            approval = self.env['approval.category'].search([
-                ('has_requisition', '=', 'required')
-            ], limit=1)
-            if len(approval) > 0:
-                values = {
-                    'name': approval.name,
-                    'category_id': approval.id,
-                    'date': datetime.now(),
-                    'request_owner_id': self.env.user.id,
-                    'requisition_id': self.id,
-                    'request_status': 'pending'
-                }
-                t = self.env['approval.request'].create(values)
-                for item in self.approver_id:
-                    t.approver_ids += self.env['approval.approver'].new({
-                        'user_id': item.id,
-                        'request_id': t.id,
-                        'status': 'new'
-                    })
-                t.action_confirm()
-            else:
-                raise ValidationError(_("There is no approval category for this type record. Go to Approvals/Config/Approval type."))
-        else:
-            if xfind['request_status'] == 'approved':
-                raise ValidationError(_("There is an approval request approved for this requisition."))
-            else:
-                raise ValidationError(_("There is an approval request ongoing for this requisition."))
+        for requisition in self:
+            category_obj = self.env['approval.category'].search([('has_requisition', '=', 'required')], limit=1)
+            is_company =  requisition.env['res.company'].search([('partner_id', '=', requisition.employee_id.address_id.id)])
+            # approvers = len(requisition.approver_ids)
+            # if approvers > len(category_obj.user_ids):
+            #     raise UserError(
+            #         "No puede agregar más aprobadores de lo estipulado."
+            #         "Vaya a Aprobaciones / Configuración / Tipos de aprobación.")
+
+            if len(is_company) == 0:
+                for aproval in requisition.approvals_ids:
+                    if aproval.request_status in ['new', 'pending', 'approved']:
+                        raise ValidationError("Existe una aprobación en curso")
+                    if aproval.request_status == "refused":
+                        raise ValidationError("Verifique si no existe una solicitud rechazada antes de generar una nueva")
+            
+            values = {
+                'name': category_obj.name + ' ' + requisition.name,
+                'category_id': category_obj.id,
+                'date': datetime.now(),
+                'request_owner_id': requisition.env.user.id,
+                'requisition_id': requisition.id,
+                'request_status': 'pending'
+            }
+            t = self.env['approval.request'].create(values)
+            for item in requisition.approver_ids:
+                self.env['approval.approver'].create({
+                    'user_id': item.id,
+                    'request_id': t.id,
+                    'status': 'pending'
+            })
+
+            if not category_obj:
+                raise ValidationError(
+                    "No existe una categoría de aprobación para este tipo de registro."
+                        "Vaya a Aprobaciones / Configuración / Tipo de aprobación.")
+            if len(category_obj) > 2:
+                raise ValidationError(
+                    "Existe mas de dos categoría de aprobación para este tipo de registro."
+                        "Vaya a Aprobaciones / Configuración / Tipo de aprobación.")
+
+            requisition.state = 'confirmed'
 
 class PurchaseRequisitionsLines(models.Model):
     _name = 'purchase.requisitions.lines'
@@ -145,9 +160,6 @@ class PurchaseOrdersRequisition(models.Model):
 
     requisition_id = fields.Many2one(comodel_name='purchase.requisitions', string='Requisition')
     
-class PurchaseOrderPriority(models.Model):
-    _inherit = 'purchase.order'
-
     @api.onchange('requisition_id')
     def _set_priority(self):
         for item in self:

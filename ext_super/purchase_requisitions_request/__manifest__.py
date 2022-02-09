@@ -8,6 +8,7 @@
     'data': [
         'security/ir.model.access.csv',
         'data/requisition_sequence.xml',
+        'data/requisition_approval.xml',
         'views/approval_requisition_fields_extend.xml',
         'views/purchase_requisitions_request.xml',
         'views/requisitions_related_fields.xml',

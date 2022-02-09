@@ -11,7 +11,7 @@
                 <!-- Add your xpath here -->
                 <xpath expr="//page[@name='other_client_data']" position="after">
                     <page string="Sub Providers" name="sub_providers">
-                        <field name="provider_childs_ids" mode="kanban" context="{'provider_parent_id': active_id, 'default_street': street, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_lang': lang, 'default_user_id': user_id, 'default_type': 'other'}">
+                        <!-- <field name="provider_childs_ids" mode="kanban" context="{'provider_parent_id': active_id, 'default_street': street, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_lang': lang, 'default_user_id': user_id, 'default_type': 'other'}">
                             <kanban>
                                 <field name="id"/>
                                 <field name="color"/>
@@ -32,7 +32,6 @@
                                 <field name="state_id"/>
                                 <field name="image_128"/>
                                 <field name="lang"/>
-                                <!-- fields in form x2many view to diminish requests -->
                                 <field name="comment"/>
                                 <field name="display_name"/>
                                 <templates>
@@ -71,9 +70,7 @@
                             </kanban>
                             <form string="Contact / Address">
                                 <sheet>
-                                    <!-- provider_parent_id and type fields needed in attrs in base_address_city module which overwrites
-                                    _fields_view_get() of partner. It would be better to put those fields there but the web client
-                                    dosen't support when a field is displayed several times in the same view.-->
+ 
                                     <field name="type" required="1" widget="radio" options="{'horizontal': true}"/>
                                     <field name="provider_parent_id" invisible="1"/>
                                     <hr/>
@@ -116,7 +113,8 @@
                                     <field name="user_id" invisible="True"/>
                                 </sheet>
                             </form>
-                        </field>
+                        </field> -->
+                        <field name="provider_childs_ids" widget="many2many"/>
                     </page>
                 </xpath>
             </field>

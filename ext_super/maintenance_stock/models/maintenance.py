@@ -15,10 +15,11 @@ class MaintenanceRequest(models.Model):
 
     @api.model
     def _default_warehouse_id(self):
-        company = self.env.company.id
-        warehouse_ids = self.env['stock.warehouse'].search([('company_id', '=', company)], limit=1)
+        company = self.company_id.id
+        warehouse_ids = self.env['stock.warehouse'].search([('company_id', '=', company), ('id', '=', 77)], limit=1)
         return warehouse_ids
 
+    warehouse_id = fields.Many2one('stock.warehouse', string='Bodega', default=_default_warehouse_id, check_company=True)
     license_plate = fields.Char(related='vehicle_id.license_plate', store=True, string="Placa")
     odometer_unit = fields.Char(string='Odometer Unit')
     odometer = fields.Float(string='Kilometraje')
@@ -27,7 +28,7 @@ class MaintenanceRequest(models.Model):
     equipment_id = fields.Many2one(string='Equipo')
 
     type_equipment = fields.Selection([('flota de vehículos', 'Flota de Vehículos') ,('maquinas y herramientas', 'Maquinas y Herramientas')],
-                     string='Tipo de equipamiento', default='flota de vehículos')
+                                      string='Tipo de equipamiento', default='flota de vehículos')
     number_petition = fields.Char(string='N° petición')
     preventive_maintenance = fields.Float(string='Ultimo mantenimento preventivo')
     report_succes = fields.Text(string='Reporte Trabajo Realizado')
@@ -46,9 +47,7 @@ class MaintenanceRequest(models.Model):
     picking_ids = fields.One2many('stock.picking', 'maintenance_id', string='Transfers')
     mt_odometer_unit = fields.Selection([
         ('kilometers', 'km'),
-        ], 'Odometer Unit', default='kilometers', help='Unit of the odometer ')
-    warehouse_id = fields.Many2one('stock.warehouse', string='Bodega',
-                                   required=True, default=_default_warehouse_id, check_company=True)
+    ], 'Odometer Unit', default='kilometers', help='Unit of the odometer ')
     picking_policy = fields.Selection([('direct', 'As soon as possible'), ('one', 'When all products are ready')],
                                       string='Shipping Policy', required=True, default='direct',
                                       help="If you deliver all products at once, the delivery "
@@ -114,26 +113,7 @@ class MaintenanceRequest(models.Model):
         if self.company_id:
             warehouse_id = self.env['ir.default'].get_model_defaults('maintenance.request').get('warehouse_id')
             self.warehouse_id = warehouse_id or self.env['stock.warehouse'].search([
-                ('company_id', '=', self.company_id.id)], limit=1)
-
-    def _log_decrease_ordered_quantity(self, documents, cancel=False):
-
-        def _render_note_exception_quantity_so(rendering_context):
-            order_exceptions, visited_moves = rendering_context
-            visited_moves = list(visited_moves)
-            visited_moves = self.env[visited_moves[0]._name].concat(*visited_moves)
-            maintenance_line_ids_line_ids = self.env['maintenance.line.request'].browse([maintenance_line.id for m in order_exceptions.values() for maintenance_line in m[0]])
-            sale_order_ids = maintenance_line_ids_line_ids.mapped('order_id')
-            impacted_pickings = visited_moves.filtered(lambda m: m.state not in ('done', 'cancel')).mapped('picking_id')
-            values = {
-                'sale_order_ids': sale_order_ids,
-                'order_exceptions': order_exceptions.values(),
-                'impacted_pickings': impacted_pickings,
-                'cancel': cancel
-            }
-            return self.env.ref('sale_stock.exception_on_so').render(values=values)
-
-        self.env['stock.picking']._log_activity(_render_note_exception_quantity_so, documents)
+                ('company_id', '=', self.company_id.id), ('id', '=', 77)], limit=1)
 
 
 class MaintenanceLineRequest(models.Model):
@@ -187,6 +167,7 @@ class MaintenanceLineRequest(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         lines = super(MaintenanceLineRequest, self).create(vals_list)
+        #for values in vals_list:
         lines.filtered(lambda line: line.state == 'process')._action_launch_stock_rule()
         return lines
 
@@ -291,7 +272,7 @@ class MaintenanceLineRequest(models.Model):
             thoses lines, even if the product is a storable.
         """
         for line in self:
-            if not line.is_expense and line.product_id.type in ['consu', 'product']:
+            if line.product_id.type in ['consu', 'product']:
                 line.qty_delivered_method = 'stock_move_maintenance'
 
     @api.depends('move_ids.state', 'move_ids.scrapped', 'move_ids.product_uom_qty', 'move_ids.product_uom')
@@ -374,7 +355,7 @@ class MaintenanceLineRequest(models.Model):
         if self.maintenance_id.driver_id or self.maintenance_id.user_id.partner_id.id:
             product = self.product_id.with_context(
                 lang=self.maintenance_id.driver_id.lang or self.maintenance_id.user_id.partner_id.lang,
-                partner=self.maintenance_id.driver_id or self.maintenance_id.urser_id.partner_id,
+                partner=self.maintenance_id.driver_id or self.maintenance_id.user_id.partner_id,
                 quantity=self.product_qty,
                 date=self.maintenance_id.request_date,
                 uom=self.product_uom_id.id,
@@ -398,6 +379,38 @@ class MaintenanceLineRequest(models.Model):
             return {'warning': warning_mess}
         return {}
 
+    @api.onchange('product_id', 'product_qty')
+    def onchange_qty_stock(self):
+        quant = self.env['stock.quant']
+        stock_location = self.env['stock.location']
+        cant = 0.0
+        if not self.product_id.id or self.product_id.type == "service":
+            return ''
+        if self.product_qty == 0.0:
+            raise UserError(_("No puede generar una Linea de mantenimiento con cantidad 0 "))
+        locations = stock_location.search([('location_id', '=', self.maintenance_id.warehouse_id.view_location_id.id)])
+        for l in locations:
+            domain = [
+                ('product_id', '=', self.product_id.id),
+                ('location_id', '=', l.id),
+            ]
+            q = quant.search(domain)
+            if not q:
+                raise UserError(_("No existe el producto: %s en la ubicacion: %s de la bodega: %s") %
+                                (self.product_id.name, self.maintenance_id.warehouse_id.view_location_id.name,
+                                 self.maintenance_id.warehouse_id.name
+                                 ))
+            else:
+                for det in q:
+                    disponible = det.quantity
+                    cant += (disponible - q.reserved_quantity)
+                if cant == 0.0 and self.product_qty == 0.0:
+                    raise UserError(_("El producto: %s con la cantidad: %s  en la ubicacion: %s no tiene stock ") % (
+                        self.product_id.name, self.product_qty, self.maintenance_id.warehouse_id.view_location_id.name))
+                if disponible < self.product_qty:
+                    raise UserError(_("La cantidad  solicitada para el producto: %s  es mayor a la disponible "
+                                      "en la ubicacion: %s") % (self.product_id.name,
+                                                                self.maintenance_id.warehouse_id.view_location_id.name))
 
     def get_sale_order_line_multiline_description_sale(self, product):
         """ Compute a default multiline description for this sales order line.
@@ -479,8 +492,8 @@ class MaintenanceLineRequest(models.Model):
                 # In case the procurement group is already created and the order was
                 # cancelled, we need to update certain values of the group.
                 updated_vals = {}
-                if group_id.partner_id != line.maintenance_id.drive_id:
-                    updated_vals.update({'partner_id': line.maintenance_id.drive_id.id})
+                if group_id.partner_id != line.maintenance_id.drive_id or self.maintenance_id.user_id.partner_id.id:
+                    updated_vals.update({'partner_id': line.maintenance_id.drive_id.id or self.maintenance_id.user_id.partner_id.id})
                 if group_id.move_type != line.maintenance_id.picking_policy:
                     updated_vals.update({'move_type': line.maintenance_id.picking_policy})
                 if updated_vals:
@@ -494,7 +507,7 @@ class MaintenanceLineRequest(models.Model):
             product_qty, procurement_uom = line_uom._adjust_uom_quantities(product_qty, quant_uom)
             procurements.append(self.env['procurement.group'].Procurement(
                 line.product_id, product_qty, procurement_uom, line.maintenance_id.user_id.partner_id.property_stock_customer,
-                line.name, line.maintenance_id.name, line.maintenance_id.company_id, values))
+                line.name, line.maintenance_id.number_petition, line.maintenance_id.company_id, values))
 
         if procurements:
             self.env['procurement.group'].run(procurements)

@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+        <record id="view_account_payment_form_approvals" model="ir.ui.view">
+            <field name="name">account.payment.approvals.view.form</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='payment_method_code']" position="after">
+                      <field name="is_approval" widget="boolean_toggle"/>
+                      <field name="approver_ids" widget="many2many_tags" attrs="{'invisible': [('is_approval', '=', False)], 'required': [('is_approval', '=', True)]}"/>
+                </xpath>
+                <xpath expr="//group[1]" position="after">
+                     <notebook attrs="{'invisible': [('is_approval', '=', False)]}">
+                        <page name="approval" string="Aprobaciones">
+                            <field name="approvals_ids"  mode="tree">
+                                <tree create="false" edit="false" delete="false">
+                                    <field name="name" invisible="1"/>
+                                    <field name="category_id" invisible="1"/>
+                                    <field name="payment_id" invisible="1"/>
+                                    <field name="date_confirmed" decoration-bf="1"/>
+                                    <field name="approver_ids" widget="many2many_tags"/>
+                                    <field name="request_status" widget="badge" decoration-info="request_status == 'new'" decoration-success="request_status == 'approved'"
+                                           decoration-danger="request_status == 'cancel'" decoration-muted="request_status == 'refused'"/>
+                                    <field name="reason" optional="hide"/>
+                                    <field name="type_rejected" optional="hide"/>
+                                </tree>
+                            </field>
+                        </page>
+                     </notebook>
+                </xpath>
+                <xpath expr="//button[@name='post']" position="after">
+                    <button string="Solicitud de Aprobacion" name="approvals_request_payment" type="object" class="oe_highlight"
+                    attrs="{'invisible': ['|', ('is_approval', '=', False), ('state', 'in', ['cancel'])]}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_account_payment_method_tree" model="ir.ui.view">
+            <field name="name">account.payment.method.tree</field>
+            <field name="model">account.payment.method</field>
+            <field name="inherit_id" ref="l10n_ve_check_printing.modo_pagos_view_view"/>
+            <field name="arch" type="xml">
+               <xpath expr="//field[@name='payment_type']" position="after">
+                    <field name="is_approval" widget="boolean_toggle"/>
+               </xpath>
+            </field>
+        </record>
+
+        <record id="view_account_payment_method_form" model="ir.ui.view">
+            <field name="name">account.payment.method.form</field>
+            <field name="model">account.payment.method</field>
+            <field name="inherit_id" ref="l10n_ve_check_printing.modo_pagos_view_form"/>
+            <field name="arch" type="xml">
+               <xpath expr="//field[@name='name']" position="after">
+                    <field name="is_approval" widget="boolean_toggle"/>
+               </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

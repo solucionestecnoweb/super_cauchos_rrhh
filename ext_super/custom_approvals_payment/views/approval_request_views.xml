@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+        <record id="approval_request_payment_view_form" model="ir.ui.view">
+            <field name="name">approval.request.payment.view.form</field>
+            <field name="model">approval.request</field>
+            <field name="inherit_id" ref="approvals.approval_request_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='request_details']" position="inside">
+                    <field name="is_payment" invisible="1"/>
+                    <field name="payment_id" attrs="{'invisible':[('is_payment','=','no')], 'required': [('is_payment','=','required')]}" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -4,6 +4,7 @@
         <field name="model">account.exchange</field>
         <field name="arch" type="xml">
             <tree>
+                <field name="name"/>
                 <field name="amount"/>
                 <field name="transaction"/>
                 <field name="final_currency_id"/>
@@ -31,12 +32,13 @@
                     <button name="confirmed" class="oe_highlight" states="draft" string="Confirmed" type="object"/>
                     <button name="done" class="oe_highlight" states="confirmed" string="Done" type="object"/>
                     <button name="cancel" class="oe_highlight" states="confirmed" string="Cancel" type="object"/>
+                    <button name="correcion_asientos" class="oe_highlight"  string="Corregir" type="object"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done,cancel"/>
                 </header>
                 <sheet>
                     <div class="oe_title">
                         <h1>
-                            <field name="name" readonly="1" attrs="{'invisible': [('state', '!=', 'confirmed'), ('name', '=', '/')]}"/><br/>
+                            <field name="name" readonly="1"/>
                         </h1>
                     </div>
                     <group string="Monto a Cambiar" name="info" priority="1">
@@ -46,11 +48,13 @@
                             <field name="rate" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
                             <field name="debit_id"  string="Origen de Fondos" required="1" domain="[('company_id', '=', company_id),('type','in',('bank','cash') )]" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
                             <field name="account_id" required="1" /> 
+                            <field name="reference" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
                         </group>
                         <group>
                             <field name="transaction" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>                         
                             <field name="company_id" required="1" readonly="1"/>
                             <!-- <field name="journal_id" required="1" /> -->
+                            <field name="reference_to" attrs="{'invisible': [('state', 'in', 'draft')],  'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
                             <field name="credit_id" string="Destino de Fondos"  required="1" domain="[('company_id', '=', company_id),('type','in',('bank','cash') )]" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
                         </group>
                     </group>
@@ -60,7 +64,6 @@
                             <field name="final_currency_id" string="Moneda Destino" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
                             <field name="request" attrs="{'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
                             <field name="confirmation" attrs="{'required': [('state','=','confirmed')] ,'readonly': [('state', 'in', ('cancel','draft', 'done'))]}"/>
-                            <field name="reference" attrs="{'invisible': [('state', 'in', 'draft')],  'readonly': [('state', 'in', ('cancel', 'done'))]}"/>
                         </group>
                     </group>
                     <group string="Asientos" name="result" priority="2">

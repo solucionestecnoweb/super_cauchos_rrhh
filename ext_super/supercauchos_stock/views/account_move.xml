@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+    <!-- account.move inherit form view -->
+    <record id="view_move_form" model="ir.ui.view">
+        <field name="name">account.move.inherit.view.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <!-- Add your xpath here -->
+            <xpath expr="//group[1]/group[1]" position="inside">
+                <field name="fillert" readonly="1" attrs="{'invisible': [('type','=','entry')]}"/>
+            </xpath>
+
+            <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='product_uom_id']" position="after">
+                <field name="filler" attrs="{'invisible': [('parent.type','=','entry')]}"/>
+                <field name="fillert" readonly="1" attrs="{'invisible': [('parent.type','=','entry')]}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- account.move inherit tree view -->
+    <record id="view_invoice_tree" model="ir.ui.view">
+        <field name="name">account.move.inherit.view.tree</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_invoice_tree"/>
+        <field name="arch" type="xml">
+            <!-- Add your xpath here -->
+            <xpath expr="//field[@name='amount_total_signed']" position="before">
+                <field name="fillert" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

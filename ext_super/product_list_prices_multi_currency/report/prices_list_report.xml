@@ -128,6 +128,7 @@
                                             <col span="1" style="width: auto;"/>
                                             <col span="1" style="width: auto;"/>
                                             <col span="1" style="width: auto;"/>
+                                            <col span="1" style="width: auto;"/>
                                             <!-- Filler -->
                                             <t t-if="o.show_filler">
                                                 <t t-if="o.show_qty_av">
@@ -182,7 +183,7 @@
                                                     </th>
                                                 </t>
                                                 <!-- Descripción -->
-                                                <th colspan="5" class="text-center" style="border-right: 3px solid white; border-bottom: 3px solid white; display: table-cell; vertical-align: middle;">
+                                                <th colspan="6" class="text-center" style="border-right: 3px solid white; border-bottom: 3px solid white; display: table-cell; vertical-align: middle;">
                                                     <span style="font-size:14px;">Description</span>
                                                 </th>
                                                 <!-- Filler -->
@@ -247,6 +248,9 @@
                                                 </th>
                                                 <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
                                                     <span style="font-size:14px;">Tarps</span>
+                                                </th>
+                                                <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
+                                                    <span style="font-size:14px;">Load/Speed</span>
                                                 </th>
                                                 <th class="text-center" style="border-right: 3px solid white; display: table-cell; vertical-align: middle;">
                                                     <span style="font-size:14px;">Brand</span>
@@ -316,7 +320,7 @@
                                                                         <span style="font-size:12px;"></span>
                                                                     </td>
                                                                     <!-- Descripción -->
-                                                                    <td colspan="5" style="border-top: 1px black solid; display: table-cell; vertical-align: middle;" class="text-center">
+                                                                    <td colspan="6" style="border-top: 1px black solid; display: table-cell; vertical-align: middle;" class="text-center">
                                                                         <span style="font-size:12px;">Sub Total Marca</span>
                                                                     </td>
                                                                     <!-- Filler -->
@@ -369,6 +373,111 @@
                                                                     </td>
                                                                 </tr>
                                                             </t>
+                                                            <t t-else="">
+                                                                <tr style="height: 2px;">
+                                                                    <!-- Cantidad disponible -->
+                                                                    <t t-if="o.show_qty">
+                                                                        <td style="border-top: 1px black solid; display: table-cell; vertical-align: middle;" class="text-center">
+                                                                        </td>
+                                                                    </t>
+                                                                    <!-- Cantidad existencia -->
+                                                                    <td style="border-top: 1px black solid; display: table-cell; vertical-align: middle;" class="text-center">
+                                                                    </td>
+                                                                    <!-- Descripción -->
+                                                                    <td colspan="6" style="border-top: 1px black solid; display: table-cell; vertical-align: middle;" class="text-center">
+                                                                    </td>
+                                                                    <!-- Filler -->
+                                                                    <t t-if="o.show_filler">
+                                                                        <t t-if="o.show_qty_av">
+                                                                            <td class="text-center" style="border-top: 1px black solid; display: table-cell; vertical-align: middle;">
+                                                                            </td>
+                                                                            <td class="text-center" style="border-top: 1px black solid; display: table-cell; vertical-align: middle;">
+                                                                            </td>
+                                                                        </t>
+                                                                        <t t-else="">
+                                                                            <td class="text-center" style="border-top: 1px black solid; display: table-cell; vertical-align: middle;">
+                                                                            </td>
+                                                                        </t>
+                                                                    </t>
+                                                                    <!-- Precios -->
+                                                                    <t t-foreach="prices" t-as="line">
+                                                                        <t t-if="o.show_bs">
+                                                                            <td class="text-center" style="border-top: 1px black solid; display: table-cell; vertical-align: middle;">
+                                                                            </td>
+                                                                        </t>
+                                                                        <td class="text-center" style="border-top: 1px black solid; display: table-cell; vertical-align: middle;">
+                                                                        </td>
+                                                                        <t t-if="o.show_qty_av">
+                                                                            <td class="text-center" style="border-top: 1px black solid; display: table-cell; vertical-align: middle;">
+                                                                            </td>
+                                                                        </t>
+                                                                    </t>
+                                                                    <!-- Costo -->
+                                                                    <t t-if="o.show_cost">
+                                                                        <td class="text-center" style="border-top: 1px black solid; display: table-cell; vertical-align: middle;">
+                                                                        </td>
+                                                                        <t t-if="o.show_qty_av">
+                                                                            <td class="text-center" style="border-top: 1px black solid; display: table-cell; vertical-align: middle;">
+                                                                            </td>
+                                                                        </t>
+                                                                        <td class="text-center" style="border-top: 1px black solid; display: table-cell; vertical-align: middle;">
+                                                                        </td>
+                                                                    </t>
+                                                                    <td class="text-center" style="border-top: 1px black solid; display: table-cell; vertical-align: middle;">
+                                                                    </td>
+                                                                </tr>
+                                                            </t>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <tr style="height: 2px;">
+                                                                <!-- Cantidad disponible -->
+                                                                <t t-if="o.show_qty">
+                                                                    <td style="border-top: 1px black solid; display: table-cell; vertical-align: middle;" class="text-center">
+                                                                    </td>
+                                                                </t>
+                                                                <!-- Descripción -->
+                                                                <td colspan="6" style="border-top: 1px black solid; display: table-cell; vertical-align: middle;" class="text-center">
+                                                                </td>
+                                                                <!-- Filler -->
+                                                                <t t-if="o.show_filler">
+                                                                    <t t-if="o.show_qty_av">
+                                                                        <td class="text-center" style="border-top: 1px black solid; display: table-cell; vertical-align: middle;">
+                                                                        </td>
+                                                                        <td class="text-center" style="border-top: 1px black solid; display: table-cell; vertical-align: middle;">
+                                                                        </td>
+                                                                    </t>
+                                                                    <t t-else="">
+                                                                        <td class="text-center" style="border-top: 1px black solid; display: table-cell; vertical-align: middle;">
+                                                                        </td>
+                                                                    </t>
+                                                                </t>
+                                                                <!-- Precios -->
+                                                                <t t-foreach="prices" t-as="line">
+                                                                    <t t-if="o.show_bs">
+                                                                        <td class="text-center" style="border-top: 1px black solid; display: table-cell; vertical-align: middle;">
+                                                                        </td>
+                                                                    </t>
+                                                                    <td class="text-center" style="border-top: 1px black solid; display: table-cell; vertical-align: middle;">
+                                                                    </td>
+                                                                    <t t-if="o.show_qty_av">
+                                                                        <td class="text-center" style="border-top: 1px black solid; display: table-cell; vertical-align: middle;">
+                                                                        </td>
+                                                                    </t>
+                                                                </t>
+                                                                <!-- Costo -->
+                                                                <t t-if="o.show_cost">
+                                                                    <td class="text-center" style="border-top: 1px black solid; display: table-cell; vertical-align: middle;">
+                                                                    </td>
+                                                                    <t t-if="o.show_qty_av">
+                                                                        <td class="text-center" style="border-top: 1px black solid; display: table-cell; vertical-align: middle;">
+                                                                        </td>
+                                                                    </t>
+                                                                    <td class="text-center" style="border-top: 1px black solid; display: table-cell; vertical-align: middle;">
+                                                                    </td>
+                                                                </t>
+                                                                <td class="text-center" style="border-top: 1px black solid; display: table-cell; vertical-align: middle;">
+                                                                </td>
+                                                            </tr>
                                                         </t>
                                                     </t>
                                                     <t t-set="brand_change" t-value="item.brand_id.id"/>
@@ -381,18 +490,18 @@
                                                     <!-- Cantidad -->
                                                     <t t-if="o.show_qty">
                                                         <td style="display: table-cell; vertical-align: middle;" class="text-center">
-                                                            <span style="font-size:12px;"><t t-esc="round(item.qty_available)"/></span>
+                                                            <span style="font-size:12px;"><t t-esc="round(ava_qty[1])"/></span>
                                                         </td>
                                                     </t>
                                                     <!-- Cantidad disponible -->
                                                     <t t-if="o.show_qty_av">
                                                         <td style="display: table-cell; vertical-align: middle;" class="text-center">
-                                                            <span style="font-size:12px;"><t t-esc="round(ava_qty)"/></span>
+                                                            <span style="font-size:12px;"><t t-esc="round(ava_qty[0])"/></span>
                                                         </td>
                                                     </t>
                                                     <!-- Medida -->
                                                     <td style="display: table-cell; vertical-align: middle;" class="text-center">
-                                                        <span style="font-size:12px;"><t t-esc="item.medidas"/>-<t t-esc="item.rin"/></span>
+                                                        <span style="font-size:12px;"><t t-esc="item.medidas"/><t t-if="item.construction_type == 'r'">R</t><t t-elif="item.construction_type == 'c'">-</t><t t-if="item.rin != 0.00" t-esc="o.get_rin(item.rin)"/></span>
                                                     </td>
                                                     <!-- Modelo -->
                                                     <td style="display: table-cell; vertical-align: middle;" class="text-center">
@@ -401,6 +510,10 @@
                                                     <!-- Lonas -->
                                                     <td style="display: table-cell; vertical-align: middle;" class="text-center">
                                                         <span style="font-size:12px;"><t t-esc="item.tarps"/></span>
+                                                    </td>
+                                                    <!-- Load/Speed -->
+                                                    <td style="display: table-cell; vertical-align: middle;" class="text-center">
+                                                        <span style="font-size:12px;"><t t-esc="item.load_speed"/></span>
                                                     </td>
                                                     <!-- Marca -->
                                                     <td style="display: table-cell; vertical-align: middle;" class="text-center">
@@ -417,7 +530,7 @@
                                                                 <span style="font-size:12px;"><t t-esc="item.filler" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                             </td>
                                                             <td style="display: table-cell; vertical-align: middle;" class="text-center">
-                                                                <span style="font-size:12px;"><t t-esc="item.filler * ava_qty" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                                <span style="font-size:12px;"><t t-esc="item.filler * ava_qty[0]" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                             </td>
                                                         </t>
                                                         <t t-else="">
@@ -444,7 +557,7 @@
                                                                         </td>
                                                                         <t t-if="o.show_qty_av">
                                                                             <td style="display: table-cell; vertical-align: middle;" class="text-right">
-                                                                                <span style="font-size:12px;"><t t-esc="((lines.fixed_price + iva) / rate) * ava_qty" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                                                <span style="font-size:12px;"><t t-esc="((lines.fixed_price + iva) / rate) * ava_qty[0]" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                                             </td>
                                                                         </t>
                                                                     </t>
@@ -454,12 +567,12 @@
                                                                         </td>
                                                                         <t t-if="o.show_qty_av">
                                                                             <td style="display: table-cell; vertical-align: middle;" class="text-right">
-                                                                                <span style="font-size:12px;"><t t-esc="((lines.fixed_price + iva) / rate) * ava_qty" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                                                <span style="font-size:12px;"><t t-esc="((lines.fixed_price + iva) / rate) * ava_qty[0]" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                                             </td>
                                                                         </t>
                                                                     </t>
                                                                     <t t-if="len(o.pricelist_id) == 1">
-                                                                        <t t-set="sub_price_temp" t-value="sub_price_temp + (((lines.fixed_price + iva) * ava_qty) / rate)"/>
+                                                                        <t t-set="sub_price_temp" t-value="sub_price_temp + (((lines.fixed_price + iva) * ava_qty[0]) / rate)"/>
                                                                     </t>
                                                                 </t>
                                                                 <t t-else="">
@@ -472,7 +585,7 @@
                                                                         </td>
                                                                         <t t-if="o.show_qty_av">
                                                                             <td style="display: table-cell; vertical-align: middle;" class="text-right">
-                                                                                <span style="font-size:12px;"><t t-esc="(lines.fixed_price + iva) * ava_qty" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                                                <span style="font-size:12px;"><t t-esc="(lines.fixed_price + iva) * ava_qty[0]" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                                             </td>
                                                                         </t>
                                                                     </t>
@@ -482,12 +595,12 @@
                                                                         </td>
                                                                         <t t-if="o.show_qty_av">
                                                                             <td style="display: table-cell; vertical-align: middle;" class="text-right">
-                                                                                <span style="font-size:12px;"><t t-esc="(lines.fixed_price + iva) * ava_qty" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                                                <span style="font-size:12px;"><t t-esc="(lines.fixed_price + iva) * ava_qty[0]" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                                             </td>
                                                                         </t>
                                                                     </t>
                                                                     <t t-if="len(o.pricelist_id) == 1">
-                                                                        <t t-set="sub_price_temp" t-value="sub_price_temp + ((lines.fixed_price + iva) * ava_qty)"/>
+                                                                        <t t-set="sub_price_temp" t-value="sub_price_temp + ((lines.fixed_price + iva) * ava_qty[0])"/>
                                                                     </t>
                                                                 </t>
                                                                 <t t-set="ctrl" t-value="False"/>
@@ -504,7 +617,7 @@
                                                                         </td>
                                                                         <t t-if="o.show_qty_av">
                                                                             <td style="display: table-cell; vertical-align: middle;" class="text-right">
-                                                                                <span style="font-size:12px;"><t t-esc="((lines.fixed_price + iva) / rate) * ava_qty" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                                                <span style="font-size:12px;"><t t-esc="((lines.fixed_price + iva) / rate) * ava_qty[0]" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                                             </td>
                                                                         </t>
                                                                     </t>
@@ -514,12 +627,12 @@
                                                                         </td>
                                                                         <t t-if="o.show_qty_av">
                                                                             <td style="display: table-cell; vertical-align: middle;" class="text-right">
-                                                                                <span style="font-size:12px;"><t t-esc="((lines.fixed_price + iva) / rate) * ava_qty" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                                                <span style="font-size:12px;"><t t-esc="((lines.fixed_price + iva) / rate) * ava_qty[0]" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                                             </td>
                                                                         </t>
                                                                     </t>
                                                                     <t t-if="len(o.pricelist_id) == 1">
-                                                                        <t t-set="sub_price_temp" t-value="sub_price_temp + (((lines.fixed_price + iva) * ava_qty) / rate)"/>
+                                                                        <t t-set="sub_price_temp" t-value="sub_price_temp + (((lines.fixed_price + iva) * ava_qty[0]) / rate)"/>
                                                                     </t>
                                                                 </t>
                                                                 <t t-else="">
@@ -532,7 +645,7 @@
                                                                         </td>
                                                                         <t t-if="o.show_qty_av">
                                                                             <td style="display: table-cell; vertical-align: middle;" class="text-right">
-                                                                                <span style="font-size:12px;"><t t-esc="(lines.fixed_price + iva) * ava_qty" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                                                <span style="font-size:12px;"><t t-esc="(lines.fixed_price + iva) * ava_qty[0]" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                                             </td>
                                                                         </t>
                                                                     </t>
@@ -542,12 +655,12 @@
                                                                         </td>
                                                                         <t t-if="o.show_qty_av">
                                                                             <td style="display: table-cell; vertical-align: middle;" class="text-right">
-                                                                                <span style="font-size:12px;"><t t-esc="(lines.fixed_price + iva) * ava_qty" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                                                <span style="font-size:12px;"><t t-esc="(lines.fixed_price + iva) * ava_qty[0]" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                                             </td>
                                                                         </t>
                                                                     </t>
                                                                     <t t-if="len(o.pricelist_id) == 1">
-                                                                        <t t-set="sub_price_temp" t-value="sub_price_temp + ((lines.fixed_price + iva) * ava_qty)"/>
+                                                                        <t t-set="sub_price_temp" t-value="sub_price_temp + ((lines.fixed_price + iva) * ava_qty[0])"/>
                                                                     </t>
                                                                 </t>
                                                                 <t t-set="ctrl" t-value="False"/>
@@ -564,7 +677,7 @@
                                                                         </td>
                                                                         <t t-if="o.show_qty_av">
                                                                             <td style="display: table-cell; vertical-align: middle;" class="text-right">
-                                                                                <span style="font-size:12px;"><t t-esc="((lines.fixed_price + iva) / rate) * ava_qty" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                                                <span style="font-size:12px;"><t t-esc="((lines.fixed_price + iva) / rate) * ava_qty[0]" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                                             </td>
                                                                         </t>
                                                                     </t>
@@ -574,12 +687,12 @@
                                                                         </td>
                                                                         <t t-if="o.show_qty_av">
                                                                             <td style="display: table-cell; vertical-align: middle;" class="text-right">
-                                                                                <span style="font-size:12px;"><t t-esc="((lines.fixed_price + iva) / rate) * ava_qty" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                                                <span style="font-size:12px;"><t t-esc="((lines.fixed_price + iva) / rate) * ava_qty[0]" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                                             </td>
                                                                         </t>
                                                                     </t>
                                                                     <t t-if="len(o.pricelist_id) == 1">
-                                                                        <t t-set="sub_price_temp" t-value="sub_price_temp + (((lines.fixed_price + iva) * ava_qty) / rate)"/>
+                                                                        <t t-set="sub_price_temp" t-value="sub_price_temp + (((lines.fixed_price + iva) * ava_qty[0]) / rate)"/>
                                                                     </t>
                                                                 </t>
                                                                 <t t-else="">
@@ -592,7 +705,7 @@
                                                                         </td>
                                                                         <t t-if="o.show_qty_av">
                                                                             <td style="display: table-cell; vertical-align: middle;" class="text-right">
-                                                                                <span style="font-size:12px;"><t t-esc="(lines.fixed_price + iva) * ava_qty" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                                                <span style="font-size:12px;"><t t-esc="(lines.fixed_price + iva) * ava_qty[0]" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                                             </td>
                                                                         </t>
                                                                     </t>
@@ -602,12 +715,12 @@
                                                                         </td>
                                                                         <t t-if="o.show_qty_av">
                                                                             <td style="display: table-cell; vertical-align: middle;" class="text-right">
-                                                                                <span style="font-size:12px;"><t t-esc="(lines.fixed_price + iva) * ava_qty" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                                                <span style="font-size:12px;"><t t-esc="(lines.fixed_price + iva) * ava_qty[0]" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                                             </td>
                                                                         </t>
                                                                     </t>
                                                                     <t t-if="len(o.pricelist_id) == 1">
-                                                                        <t t-set="sub_price_temp" t-value="sub_price_temp + ((lines.fixed_price + iva) * ava_qty)"/>
+                                                                        <t t-set="sub_price_temp" t-value="sub_price_temp + ((lines.fixed_price + iva) * ava_qty[0])"/>
                                                                     </t>
                                                                 </t>
                                                                 <t t-set="ctrl" t-value="False"/>
@@ -624,7 +737,7 @@
                                                                         </td>
                                                                         <t t-if="o.show_qty_av">
                                                                             <td style="display: table-cell; vertical-align: middle;" class="text-right">
-                                                                                <span style="font-size:12px;"><t t-esc="((lines.fixed_price + iva) / rate) * ava_qty" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                                                <span style="font-size:12px;"><t t-esc="((lines.fixed_price + iva) / rate) * ava_qty[0]" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                                             </td>
                                                                         </t>
                                                                     </t>
@@ -634,12 +747,12 @@
                                                                         </td>
                                                                         <t t-if="o.show_qty_av">
                                                                             <td style="display: table-cell; vertical-align: middle;" class="text-right">
-                                                                                <span style="font-size:12px;"><t t-esc="((lines.fixed_price + iva) / rate) * ava_qty" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                                                <span style="font-size:12px;"><t t-esc="((lines.fixed_price + iva) / rate) * ava_qty[0]" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                                             </td>
                                                                         </t>
                                                                     </t>
                                                                     <t t-if="len(o.pricelist_id) == 1">
-                                                                        <t t-set="sub_price_temp" t-value="sub_price_temp + (((lines.fixed_price + iva) * ava_qty) / rate)"/>
+                                                                        <t t-set="sub_price_temp" t-value="sub_price_temp + (((lines.fixed_price + iva) * ava_qty[0]) / rate)"/>
                                                                     </t>
                                                                 </t>
                                                                 <t t-else="">
@@ -652,7 +765,7 @@
                                                                         </td>
                                                                         <t t-if="o.show_qty_av">
                                                                             <td style="display: table-cell; vertical-align: middle;" class="text-right">
-                                                                                <span style="font-size:12px;"><t t-esc="(lines.fixed_price + iva) * ava_qty" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                                                <span style="font-size:12px;"><t t-esc="(lines.fixed_price + iva) * ava_qty[0]" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                                             </td>
                                                                         </t>
                                                                     </t>
@@ -662,12 +775,12 @@
                                                                         </td>
                                                                         <t t-if="o.show_qty_av">
                                                                             <td style="display: table-cell; vertical-align: middle;" class="text-right">
-                                                                                <span style="font-size:12px;"><t t-esc="(lines.fixed_price + iva) * ava_qty" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                                                <span style="font-size:12px;"><t t-esc="(lines.fixed_price + iva) * ava_qty[0]" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                                             </td>
                                                                         </t>
                                                                     </t>
                                                                     <t t-if="len(o.pricelist_id) == 1">
-                                                                        <t t-set="sub_price_temp" t-value="sub_price_temp + ((lines.fixed_price + iva) * ava_qty)"/>
+                                                                        <t t-set="sub_price_temp" t-value="sub_price_temp + ((lines.fixed_price + iva) * ava_qty[0])"/>
                                                                     </t>
                                                                 </t>
                                                                 <t t-set="ctrl" t-value="False"/>
@@ -684,7 +797,7 @@
                                                                         </td>
                                                                         <t t-if="o.show_qty_av">
                                                                             <td style="display: table-cell; vertical-align: middle;" class="text-right">
-                                                                                <span style="font-size:12px;"><t t-esc="((lines.fixed_price + iva) / rate) * ava_qty" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                                                <span style="font-size:12px;"><t t-esc="((lines.fixed_price + iva) / rate) * ava_qty[0]" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                                             </td>
                                                                         </t>
                                                                     </t>
@@ -694,12 +807,12 @@
                                                                         </td>
                                                                         <t t-if="o.show_qty_av">
                                                                             <td style="display: table-cell; vertical-align: middle;" class="text-right">
-                                                                                <span style="font-size:12px;"><t t-esc="((lines.fixed_price + iva) / rate) * ava_qty" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                                                <span style="font-size:12px;"><t t-esc="((lines.fixed_price + iva) / rate) * ava_qty[0]" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                                             </td>
                                                                         </t>
                                                                     </t>
                                                                     <t t-if="len(o.pricelist_id) == 1">
-                                                                        <t t-set="sub_price_temp" t-value="sub_price_temp + (((lines.fixed_price + iva) * ava_qty) / rate)"/>
+                                                                        <t t-set="sub_price_temp" t-value="sub_price_temp + (((lines.fixed_price + iva) * ava_qty[0]) / rate)"/>
                                                                     </t>
                                                                 </t>
                                                                 <t t-else="">
@@ -712,7 +825,7 @@
                                                                         </td>
                                                                         <t t-if="o.show_qty_av">
                                                                             <td style="display: table-cell; vertical-align: middle;" class="text-right">
-                                                                                <span style="font-size:12px;"><t t-esc="(lines.fixed_price + iva) * ava_qty" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                                                <span style="font-size:12px;"><t t-esc="(lines.fixed_price + iva) * ava_qty[0]" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                                             </td>
                                                                         </t>
                                                                     </t>
@@ -722,12 +835,12 @@
                                                                         </td>
                                                                         <t t-if="o.show_qty_av">
                                                                             <td style="display: table-cell; vertical-align: middle;" class="text-right">
-                                                                                <span style="font-size:12px;"><t t-esc="(lines.fixed_price + iva) * ava_qty" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                                                <span style="font-size:12px;"><t t-esc="(lines.fixed_price + iva) * ava_qty[0]" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                                             </td>
                                                                         </t>
                                                                     </t>
                                                                     <t t-if="len(o.pricelist_id) == 1">
-                                                                        <t t-set="sub_price_temp" t-value="sub_price_temp + ((lines.fixed_price + iva) * ava_qty)"/>
+                                                                        <t t-set="sub_price_temp" t-value="sub_price_temp + ((lines.fixed_price + iva) * ava_qty[0])"/>
                                                                     </t>
                                                                 </t>
                                                                 <t t-set="ctrl" t-value="False"/>
@@ -753,13 +866,13 @@
                                                         </td>
                                                         <t t-if="o.show_qty_av">
                                                             <td style="display: table-cell; vertical-align: middle;" class="text-center">
-                                                                <span style="font-size:12px;"><t t-esc="item.cost_price_usd * ava_qty" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
+                                                                <span style="font-size:12px;"><t t-esc="item.cost_price_usd * ava_qty[0]" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/></span>
                                                             </td>
                                                         </t>
                                                         <td style="display: table-cell; vertical-align: middle;" class="text-center">
-                                                            <span style="font-size:12px;"><t t-if="sub_price_temp > 0" t-esc="(((sub_price_temp / ava_qty) - item.cost_price_usd) / (sub_price_temp / ava_qty)) * 100" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/><t t-else="" t-esc="0 + 0" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/>%</span>
+                                                            <span style="font-size:12px;"><t t-if="sub_price_temp > 0" t-esc="(((sub_price_temp / ava_qty[0]) - item.cost_price_usd) / (sub_price_temp / ava_qty[0])) * 100" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/><t t-else="" t-esc="0 + 0" t-options='{"widget": "float", "decimal_precision": "o.company_id.currency_id"}'/>%</span>
                                                         </td>
-                                                        <t t-set="sub_cost_temp" t-value="sub_cost_temp + (item.cost_price_usd * ava_qty)"/>
+                                                        <t t-set="sub_cost_temp" t-value="sub_cost_temp + (item.cost_price_usd * ava_qty[0])"/>
                                                     </t>
                                                     <!-- Alic. -->
                                                     <td style="display: table-cell; vertical-align: middle;" class="text-center">
@@ -777,9 +890,9 @@
                                                 </tr>
                                                 <!-- Totales/Sub totales -->
                                                 <!-- Filler -->
-                                                <t t-set="sub_filler_mar" t-value="sub_filler_mar + (item.filler * ava_qty)"/>
-                                                <t t-set="sub_filler_cat" t-value="sub_filler_cat + (item.filler * ava_qty)"/>
-                                                <t t-set="sub_filler_tot" t-value="sub_filler_tot + (item.filler * ava_qty)"/>
+                                                <t t-set="sub_filler_mar" t-value="sub_filler_mar + (item.filler * ava_qty[0])"/>
+                                                <t t-set="sub_filler_cat" t-value="sub_filler_cat + (item.filler * ava_qty[0])"/>
+                                                <t t-set="sub_filler_tot" t-value="sub_filler_tot + (item.filler * ava_qty[0])"/>
                                                 <!-- Precio -->
                                                 <t t-set="sub_price_mar" t-value="sub_price_mar + sub_price_temp"/>
                                                 <t t-set="sub_price_cat" t-value="sub_price_cat + sub_price_temp"/>
@@ -806,7 +919,7 @@
                                                                     <span style="font-size:12px;"></span>
                                                                 </td>
                                                                 <!-- Descripción -->
-                                                                <td colspan="5" style="border-top: 1px black solid; display: table-cell; vertical-align: middle;" class="text-center">
+                                                                <td colspan="6" style="border-top: 1px black solid; display: table-cell; vertical-align: middle;" class="text-center">
                                                                     <span style="font-size:12px;">Sub Total Marca</span>
                                                                 </td>
                                                                 <!-- Filler -->
@@ -868,7 +981,7 @@
                                                                     <span style="font-size:12px;"></span>
                                                                 </td>
                                                                 <!-- Descripción -->
-                                                                <td colspan="5" style="border-top: 1px black solid; display: table-cell; vertical-align: middle;" class="text-center">
+                                                                <td colspan="6" style="border-top: 1px black solid; display: table-cell; vertical-align: middle;" class="text-center">
                                                                     <span style="font-size:12px;">Sub Total Categoría</span>
                                                                 </td>
                                                                 <!-- Filler -->

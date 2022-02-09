@@ -22,105 +22,152 @@ class TomaFisica(models.TransientModel):
 
     # date_from = fields.Date(string='Date From', default=lambda *a:datetime.now().strftime('%Y-%m-%d'))
     # date_to = fields.Date('Date To', default=lambda *a:(datetime.now() + timedelta(days=(1))).strftime('%Y-%m-%d'))
-    date_now = fields.Datetime(string='Date Now', default=lambda *a:datetime.now())
-    warehouse = fields.Many2one('stock.warehouse', string='Almacen')
+    date_now = fields.Datetime(string='Date Now', default=lambda *a:(datetime.now() - timedelta(hours=4)))
+    warehouse_ids = fields.Many2many('stock.location', string='Almacen')
     category_id = fields.Many2many(comodel_name='product.category', string='Categoría')
-
+    company_ids = fields.Many2many(comodel_name='res.company', string='Compañía', default=lambda self: self.env.companies.ids)
+    
     state = fields.Selection([('choose', 'choose'), ('get', 'get')],default='choose')
     report = fields.Binary('Prepared file', filters='.xls', readonly=True)
-    name = fields.Char('File Name', size=40)
+    name = fields.Char('File Name', size=60)
     company_id = fields.Many2one('res.company','Company',default=lambda self: self.env.user.company_id.id)
+
+    show_qty_av = fields.Boolean(string='¿Mostrar cantidad en existencia en el reporte?')
+    show_filter = fields.Selection(string='Productos a mostrar', selection=[('todos', 'Todos los productos'), ('mayor_0', 'Existencia mayor que cero')], default='todos')
+    show_filler = fields.Boolean(string='¿Mostrar filler en el reporte?')
+    show_count = fields.Boolean(string='¿Mostrar conteo físico en el reporte?', default=True)
+
+    @api.onchange('company_ids')
+    def onchange_location(self):
+        return {'domain': {
+            'warehouse_ids': [('company_id', 'in', self.company_ids.ids), ('usage', '=', 'internal')]
+            }}
 
     def print_inventario(self):
         return {'type': 'ir.actions.report','report_name': 'supercauchos_stock.inventario_toma_fisica','report_type':"qweb-pdf"}
 
-    def _get_products(self):
+    ##### Categorías #####
+    def get_categ(self, category):
         categ = []
         temp = []
-        for item in self.category_id:
+        if category.ids == []:
+            category = self.env['product.category'].search([])
+
+        for item in category:
             if item.parent_id:
                 temp.append(item.id)
             else:
                 xfind = self.env['product.category'].search([('parent_id', '=', item.id)])
-                for line in xfind:
-                    temp.append(line.id)
+                if xfind:
+                    for line in xfind:
+                        temp.append(line.id)
+                else:
+                    temp.append(item.id)
         temp = set(temp)
         for item in temp:
             categ.append(item)
         
-        if categ != [] and self.warehouse:
+        xfind = self.env['product.category'].search([('id', 'in', categ)])
+        return xfind
+    
+    ##### Productos #####
+    def _get_products(self, category):
+        if self.show_filter == 'todos':
             xfind = self.env['product.product'].search([
-                ('warehouse_id', '=', self.warehouse),
                 ('type', '=', 'product'),
-                ('categ_id', 'in', categ)
+                ('categ_id', '=', category.id),
             ])
-        elif categ != []:
-            xfind = self.env['product.product'].search([
-                ('type', '=', 'product'),
-                ('categ_id', 'in', categ)
-            ])
-        elif self.warehouse:
-            xfind = self.env['product.product'].search([
-                ('warehouse_id', '=', self.warehouse),
-                ('type', '=', 'product'),
-            ])
+            return xfind
         else:
             xfind = self.env['product.product'].search([
                 ('type', '=', 'product'),
+                ('categ_id', '=', category.id),
+                ('qty_available', '>', 0),
             ])
-        return xfind
 
-    def _get_orders(self, product_id):
-        if self.warehouse:
-            xfind = self.env['stock.picking'].search([
-                ('product_id', '=', product_id),
-                ('picking_type_id.code', '=', 'outgoing'),
-                ('location_dest_id.usage', '=', 'customer'),
-                ('state','=','done'),
-                ('move_ids_without_package.product_id.warehouse_id', '=', self.warehouse)
-            ])
+            result = []
+            for item in xfind:
+                cantidad = self.get_qty(item)
+                if cantidad > 0:
+                    result += item         
+
+            return result
+
+    ##### Cantidad en existencia #####
+    def get_qty(self, producto):
+        if self.warehouse_ids:
+            if len(self.company_ids) > 0:
+                stock_q = self.env['stock.quant'].search([
+                    ('product_id', '=', producto.id),
+                    ('location_id', 'in', self.warehouse_ids.ids),
+                    ('quantity', '>', 0),
+                    ('company_id', 'in', self.company_ids.ids)
+                ])
+            else:
+                stock_q = self.env['stock.quant'].search([
+                    ('product_id', '=', producto.id),
+                    ('location_id', 'in', self.warehouse_ids.ids),
+                    ('quantity', '>', 0)
+                ])
         else:
-            xfind = self.env['stock.picking'].search([
-                ('product_id', '=', product_id),
-                ('picking_type_id.code', '=', 'outgoing'),
-                ('location_dest_id.usage', '=', 'customer'),
-                ('state','=','done')
-            ])
-        return xfind
+            if len(self.company_ids) > 0:
+                stock_q = self.env['stock.quant'].search([
+                    ('product_id', '=', producto.id),
+                    ('quantity', '>', 0),
+                    ('company_id', 'in', self.company_ids.ids)
+                ])
+            else:
+                stock_q = self.env['stock.quant'].search([
+                    ('product_id', '=', producto.id),
+                    ('quantity', '>', 0)
+                ])
+                 
+        cantidad = 0
+        for item in stock_q:
+            cantidad += item.quantity
 
-    def _not_dispatched(self, product_id):
-        if self.warehouse:
-            xfind = self.env['stock.picking'].search([
-                ('product_id', '=', product_id),
-                ('picking_type_id.code', '=', 'outgoing'),
-                ('location_dest_id.usage', '=', 'customer'),
-                ('state','in',('waiting', 'confirmed', 'assigned')),
-                ('move_ids_without_package.product_id.warehouse_id', '=', self.warehouse)
-            ])
+        return cantidad
+
+    ##### Pedido del cliente #####
+    def _get_orders(self, producto):
+        if self.warehouse_ids:
+            if len(self.company_ids) > 0:
+                stock_q = self.env['stock.quant'].search([
+                    ('product_id', '=', producto),
+                    ('location_id', 'in', self.warehouse_ids.ids),
+                    ('quantity', '>', 0),
+                    ('company_id', 'in', self.company_ids.ids)
+                ])
+            else:
+                stock_q = self.env['stock.quant'].search([
+                    ('product_id', '=', producto),
+                    ('location_id', 'in', self.warehouse_ids.ids),
+                    ('quantity', '>', 0)
+                ])
         else:
-            xfind = self.env['stock.picking'].search([
-                ('product_id', '=', product_id),
-                ('picking_type_id.code', '=', 'outgoing'),
-                ('location_dest_id.usage', '=', 'customer'),
-                ('state','in',('waiting', 'confirmed', 'assigned'))
-            ])
-        return xfind
+            if len(self.company_ids) > 0:
+                stock_q = self.env['stock.quant'].search([
+                    ('product_id', '=', producto),
+                    ('quantity', '>', 0),
+                    ('company_id', 'in', self.company_ids.ids)
+                ])
+            else:
+                stock_q = self.env['stock.quant'].search([
+                    ('product_id', '=', producto),
+                    ('quantity', '>', 0)
+                ])
+        cantidad = 0
+        for item in stock_q:
+            cantidad += item.reserved_quantity
 
-    def _initial_stock(self, product_id):
-        product_id.ver_kardex()
-        xdate = self.date_now.month
-        xdate = str(self.date_now.year) + '-' + str(xdate) + '-01' 
-        xfind = self.env['product.product.kardex.line'].search([('name', '=', product_id.id), ('fecha', '<', xdate)], limit=1, order='fecha desc, id desc')
-        if len(xfind) == 0:
-            xdate = self.date_now.month + 1
-            years = self.date_now.year
-            if xdate == 13:
-                xdate = 1
-                years += 1
-            xdate = str(years) + '-' + str(xdate) + '-01' 
-            xfind = self.env['product.product.kardex.line'].search([('name', '=', product_id.id), ('fecha', '<', xdate)], limit=1, order='fecha asc, id asc')
-        
-        return xfind
+        return cantidad
+
+    def get_rin(self, rin):
+        if rin % 1 != 0:
+            return rin
+        else:
+            txt = str(rin).split('.')
+            return txt[0]
 
     # *******************  REPORTE EN EXCEL ****************************
 

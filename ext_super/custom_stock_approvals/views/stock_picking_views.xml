@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+        <record id="stock_picking_view_form_approvals" model="ir.ui.view">
+            <field name="name">stock.picking.approvals.view.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='origin']" position="after">
+                      <field name="is_approval" widget="boolean_toggle"/>
+                      <field name="approver_ids" widget="many2many_tags" attrs="{'invisible': [('is_approval', '=', False)], 'required': [('is_approval', '=', True)]}"/>
+                </xpath>
+                <xpath expr="//notebook" position="inside">
+                    <page name="approval" string="Aprobaciones" attrs="{'invisible': [('is_approval', '=', False)]}">
+                        <field name="approvals_ids" mode="tree">
+                            <tree create="false" edit="false" delete="false">
+                                <field name="name" invisible="1"/>
+                                <field name="category_id" invisible="1"/>
+                                <field name="picking_id" invisible="1"/>
+                                <field name="date_confirmed" decoration-bf="1"/>
+                                <field name="approver_ids" widget="many2many_tags"/>
+                                <field name="request_status" widget="badge" decoration-info="request_status == 'new'" decoration-success="request_status == 'approved'"
+                                       decoration-danger="request_status == 'cancel'" decoration-muted="request_status == 'refused'"/>
+                                <field name="reason" optional="hide"/>
+                                <field name="type_rejected" optional="hide"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+                <xpath expr="//button[@name='action_confirm']" position="after">
+                    <button string="Solicitud de Aprobacion" name="approvals_request_picking" type="object" class="oe_highlight"
+                    attrs="{'invisible': ['|', ('is_approval', '=', False), ('state', 'in', ['sent', 'cancel'])]}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

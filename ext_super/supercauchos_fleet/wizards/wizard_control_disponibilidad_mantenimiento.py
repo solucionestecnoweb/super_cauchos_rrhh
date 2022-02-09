@@ -50,9 +50,7 @@ class FlotaControlDisponibilidadMantenimiento(models.TransientModel):
 
     #VEHICULOS
     def vehiculos(self):
-        busqueda = self.env['fleet.vehicle'].search([
-            ('company_id', 'in', self.company_id.ids),
-        ])
+        busqueda = self.env['fleet.vehicle'].search([])
         return busqueda
 
     #FECHAS

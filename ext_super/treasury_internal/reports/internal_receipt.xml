@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Formato Recibo de pago -->
+    <record id="paperformat_receipt" model="report.paperformat">
+        <field name="name">Recibo de Transferencia</field>
+        <!-- <field name="default" eval="True"/> -->
+        <field name="format">Letter</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">10</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">5</field>
+        <field name="dpi">120</field>
+    </record>
+
+    <report 
+            id="action_internal_receipt" 
+            model="internal.transfers" 
+            string="Recibo de transferencia" 
+            report_type="qweb-pdf"
+            paperformat="treasury_internal.paperformat_receipt"
+            name="treasury_internal.internal_receipt" 
+            file="treasury_internal.internal_receipt"
+            print_report_name="(object.state == 'draft' and 'Borrador - %s' % (object.name)) or 'Recibo de transferencia - %s' % (object.name)"
+            />
+
+        <template id="external_layout_internal_receipt">
+            <div class="header">
+            </div>
+
+            <div class="article o_report_layout_standard">
+                <t t-raw="0"/>
+            </div>
+
+            <div class="footer">
+            </div>
+        </template>
+
+        <template id="internal_receipt">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="treasury_internal.external_layout_internal_receipt">
+                        <div class="page">
+                            <div class="container">
+                                <!-- Primera impresión -->
+                                <div class="container" style="height: 800px;">
+                                    <div>
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-5 text-center">
+                                                    <img t-if="o.out_company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.out_company_id.logo)" style="max-height: 100px; max-width: 200px;"/><br/>
+                                                    <span style="font-size:16px;"><t t-esc="o.out_company_id.name"/></span><br/>
+                                                </div>
+                                                <div class="col-3">
+                                                </div>
+                                                <div class="col-4 text-left">
+                                                    <t t-if="o.state == 'draft'">
+                                                        <b style="font-size:16px;">Borrador <t t-esc="o.name"/></b><br/>
+                                                    </t>
+                                                    <t t-elif="o.state == 'cancel'">
+                                                        <b style="font-size:16px;">Recibo N° <t t-esc="o.name"/> (Cancelado)</b><br/>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <b style="font-size:16px;">Recibo N° <t t-esc="o.name"/></b><br/>
+                                                    </t>
+                                                    <b style="font-size:14px;">Concepto de Pago: <t t-esc="o.payment_concept"/></b>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="margin-top: 100px;">
+                                        <div class="container">
+                                            <div class="row">
+                                                <table style="width: 100%;">
+                                                    <!-- Cantidad de columnas -->
+                                                    <colgroup>
+                                                        <col span="1" style="width: auto;"/>
+                                                        <col span="1" style="width: auto;"/>
+                                                        <col span="1" style="width: auto;"/>
+                                                        <col span="1" style="width: auto;"/>
+                                                        <col span="1" style="width: auto;"/>
+                                                        <col span="1" style="width: auto;"/>
+                                                        <col span="1" style="width: auto;"/>
+                                                        <col span="1" style="width: auto;"/>
+                                                        <col span="1" style="width: auto;"/>
+                                                    </colgroup>
+                                                    <!-- Fin cantidad de columnas -->
+
+                                                    <!-- Cabecera -->
+                                                    <thead>
+                                                        <tr>
+                                                            <th colspan="9" class="text-center border border-dark" style="background-color: #cacaca; font-size:16px;">Compañía que Envía Dinero</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Compañía Origen</th>
+                                                            <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Fecha de solicitud</th>
+                                                            <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Importe</th>
+                                                            <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Moneda</th>
+                                                            <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Tasa</th>
+                                                            <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Origen de Fondos</th>
+                                                            <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Cuenta Transitoria</th>
+                                                            <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Referencia</th>
+                                                            <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Asiento Origen</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <!-- Fin de Cabecera -->
+                                                    <t t-if="o.currency_id">
+                                                        <t t-set="moneda" t-value="o.currency_id"/>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <t t-set="moneda" t-value="o.out_company_id.currency_id"/>
+                                                    </t>
+                                                    <!-- Lineas -->
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="text-center" style="font-size:14px;"><t t-esc="o.out_company_id.name"/></td>
+                                                            <td class="text-center" style="font-size:14px;"><t t-esc="o.out_payment_date.strftime('%d/%m/%Y')"/></td>
+                                                            <td class="text-right" style="font-size:14px; padding-right: 3px;">&amp;nbsp;<t t-esc="o.amount" t-options='{"widget": "float", "decimal_precision": "moneda"}'/>&amp;nbsp;</td>
+                                                            <td class="text-center" style="font-size:14px;"><t t-esc="moneda.name"/></td>
+                                                            <td class="text-right" style="font-size:14px; padding-right: 3px;">&amp;nbsp;<t t-esc="o.rate" t-options='{"widget": "float", "decimal_precision": "moneda"}'/>&amp;nbsp;</td>
+                                                            <td class="text-center" style="font-size:14px;"><t t-esc="o.out_journal_id.name"/></td>
+                                                            <td class="text-center" style="font-size:14px;"><t t-esc="o.out_destination_account_id.name"/></td>
+                                                            <td class="text-center" style="font-size:14px;">&amp;nbsp;<t t-esc="o.communication"/>&amp;nbsp;</td>
+                                                            <td class="text-center" style="font-size:14px;"><t t-esc="o.move_transient_id.name"/></td>
+                                                        </tr>
+                                                    </tbody> 
+                                                    <!-- Fin lineas -->
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <br/><br/>
+                                        <table style="width: 100%;">
+                                            <!-- Cantidad de columnas -->
+                                            <colgroup>
+                                                <col span="1" style="width: auto;"/>
+                                                <col span="1" style="width: auto;"/>
+                                                <col span="1" style="width: auto;"/>
+                                                <col span="1" style="width: auto;"/>
+                                                <col span="1" style="width: auto;"/>
+                                                <col span="1" style="width: auto;"/>
+                                                <col span="1" style="width: auto;"/>
+                                                <col span="1" style="width: auto;"/>
+                                                <col span="1" style="width: auto;"/>
+                                            </colgroup>
+                                            <!-- Fin cantidad de columnas -->
+                                            
+                                            <thead>
+                                                <tr>
+                                                    <th colspan="9" class="text-center border border-dark" style="background-color: #cacaca; font-size:16px;">Compañía que Recibe Dinero</th>
+                                                </tr>
+                                                <tr>
+                                                    <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Compañía Destino</th>
+                                                    <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Fecha de confirmación</th>
+                                                    <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Importe</th>
+                                                    <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Moneda</th>
+                                                    <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Tasa</th>
+                                                    <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Destino de fondos</th>
+                                                    <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Cuenta Transitoria</th>
+                                                    <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Referencia</th>
+                                                    <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Asiento Destino</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <!-- Lineas -->
+                                                <tr>
+                                                    <td class="text-center" style="font-size:14px;"><t t-esc="o.in_company_id.name"/></td>
+                                                    <td class="text-center" style="font-size:14px;"><t t-esc="o.in_payment_date.strftime('%d/%m/%Y')"/></td>
+                                                    <td class="text-right" style="font-size:14px; padding-right: 3px;">&amp;nbsp;<t t-esc="o.amount" t-options='{"widget": "float", "decimal_precision": "moneda"}'/>&amp;nbsp;</td>
+                                                    <td class="text-center" style="font-size:14px;"><t t-esc="moneda.name"/></td>
+                                                    <td class="text-right" style="font-size:14px; padding-right: 3px;">&amp;nbsp;<t t-esc="o.rate" t-options='{"widget": "float", "decimal_precision": "moneda"}'/>&amp;nbsp;</td>
+                                                    <td class="text-center" style="font-size:14px;"><t t-esc="o.in_journal_id.name"/></td>
+                                                    <td class="text-center" style="font-size:14px;"><t t-esc="o.in_destination_account_id.name"/></td>
+                                                    <td class="text-center" style="font-size:14px;">&amp;nbsp;<t t-esc="o.communication"/>&amp;nbsp;</td>
+                                                    <td class="text-center" style="font-size:14px;"><t t-esc="o.move_id.name"/></td>
+                                                </tr>
+                                                <!-- Fin lineas -->
+                                            </tbody>     
+                                        </table>
+                                    </div>
+                                    <br/><br/>
+                                    <div style="margin-top: 100px;">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-3 text-center">
+                                                </div>
+                                                <div class="col-5 text-center">
+                                                    <span style="font-size:14px;">Realizado por: <t t-esc="o.create_uid.name"/></span><br/>
+                                                </div>
+                                                <div class="col-4 text-center">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="col-2">
+                                                            </div>
+                                                            <div class="col-10 border-top border-dark text-center">
+                                                                <span style="font-size:14px;">Firma conforme</span><br/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Segunda impresión -->
+                                <div class="container">
+                                    <div>
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-5 text-center">
+                                                    <img t-if="o.out_company_id.logo" t-att-src="'data:image/png;base64,%s' % to_text(o.out_company_id.logo)" style="max-height: 100px; max-width: 200px;"/><br/>
+                                                    <span style="font-size:16px;"><t t-esc="o.out_company_id.name"/></span><br/>
+                                                </div>
+                                                <div class="col-3">
+                                                </div>
+                                                <div class="col-4 text-left">
+                                                    <t t-if="o.state == 'draft'">
+                                                        <b style="font-size:16px;">Borrador <t t-esc="o.name"/></b><br/>
+                                                    </t>
+                                                    <t t-elif="o.state == 'cancel'">
+                                                        <b style="font-size:16px;">Recibo N° <t t-esc="o.name"/> (Cancelado)</b><br/>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <b style="font-size:16px;">Recibo N° <t t-esc="o.name"/></b><br/>
+                                                    </t>
+                                                    <b style="font-size:14px;">Concepto de Pago: <t t-esc="o.payment_concept"/></b>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="margin-top: 100px;">
+                                        <div class="container">
+                                            <div class="row">
+                                                <table style="width: 100%;">
+                                                    <!-- Cantidad de columnas -->
+                                                    <colgroup>
+                                                        <col span="1" style="width: auto;"/>
+                                                        <col span="1" style="width: auto;"/>
+                                                        <col span="1" style="width: auto;"/>
+                                                        <col span="1" style="width: auto;"/>
+                                                        <col span="1" style="width: auto;"/>
+                                                        <col span="1" style="width: auto;"/>
+                                                        <col span="1" style="width: auto;"/>
+                                                        <col span="1" style="width: auto;"/>
+                                                        <col span="1" style="width: auto;"/>
+                                                    </colgroup>
+                                                    <!-- Fin cantidad de columnas -->
+
+                                                    <!-- Cabecera -->
+                                                    <thead>
+                                                        <tr>
+                                                            <th colspan="9" class="text-center border border-dark" style="background-color: #cacaca; font-size:16px;">Compañía que Envía Dinero</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Compañía Origen</th>
+                                                            <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Fecha de solicitud</th>
+                                                            <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Importe</th>
+                                                            <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Moneda</th>
+                                                            <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Tasa</th>
+                                                            <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Origen de Fondos</th>
+                                                            <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Cuenta Transitoria</th>
+                                                            <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Referencia</th>
+                                                            <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Asiento Origen</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <!-- Fin de Cabecera -->
+                                                    <t t-if="o.currency_id">
+                                                        <t t-set="moneda" t-value="o.currency_id"/>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <t t-set="moneda" t-value="o.out_company_id.currency_id"/>
+                                                    </t>
+                                                    <!-- Lineas -->
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="text-center" style="font-size:14px;"><t t-esc="o.out_company_id.name"/></td>
+                                                            <td class="text-center" style="font-size:14px;"><t t-esc="o.out_payment_date.strftime('%d/%m/%Y')"/></td>
+                                                            <td class="text-right" style="font-size:14px; padding-right: 3px;">&amp;nbsp;<t t-esc="o.amount" t-options='{"widget": "float", "decimal_precision": "moneda"}'/>&amp;nbsp;</td>
+                                                            <td class="text-center" style="font-size:14px;"><t t-esc="moneda.name"/></td>
+                                                            <td class="text-right" style="font-size:14px; padding-right: 3px;">&amp;nbsp;<t t-esc="o.rate" t-options='{"widget": "float", "decimal_precision": "moneda"}'/>&amp;nbsp;</td>
+                                                            <td class="text-center" style="font-size:14px;"><t t-esc="o.out_journal_id.name"/></td>
+                                                            <td class="text-center" style="font-size:14px;"><t t-esc="o.out_destination_account_id.name"/></td>
+                                                            <td class="text-center" style="font-size:14px;">&amp;nbsp;<t t-esc="o.communication"/>&amp;nbsp;</td>
+                                                            <td class="text-center" style="font-size:14px;"><t t-esc="o.move_transient_id.name"/></td>
+                                                        </tr>
+                                                    </tbody> 
+                                                    <!-- Fin lineas -->
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <br/><br/>
+                                        <table style="width: 100%;">
+                                            <!-- Cantidad de columnas -->
+                                            <colgroup>
+                                                <col span="1" style="width: auto;"/>
+                                                <col span="1" style="width: auto;"/>
+                                                <col span="1" style="width: auto;"/>
+                                                <col span="1" style="width: auto;"/>
+                                                <col span="1" style="width: auto;"/>
+                                                <col span="1" style="width: auto;"/>
+                                                <col span="1" style="width: auto;"/>
+                                                <col span="1" style="width: auto;"/>
+                                                <col span="1" style="width: auto;"/>
+                                            </colgroup>
+                                            <!-- Fin cantidad de columnas -->
+                                            
+                                            <thead>
+                                                <tr>
+                                                    <th colspan="9" class="text-center border border-dark" style="background-color: #cacaca; font-size:16px;">Compañía que Recibe Dinero</th>
+                                                </tr>
+                                                <tr>
+                                                    <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Compañía Destino</th>
+                                                    <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Fecha de confirmación</th>
+                                                    <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Importe</th>
+                                                    <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Moneda</th>
+                                                    <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Tasa</th>
+                                                    <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Destino de fondos</th>
+                                                    <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Cuenta Transitoria</th>
+                                                    <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Referencia</th>
+                                                    <th class="text-center border border-dark" style="background-color: #cacaca; font-size:14px;">Asiento Destino</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <!-- Lineas -->
+                                                <tr>
+                                                    <td class="text-center" style="font-size:14px;"><t t-esc="o.in_company_id.name"/></td>
+                                                    <td class="text-center" style="font-size:14px;"><t t-esc="o.in_payment_date.strftime('%d/%m/%Y')"/></td>
+                                                    <td class="text-right" style="font-size:14px; padding-right: 3px;">&amp;nbsp;<t t-esc="o.amount" t-options='{"widget": "float", "decimal_precision": "moneda"}'/>&amp;nbsp;</td>
+                                                    <td class="text-center" style="font-size:14px;"><t t-esc="moneda.name"/></td>
+                                                    <td class="text-right" style="font-size:14px; padding-right: 3px;">&amp;nbsp;<t t-esc="o.rate" t-options='{"widget": "float", "decimal_precision": "moneda"}'/>&amp;nbsp;</td>
+                                                    <td class="text-center" style="font-size:14px;"><t t-esc="o.in_journal_id.name"/></td>
+                                                    <td class="text-center" style="font-size:14px;"><t t-esc="o.in_destination_account_id.name"/></td>
+                                                    <td class="text-center" style="font-size:14px;">&amp;nbsp;<t t-esc="o.communication"/>&amp;nbsp;</td>
+                                                    <td class="text-center" style="font-size:14px;"><t t-esc="o.move_id.name"/></td>
+                                                </tr>
+                                                <!-- Fin lineas -->
+                                            </tbody>     
+                                        </table>
+                                    </div>
+                                    <br/><br/>
+                                    <div style="margin-top: 100px;">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-3 text-center">
+                                                </div>
+                                                <div class="col-5 text-center">
+                                                    <span style="font-size:14px;">Realizado por: <t t-esc="o.create_uid.name"/></span><br/>
+                                                </div>
+                                                <div class="col-4 text-center">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="col-2">
+                                                            </div>
+                                                            <div class="col-10 border-top border-dark text-center">
+                                                                <span style="font-size:14px;">Firma conforme</span><br/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+</odoo>

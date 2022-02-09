@@ -32,7 +32,8 @@ class PriceList(models.TransientModel):
     show_bs = fields.Boolean(string='¿Mostrar precio en Bs. en el reporte?')
     show_filler = fields.Boolean(string='¿Mostrar filler en el reporte?')
     show_cost = fields.Boolean(string='¿Mostrar Costo en el reporte?')
-
+    filter_qty = fields.Selection(string='Productos a mostrar', selection=[('disponible', 'Disponibles mayor que cero'), ('existencia', 'Existencia mayor que cero')], default='disponible')
+    
     state = fields.Selection([('choose', 'choose'), ('get', 'get')],default='choose')
     report = fields.Binary('Prepared file', filters='.xls', readonly=True)
     name = fields.Char('File Name', size=32)
@@ -70,8 +71,12 @@ class PriceList(models.TransientModel):
 
         for item in sorted(xfind, key= lambda x: (x.brand_id.sequence_report, x.rin)):
             cantidad = self.get_qty(item)
-            if cantidad > 0:
-                result += item         
+            if self.filter_qty == 'disponible':
+                if cantidad[1] > 0:
+                    result += item
+            else:
+                if cantidad[0] > 0:
+                    result += item    
 
         return result
 
@@ -105,6 +110,7 @@ class PriceList(models.TransientModel):
                 stock_q = self.env['stock.quant'].search([
                     ('product_id', '=', producto.id),
                     ('location_id', 'in', self.warehouse_id.ids),
+                    ('location_id.usage', '=', 'internal'),
                     ('quantity', '>', 0),
                     ('company_id', 'in', self.company_ids.ids)
                 ])
@@ -112,25 +118,36 @@ class PriceList(models.TransientModel):
                 stock_q = self.env['stock.quant'].search([
                     ('product_id', '=', producto.id),
                     ('location_id', 'in', self.warehouse_id.ids),
+                    ('location_id.usage', '=', 'internal'),
                     ('quantity', '>', 0)
                 ])
         else:
             if len(self.company_ids) > 0:
                 stock_q = self.env['stock.quant'].search([
                     ('product_id', '=', producto.id),
+                    ('location_id.usage', '=', 'internal'),
                     ('quantity', '>', 0),
                     ('company_id', 'in', self.company_ids.ids)
                 ])
             else:
                 stock_q = self.env['stock.quant'].search([
                     ('product_id', '=', producto.id),
+                    ('location_id.usage', '=', 'internal'),
                     ('quantity', '>', 0)
                 ])
+        
         cantidad = 0
-        for item in stock_q:
-            cantidad += item.quantity - item.reserved_quantity
+        cantidad2 = 0
+        resultado = []
 
-        return cantidad
+        for item in stock_q:
+            cantidad += item.quantity
+            cantidad2 += item.quantity - item.reserved_quantity
+
+        resultado.append(cantidad)
+        resultado.append(cantidad2)
+
+        return resultado
 
     def get_iva(self, producto, monto):
         result = 0
@@ -149,9 +166,17 @@ class PriceList(models.TransientModel):
         ])
         return xfind
 
+    def get_rin(self, rin):
+        if rin % 1 != 0:
+            return rin
+        else:
+            txt = str(rin).split('.')
+            return txt[0]
+
     def _get_rate(self):
         xfind = self.env['res.currency.rate'].search([
             ('name', '<=', fields.date.today()),
             ('company_id', '=', self.env.user.company_id.id)
         ], limit=1).sell_rate
         return xfind
+    

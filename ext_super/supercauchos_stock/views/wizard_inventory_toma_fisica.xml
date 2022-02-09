@@ -10,12 +10,17 @@
 					<div states="choose">
 						<group >
 							<group >
-								<field name="warehouse" string="Almacen"/>
+								<field name="warehouse_ids" string="Ubicación" widget="many2many_tags" domain="[('usage', '=', 'internal')]"/>
+								<field name="company_ids" widget="many2many_tags"/>
+								<field name="show_qty_av"/>
+								<field name="show_count"/>
 								<!-- <field name="date_from" string="Fecha Inicio" required="1"/>
 								<field name="date_to"  string="Fecha Fin" required="1"/> -->
 							</group>
 							<group >
 								<field name="category_id" string="Categoría" widget="many2many_tags"/>
+								<field name="show_filter" required="1"/>
+								<field name="show_filler"/>
 							</group>
 						</group>
 					</div>
@@ -26,7 +31,7 @@
 						</group>
 					</div>
 					<footer states="choose">
-						<button name="generate_xls_report" string="Exportar Excel" type="object" class="oe_highlight" />
+						<!-- <button name="generate_xls_report" string="Exportar Excel" type="object" class="oe_highlight" /> -->
 						<button name="print_inventario" string="Exportar PDF" type="object" class="oe_highlight" />
 						<button special="cancel" string="Cancel" class="oe_highlight" />
 					</footer>

@@ -29,9 +29,7 @@ class StockPicking(models.Model):
     maintenance_id = fields.Many2one(related="group_id.maintenance_id", string="Maintenance", store=True,
                                      readonly=False)
     fleet_assign = fields.Many2one('fleet.vehicle.log.assignment.control', string='Asignación de Flota',
-                                   domain="[('status', '=', 'confirmed'),"
-                                          "('date_ini', '<=', scheduled_date),"
-                                          "('date_end', '>=', scheduled_date)]")
+                                   domain=[('status', '=', 'confirmed')])
     fleet_driver_id = fields.Many2one('res.partner', string='Conductor', related='fleet_assign.driver_id')
     fleet_vehicle_id = fields.Many2one('fleet.vehicle', string='Vehiculo', related='fleet_assign.vehicle_id')
 

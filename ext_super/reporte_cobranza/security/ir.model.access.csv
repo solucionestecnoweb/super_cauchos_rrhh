@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_closing_sales,closing.sales,model_closing_sales,base.group_user,1,1,1,1
+access_closing_sales_report,closing.sales.report,model_closing_sales_report,base.group_user,1,1,1,1
+access_closing_sales_journal,closing.sales.journal,model_closing_sales_journal,base.group_user,1,1,1,1
+

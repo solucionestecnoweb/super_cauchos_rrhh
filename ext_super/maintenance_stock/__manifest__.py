@@ -21,6 +21,7 @@
     'data': [
         'security/ir.model.access.csv',
         'data/maintenace_petition_sequence.xml',
+        'data/assignment_fleet_sequence.xml',
         'views/maintenance_views.xml',
         'views/fleet_vehicle_views.xml',
         'views/product_template_views.xml',

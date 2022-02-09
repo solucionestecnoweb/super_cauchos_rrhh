@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <report
+            id="action_report_dispatch"
+            model="fleet.vehicle.log.assignment.control"
+            string="Reporte de Despacho"
+            report_type="qweb-pdf"
+            name="custom_stock.report_fleet_dispatch"
+            file="custom_stock.report_fleet_dispatch"
+            menu="True"
+        />
+        
+        <record id="paperformat_dispatch" model="report.paperformat">
+           <field name="name">DIspatch</field>
+           <field name="default" eval="True"/>
+           <field name="format">custom</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">10</field>
+            <field name="margin_bottom">10</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="dpi">90</field>
+        </record>
+
+<record id="custom_stock.action_report_dispatch" model="ir.actions.report">
+      <field name="paperformat_id" ref="custom_stock.paperformat_dispatch" />
+    </record>  
+
+        <template id="report_fleet_dispatch">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                 <style>
+                    table, th,{
+                        border: 3px solid black;
+                        border-collapse: collapse;
+                    }
+                </style>
+                    <div class="page">
+                        <t t-foreach="docs" t-as="o">
+                        <table>
+                            <tr>
+                                <td>
+                                    <div class="logo_company">
+                                        <t t-if="res_company.logo">
+                                        <img t-attf-src="data:image/*;base64,{{res_company.logo}}"
+                                                 style="width:auto; height:100px;"/>
+                                        </t>
+
+                                        <t t-else="">
+                                            <p>No hay logo de empresa</p>
+                                        </t>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <table class="table table-bordered" style="font-size:30px;border:3px solid black!important;">
+                            <tr>
+                                <td style="padding: opx!important;height:10px!important;text-align:center;">
+                                       Guia de Carga
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <table class="table table-bordered" style="font-size:13px;border:3px solid black!important;border-collapse: collapse;">
+                            <tr>
+                                <td>Responsable:<br/>
+                                <t t-if="o.get_user_active()"> 
+                                <t t-esc="o.get_user_active()"/>
+                                </t>
+                                <br/><br/>
+                                Fecha Desde:<br/>
+                                <t t-esc="o.date_ini"/>
+                                </td>
+
+                                <td>ZONAS:<br/>
+                                    <t t-esc="', '.join(o.stock_picking_ids.mapped('city'))"/>
+
+                                <br/>
+
+                                Fecha de cierre:&amp;nbsp;<t t-esc="o.date_end"/>
+
+                                </td>
+                                <td>Camión:<br/><t t-esc="', '.join(o.vehicle_id.mapped('name'))"/><br/><br/>
+                                    Cantidad de clientes:&amp;nbsp;
+                                    <t t-value="0" t-set="qty_client"/>
+                                     <t t-foreach="o.stock_picking_ids"  t-as="pck_id">
+                                        <t t-foreach="pck_id.invoice_ids"  t-as="fact">
+                                            <t t-value="qty_client + 1" t-set="qty_client"/>
+                                        </t>
+                                    </t><t t-esc="qty_client"/><br/>
+
+                                </td>
+                                <td>Chofer:&amp;nbsp;<t t-esc="', '.join(o.driver_id.mapped('name'))"/><br/><br/>
+                                Cantidad de productos:&amp;nbsp;
+                                    <t t-value="0" t-set="qty_client"/>
+                                     <t t-foreach="o.stock_picking_ids"  t-as="pck_id">
+                                        <t t-foreach="pck_id.invoice_ids"  t-as="fact">
+                                            <t t-foreach="fact.invoice_line_ids" t-as="prod">
+                                                <t t-value="qty_client + prod.quantity" t-set="qty_client"/>
+                                            </t>
+                                        </t>
+                                    </t><t t-esc="qty_client"/><br/>
+                                </td>
+                            </tr>
+                        </table>
+                         <br/>
+
+                        <t t-set="zone" t-value="[]"/>
+                        <t t-foreach="o.stock_picking_ids" t-as="l">
+                        <t t-set="zone" t-value="zone+[l.city]"/>
+                        </t>
+
+                        <t t-foreach="set(zone)" t-as="zone_1">
+                                   <table class="table table-bordered" style="font-size:13px;border:3px solid black!important;">
+                                    <tr>
+                                    <th style="padding: opx!important;height:10px!important;text-align:left;">
+                                        ZONA
+                                    </th>
+                                    <th style="padding: opx!important;height:10px!important;text-align:left;" colspan="3">
+                                        <t t-esc="zone_1"/>
+                                    </th>
+                                    </tr>
+                                    <tr>
+                                        <th>Nro Factura</th>
+                                        <th>Cliente</th>
+                                        <th>FillerT</th>
+                                        <th>Monto $</th>
+                                    </tr>
+                                <t t-foreach="o.stock_picking_ids"  t-as="pck_id">
+                                    <t t-if="zone_1==pck_id.city">
+                                    <t t-foreach="pck_id.invoice_ids"  t-as="fact">
+                                    <tr>
+                                        <td><t t-esc="fact.name"/></td>
+                                        <td><t t-esc="', '.join(fact.partner_id.mapped('name'))"/></td>
+                                        <td>
+                                            <t t-value="0" t-set="filler_prod"/>
+                                                <t t-foreach="fact.invoice_line_ids" t-as="prod">
+                                                    <t t-value="prod.product_id.filler * prod.quantity" t-set="filler_prod"/>
+                                                </t>
+                                            <t t-esc="filler_prod" t-options="{'widget': 'float', 'precision': 2}"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="fact.amount_total" t-options="{'widget': 'float', 'precision': 2}"/>
+                                        </td>
+                                    </tr>
+                                    </t>
+                                    </t>
+                                    </t>
+                                   </table>     
+                        </t><br/>
+
+                        <table class="table table-bordered" style="font-size:13px;border:3px solid black!important;">
+                            <tr>
+                                <td>Codigo</td>
+                                <td>Producto</td>
+                                <td>Almacen</td>
+                                <td>Cantidad</td>
+                                <td>FillerT</td>
+                            </tr>
+                            <t t-value="0" t-set="qty_product"/>
+                            <t t-value="0" t-set="qty_filler"/>
+                                 <t t-foreach="o.stock_picking_ids"  t-as="pck_id">
+                                    <t t-foreach="pck_id.invoice_ids"  t-as="fact">
+                                        <t t-foreach="fact.invoice_line_ids" t-as="prod">
+                            <tr>
+                                <td><t t-esc="prod.product_id.code"/></td>
+                                <td><t t-esc="prod.product_id.name"/></td>
+                                <td><t t-esc="''.join(pck_id.location_id.location_id.mapped('name'))"/></td>
+                                <td><t t-esc="prod.quantity"/>
+                                <t t-value="qty_product + prod.quantity" t-set="qty_product"/>
+                                </td>
+                                
+                                <td><t t-value="prod.product_id.filler * prod.quantity" t-set="filler_prod"/>
+                                    <t t-esc="filler_prod" t-options="{'widget': 'float', 'precision': 2}"/>
+                                <t t-value="qty_filler + filler_prod" t-set="qty_filler"/>
+
+                                </td>
+                            </tr>
+                                            </t>
+                                        </t>
+                                    </t>
+                            <tr>
+                                <td style="padding: opx!important;height:10px!important;text-align:center;" colspan="3">TOTAL:</td>
+                                <td><t t-esc="qty_product"/></td>
+                                <td><t t-esc="qty_filler" t-options="{'widget': 'float', 'precision': 2}"/></td>
+                            </tr>
+                        </table>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

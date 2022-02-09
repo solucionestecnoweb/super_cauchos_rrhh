@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+        <record id="approvals_category_payment_view_form" model="ir.ui.view">
+            <field name="name">approval.category.payment.view.form</field>
+            <field name="model">approval.category</field>
+            <field name="inherit_id" ref="approvals.approval_category_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='option_settings']" position="inside">
+                    <field name="is_payment" widget="radio" options="{'horizontal': true}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

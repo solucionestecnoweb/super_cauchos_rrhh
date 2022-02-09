@@ -4,7 +4,16 @@
         <record id="seq_maintenance_petition" model="ir.sequence">
             <field name="name">Código de Peticion</field>
             <field name="code">maintenance.petition</field>
-            <field name="prefix"></field>
+            <field name="prefix">M</field>
+            <field name="suffix"></field>
+            <field name="padding">10</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_fleet_vehicle_log_fuel" model="ir.sequence">
+            <field name="name">Code Vehicle Log Fuel</field>
+            <field name="code">fleet.vehicle.log.fuel</field>
+            <field name="prefix">RC</field>
             <field name="suffix"></field>
             <field name="padding">10</field>
             <field name="company_id" eval="False"/>

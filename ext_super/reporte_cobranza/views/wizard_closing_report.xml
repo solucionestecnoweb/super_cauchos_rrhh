@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="0">
+        <!-- Add you code here -->
+        <record id="wizard_closing_sales_report" model="ir.ui.view">
+            <field name="name">Asistente de Reporte de Cierre de Cobranza</field>
+            <field name="model">closing.sales.report</field>
+            <field name="arch" type="xml">
+                <form string="closing sales closing report">
+                    <field invisible="1" name="state"/>
+                    <div states="choose">
+                        <group >
+                            <group >
+                                <field name="date_from" required="1"/>
+                                <field name="partner_ids" domain="[('is_seller', '=', True)]" widget="many2many_tags" />
+                                <field name="user_ids" widget="many2many_tags"/>
+                            </group>
+                            <group >
+                                <field name="date_to" required="1"/>
+                                <field name="journal_ids" domain="[('type', '=', 'sale')]"  widget="many2many_tags"/>
+                            </group>
+                        </group>
+                    </div>
+                    <div states="get">
+                        <group>
+                            <field name="name" colspan="4" invisible="1"/>
+                            <field name="report" filename="name" colspan="4"/>
+                        </group>
+                    </div>
+                    <footer states="choose">
+                        <button name="generate_xls_report" string="Exportar XLS" type="object" class="oe_highlight" />
+                        <button name="print_report" string="Exportar PDF" type="object" class="oe_highlight" />
+                        <button name="show_closing_records" string="Mostrar Registros de Cierre de Cobranza" type="object" class="oe_highlight" />
+                        <button special="cancel" string="Cancelar" class="oe_highlight" />
+                    </footer>
+                    <footer states="get">
+                        <button name="show_closing_records" string="Mostrar Registros de Cierre de Cobranza" type="object" class="oe_highlight" />
+                        <button special="cancel" string="Cancelar" class="oe_highlight" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_closing_sales_report" model="ir.actions.act_window">
+            <field name="name">Reporte de Cierre de Cobranza</field>
+            <field name="res_model">closing.sales.report</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_closing_sales_report"/>
+            <field name="target">new</field>
+        </record>
+        
+        <menuitem   id="admin_closing_report_menu"
+                    name="Cierre de Cobranza"
+                    parent="administration_module.admin_collection_menu"
+                    sequence="35"
+                    action="action_closing_sales_report"/>
+    </data>
+</odoo>

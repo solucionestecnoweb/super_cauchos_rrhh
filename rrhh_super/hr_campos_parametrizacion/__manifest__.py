@@ -49,7 +49,7 @@
         'views/hr_vacation_days.xml',
         'views/hr_indicadores_economicos.xml',
         'views/hr_seting_inherit.xml',
-        'views/x_hr_inherit_payroll_structure.xml',
+        'views/hr_inherit_payroll_structure.xml',
         'views/hr_employee_inherit.xml', #ojo
         'views/hr_prestaciones.xml',
         'views/hr_incremento_view.xml',

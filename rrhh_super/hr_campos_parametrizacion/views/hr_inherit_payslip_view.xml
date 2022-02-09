@@ -39,7 +39,6 @@
                             <field name="dias_permiso_remunerado" string="Aus. Remunerada"/>
                             <field name="dias_no_remunerado" string="Aus. no Remunerada"/>
                             <field name="dias_ausencia_injus" string="Aus. Injustificada"/>
-                            <field name="dias_vacaciones_pedidas" string="Aus. por Vacaciones"/>
 
                         </group>
                         <group col="2">
@@ -56,11 +55,8 @@
                     <group col="4">
                         <group col="2">
                             <field name="horas_extras_diurnas" string="Total Horas Extras Diurnas" readonly="1"/>
-                            <field name="hollydays_str" string="Dias de Descanso Laborados" readonly="1"/> 
-                        </group>
-                        <group col="2">
                             <field name="horas_extras_nocturnas" string="Total Horas Extras Nocturnas" readonly="1"/>
-                            <field name="hollydays_ftr" string="Dias Feriados Laborados" readonly="1"/>
+                            <field name="hollydays_str" string="Dias de Descanso/Feriados Laborados" readonly="1"/>
                         </group>
                     </group>
 
@@ -72,7 +68,6 @@
                         </group>
                         <group col="2">
                             <field name="dias_vacaciones" string="Dias a Disfrutar" readonly="1"/>
-                            <field name="dias_vacaciones_pedidas" string="Dias solicitados"/>
                         </group>
                     </group>
 
@@ -88,10 +83,6 @@
                             <field name="dias_por_antiguedad" string="Dias por Año de Antiguedad" readonly="1"/>
                         </group>
                     </group>
-                </xpath>
-
-                <xpath expr="//form[1]/sheet[1]/notebook[@name='identification_employee']/page[2]/field[@name='line_ids']/tree[1]/field[@name='rate']" position="after">
-                    <field name="dias" string="Nro días"/>
                 </xpath>
             </field>
         </record>

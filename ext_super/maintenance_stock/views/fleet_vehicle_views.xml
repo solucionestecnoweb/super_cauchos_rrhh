@@ -21,6 +21,9 @@
                     </h3>
                 </div>
             </xpath>
+            <xpath expr="//field[@name='residual_value']" position="after">
+                <field name="vehicle_filler"/>
+            </xpath>
         </field>
     </record>
 
@@ -32,14 +35,15 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='vehicle_id']" position="after">
                 <field name="fuel_types"/>
-                <field name="warehouse_id"/>
-                <field name="company_id" invisible="1"/>
+                <field name="warehouse_id" invisible="1"/>
+                <field name="company_id"/>
             </xpath>
             <xpath expr="//field[@name='liter']" position="replace">
                 <field name="cistern_lts" invisible="1"/>
             </xpath>
             <xpath expr="//field[@name='price_per_liter']" position="replace">
                 <field name="vehicle_consume"/>
+                <field name="number_petition" readonly="1"/>
             </xpath>
             <xpath expr="//field[@name='amount']" position="replace">
                 <field name="cistern_lts_ava" invisible="1"/>

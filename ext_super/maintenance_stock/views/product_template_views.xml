@@ -22,13 +22,13 @@
         </field>
     </record>
 
-    <record id="product_template_form_view" model="ir.ui.view">
-        <field name="name">product.category.inherit.view.form</field>
+    <record id="product_template_category_fleetform_view" model="ir.ui.view">
+        <field name="name">product.category.view.form</field>
         <field name="model">product.category</field>
         <field name="inherit_id" ref="product.product_category_form_view"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='parent_id']" position='after'>
-                 <field name="combustible_check" widget="boolean_toggle"/>
+            <xpath expr="//group[@name='first']" position="inside">
+                <field name="combustible_check" widget="boolean_toggle"/>
             </xpath>
         </field>
     </record>

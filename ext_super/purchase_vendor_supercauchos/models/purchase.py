@@ -35,14 +35,15 @@ class AccountMoveLine(models.Model):
 
     @api.onchange('purchase_line_id')
     def marte_purchase_line_id(self):
-        if self.purchase_line_id.id and self.purchase_line_id.order_id.marter_partner_id.id:
-            
-            self.move_id.partner_id = self.purchase_line_id.order_id.marter_partner_id.id
-            self.move_id.marter_partner_id = self.purchase_line_id.order_id.partner_id.id
+        for item in self:
+            if item.purchase_line_id.id and item.purchase_line_id.order_id.marter_partner_id.id:
+                
+                item.move_id.partner_id = item.purchase_line_id.order_id.marter_partner_id.id
+                item.move_id.marter_partner_id = item.purchase_line_id.order_id.partner_id.id
 
     @api.constrains('purchase_line_id')
     def marte_purchase_line_id(self):
-        if self.purchase_line_id.id and self.purchase_line_id.order_id.marter_partner_id.id:
-            
-            self.move_id.partner_id = self.purchase_line_id.order_id.marter_partner_id.id
-            self.move_id.marter_partner_id = self.purchase_line_id.order_id.partner_id.id
+        for item in self:
+            if item.purchase_line_id.id and item.purchase_line_id.order_id.marter_partner_id.id:
+                item.move_id.partner_id = item.purchase_line_id.order_id.marter_partner_id.id
+                item.move_id.marter_partner_id = item.purchase_line_id.order_id.partner_id.id

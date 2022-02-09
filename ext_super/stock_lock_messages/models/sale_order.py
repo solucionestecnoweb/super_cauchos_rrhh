@@ -13,14 +13,15 @@ class SaleOrderLine(models.Model):
     @api.onchange('product_id', 'product_uom_qty')
     def onchange_qty_stock(self):
         quant = self.env['stock.quant']
-        stock_move = self.env['stock.move']
         stock_location = self.env['stock.location']
         cant = 0.0
-        if not self.product_id.id and not self.order_id.is_transit_merch and self.product_id.type != "service":
+        # cant_li = self.product_uom_qty
+        if not self.product_id.id or self.order_id.is_transit_merch or self.product_id.type == "service":
             return ''
         if self.product_uom_qty == 0.0:
             raise UserError(_("No puede Generar un Presupuesto con cantidad 0 "))
         locations = stock_location.search([('location_id', '=', self.order_id.warehouse_id.view_location_id.id)])
+        line = self.search([('state', '=', 'draft')])
         for l in locations:
             domain = [
                 ('product_id', '=', self.product_id.id),
@@ -32,7 +33,7 @@ class SaleOrderLine(models.Model):
                                 (self.product_id.name, self.order_id.warehouse_id.view_location_id.name,
                                  self.order_id.warehouse_id.name
                 ))
-            else:
+            if q:
                 for det in q:
                     disponible = det.quantity
                     cant += (disponible - q.reserved_quantity)
@@ -43,4 +44,8 @@ class SaleOrderLine(models.Model):
                     raise UserError(_("La cantidad  solicitada para el producto: %s  es mayor a la disponible "
                                       "en la ubicacion: %s") % (self.product_id.name,
                                                                 self.order_id.warehouse_id.view_location_id.name))
-
+        # for li in line:
+        #     if li.product_id.id == self.product_id.id:
+        #         cant_li += li.product_uom_qty
+        # if cant_li > cant:
+        #     raise UserError(_("Exiten producto ya creados en estatus BORRADOR  que poseen cantidades reservadas"))

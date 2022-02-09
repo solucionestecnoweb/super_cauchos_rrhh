@@ -21,7 +21,7 @@
                             <b style="font-size:20px;">Estadística de Disponibilidad de Vehiculos en Mantenimiento</b><br/>
                         </div>
                         <div class="col-4 text-right">
-                            <b style="font-size:12px;">Pagina <span class="page" style="font-size:12px;"/> / <span class="topage" style="font-size:12px;"/></b><br/>
+                            <b style="font-size:12px;">Página <span class="page" style="font-size:12px;"/> / <span class="topage" style="font-size:12px;"/></b><br/>
                             <b style="font-size:12px;" t-field="o.date_now"></b>
                         </div>
                     </div>
@@ -47,21 +47,21 @@
                         <div class="page">
                             <t t-set="mes" t-value="o.date_from.month"/>
                             <t t-set="agno" t-value="o.date_from.year"/>
-                            <t t-set="dia" t-value="o.obtener_dias_del_mes(mes, agno)"/>
-                            <t t-set="new_date" t-value="o.nueva_fecha(dia, mes, agno)"/>
+                            <t t-set="dia" t-value="(o.date_to - o.date_from).days + 1"/>
                             <table class="table table-sm" style="width:100%;">
                                 <thead>
                                     <tr style="background-color: #cacaca">
                                         <th class="text-center border-dark border border-right-0" rowspan="2" colspan="2"> </th>
-                                        <th class="text-center border-dark border border-right-0 border-left-0" t-att-colspan="dia">Días del mes de <t t-esc="o.date_from.strftime('%B')"/> <t t-esc="o.date_from.strftime('%Y')"/></th>
+                                        <th class="text-center border-dark border border-right-0 border-left-0" t-att-colspan="dia">Días desde <t t-esc="o.date_from.strftime('%d/%m/%Y')"/> hasta <t t-esc="o.date_to.strftime('%d/%m/%Y')"/></th>
                                         <th class="text-center border-dark border border-left-0" rowspan="2" colspan="2"></th>
                                     </tr>
                                     <tr>
-                                        <t t-foreach="new_date.day" t-as="item">
-                                            <t t-set="dia_s" t-value="item + 1"/>
+                                        <t t-set="dia_s" t-value="o.date_from.day"/>
+                                        <t t-foreach="(o.date_to - o.date_from).days + 1" t-as="item">
                                             <th class="text-center border-dark border">
                                                 <span style="font-size:12px;"><t t-esc="o.nueva_fecha(dia_s, mes, agno).strftime('%a')[0].upper()"/></span>
                                             </th>
+                                            <t t-set="dia_s" t-value="dia_s + 1"/>
                                         </t>
                                     </tr>
                                     <tr>
@@ -71,10 +71,12 @@
                                         <th class="text-center border-dark border">
                                             <span style="font-size:12px;">Placa</span>
                                         </th>
-                                        <t t-foreach="new_date.day" t-as="item">
+                                        <t t-set="dia_s" t-value="o.date_from.day"/>
+                                        <t t-foreach="(o.date_to - o.date_from).days + 1" t-as="item">
                                             <th class="text-center border-dark border">
-                                                <span style="font-size:12px;"><t t-esc="item + 1"/></span>
+                                                <span style="font-size:12px;"><t t-esc="o.nueva_fecha(dia_s, mes, agno).strftime('%d')"/></span>
                                             </th>
+                                            <t t-set="dia_s" t-value="dia_s + 1"/>
                                         </t>
                                         <th class="text-center border-dark border">
                                             <span style="font-size:12px;">Total Días Disp.</span>

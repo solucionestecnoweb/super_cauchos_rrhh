@@ -9,8 +9,14 @@
                     <field invisible="1" name="state"/>
                     <div states="choose">
                         <group >
-                            <field name="date_from" string="Mes" required="1"/>
+							<group >
+								<field name="date_from" string="Desde" required="1"/>
+							</group>
+                            <group >
+								<field name="date_to" string="Hasta" required="1"/>
+							</group>
                         </group>
+						
                     </div>
                     <div states="get">
 						<group>

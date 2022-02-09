@@ -14,13 +14,20 @@ import time
 class AccountMoveExtend(models.Model):
 	_inherit = "account.move"
 
-	seller_id = fields.Many2one(comodel_name='res.partner', string='Seller')
-	payment_condition_id = fields.Many2one(comodel_name='account.condition.payment', string='Payment Condition')
-	paperformat = fields.Selection(string='Invoice Format', selection=[('letter', 'Letter'), ('half', 'Half Letter')], related='company_id.paperformat')
-	reason = fields.Char(string='Razón de Nota')
+	seller_id = fields.Many2one(comodel_name='res.partner', string='Seller',track_visibility='onchange')
+	payment_condition_id = fields.Many2one(comodel_name='account.condition.payment', string='Payment Condition',track_visibility='onchange')
+	paperformat = fields.Selection(string='Invoice Format',track_visibility='onchange', selection=[('letter', 'Letter'), ('half', 'Half Letter')], related='company_id.paperformat')
+	reason = fields.Char(string='Razón de Nota', track_visibility='onchange')
+
+	@api.onchange('seller_id')
+	def _onchange_seller_id(self):
+		team_id = self.env['crm.team'].search([ ('sellers_id', 'in', [self.seller_id.id ] ) ])
+		if len(team_id) > 0 :
+			self.team_id = team_id
 
 	@api.onchange('partner_id')
 	def _onchange_partner_id(self):
+		self.seller_id = self.partner_id.assigned_seller_id.id
 		xfind = self.env['account.payment'].search([
 			('partner_id', '=', self.partner_id.id),
 			('anticipo', '=', True),
@@ -74,6 +81,12 @@ class AccountPaymentExtend(models.Model):
 	seller_id = fields.Many2one(comodel_name='res.partner', string='Seller')
 	payment_concept = fields.Char(string='Payment Concept')
 	payment_notes = fields.Text(string='Notes')
+
+	@api.onchange('partner_id')
+	def _os_onchange_partner_id(self):
+		self.seller_id = self.partner_id.assigned_seller_id.id
+
+
 
 	def current_date_format(self,date):
 		months = ("Enero", "Febrero", "Marzo", "Abri", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre")

@@ -49,7 +49,7 @@
                 </xpath>
 
                 <xpath expr="//field[@name='company_id']" position="after">
-                    <field name="warehouse_id"/>
+                    <field name="warehouse_id" invisible="1"/>
                     <field name="work_order"/>
                 </xpath>
 

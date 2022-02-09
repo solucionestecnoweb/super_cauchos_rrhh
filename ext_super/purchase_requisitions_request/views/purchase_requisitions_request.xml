@@ -26,19 +26,18 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
-                        <button string="Approval Request" name="approvals_request" type="object" class="oe_highlight" states="draft"/>
-                        <field name="is_approved" invisible="1"/>
+                        <button string="Approval Request" name="approvals_request" type="object" class="oe_highlight" states="draft, confirmed"/>
                         <button name="reset_draft" type="object" string="Reset to Draft" states="confirmed,cancel,reject,receive" class="btn-primary"/>
-                        <button name="requisition_confirm" type="object" string="Confirm" states="draft" class="btn-primary" groups="base.group_user"/>
-                        <button name="action_received" type="object" string="Receive" states="confirmed" class="btn-primary"/>
+                        <button name="validate_requisition" type="object" string="Validar Requisición" states="confirmed" class="btn-primary" groups="base.group_user"/>
+                        <!-- <button name="action_received" type="object" string="Receive" states="confirmed" class="btn-primary"/> -->
                         <button name="action_cancel" type="object" states="draft,confirmed" string="Cancel" groups="base.group_user"/>
-                        <button name="requisition_reject" type="object" string="Reject" states="confirmed" />
-                        <field name="state" widget="statusbar" string="confirm"  statusbar_visible="draft,confirmed,receive,reject,cancel"/>
+                        <!-- <button name="requisition_reject" type="object" string="Reject" states="confirmed" /> -->
+                        <field name="state" widget="statusbar"  statusbar_visible="draft,confirmed,receive,reject,cancel"/>
                     </header>
                     <sheet>
                         <div class="oe_button_box" name="button_box">
                             <button class="oe_stat_button" type="object" icon="fa-credit-card"
-                                    name="show_orders" string="Purchase Orders" groups="base.group_user"/>
+                                    name="show_orders" string="Purchase Orders" groups="base.group_user" states="receive"/>
                         </div>
                         <div class="oe_title">
                             <h1>
@@ -46,22 +45,22 @@
                             </h1>
                         </div>
                         <group>
-                                <group>
-                                    <field name="employee_id" attrs="{'readonly': [('state', '!=', 'draft')]}" required="1"/>
-                                    <field name="department_id" attrs="{'readonly': [('state', '!=', 'draft')]}" required="1"/>
-                                    <field name="company_id" attrs="{'readonly': [('state', '!=', 'draft')]}" required="1"/>
-                                    <field name="requisition_responsible_id" attrs="{'readonly': [('state', '!=', 'draft')]}" required="1"/>
-                                    <field name="approver_id" attrs="{'readonly': [('state', '!=', 'draft')]}" required="1"/>
-                                </group>
-                                <group>
-                                    <field name="request_date" attrs="{'readonly': [('state', '!=', 'draft')]}" required="1"/>
-                                    <field name="received_date" readonly="1"/>
-                                    <field name="date_end" attrs="{'readonly': [('state', '!=', 'draft')]}" required="1"/>
-                                    <field name="priority" attrs="{'readonly': [('state', '!=', 'draft')]}" widget="priority"/>
-                                </group>
-                             </group>
+                            <group>
+                                <field name="employee_id" attrs="{'readonly': [('state', '!=', 'draft')]}" required="1"/>
+                                <field name="department_id" attrs="{'readonly': [('state', '!=', 'draft')]}" required="1"/>
+                                <field name="company_id" attrs="{'readonly': [('state', '!=', 'draft')]}" required="1"/>
+                                <field name="requisition_responsible_id" attrs="{'readonly': [('state', '!=', 'draft')]}" required="1"/>
+                                <field name="approver_ids" widget="many2many_tags" attrs="{'readonly': [('state', '!=', 'draft')]}" required="1"/>
+                            </group>
+                            <group>
+                                <field name="request_date" attrs="{'readonly': [('state', '!=', 'draft')]}" required="1"/>
+                                <field name="received_date" readonly="1"/>
+                                <field name="date_end" attrs="{'readonly': [('state', '!=', 'draft')]}" required="1"/>
+                                <field name="priority" attrs="{'readonly': [('state', '!=', 'draft')]}" widget="priority"/>
+                            </group>
+                        </group>
                         <notebook>
-                            <page string="Requisitions Lines">
+                            <page name="lines" string="Requisitions Lines">
                                 <field name="requisition_lines_ids" attrs="{'readonly': [('state', '!=', 'draft')]}">
                                     <tree editable="bottom">
                                         <field name="product_id"/>
@@ -73,6 +72,21 @@
                                 <group>
                                     <field name="reason" attrs="{'readonly': [['state', 'in', ['reject','cancel','receive']]]}" placeholder="Add Reason for Internal Requistion ...."/>
                                 </group>
+                            </page>
+                            <page name="approvals" string="Aprobaciones">
+                                <field name="approvals_ids" readonly="1">
+                                    <tree create="false" edit="false" delete="false">
+                                        <field name="name" invisible="1"/>
+                                        <field name="category_id" invisible="1"/>
+                                        <field name="purchase_id" invisible="1"/>
+                                        <field name="date_confirmed" decoration-bf="1"/>
+                                        <field name="approver_ids" widget="many2many_tags"/>
+                                        <field name="request_status" widget="badge" decoration-info="request_status == 'new'" decoration-success="request_status == 'receive'"
+                                            decoration-danger="request_status == 'cancel'" decoration-muted="request_status == 'refused'"/>
+                                        <field name="reason" optional="hide"/>
+                                        <field name="type_rejected" optional="hide"/>
+                                    </tree>
+                                </field>
                             </page>
                     </notebook>
                     </sheet>

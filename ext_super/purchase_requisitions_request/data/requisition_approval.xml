@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+    
+        <!-- Sequences for purchase requence Sequence -->
+        <record id="purchase_requisition_approval" model="approval.category">
+            <field name="name">Requisición</field>
+            <field name="has_requisition">required</field>
+        </record>
+        
+    </data>
+</odoo>

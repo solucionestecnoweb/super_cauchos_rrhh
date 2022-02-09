@@ -20,7 +20,7 @@ class Report(models.Model):
             rate_value = rate
         return rate_value
 
-    rate = fields.Float(string="Rate", default=lambda self: self.get_rate(), digits=(12,2))
+    rate = fields.Float(string="Rate", default=lambda self: self.get_rate(), digits=(12,4))
     amount_bs = fields.Monetary(compute='_compute_amount_bs', currency_field='currency_bs_id', digits=(12,2))
     amount_currency = fields.Monetary(compute='_compute_amount_currency', currency_field='currency_usd_id', digits=(12,2))
     currency_bs_id = fields.Many2one('res.currency', default=lambda self: self.env.user.company_id.currency_id.id)
