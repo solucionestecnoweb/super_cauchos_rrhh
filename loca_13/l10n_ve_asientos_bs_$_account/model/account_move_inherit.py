@@ -58,8 +58,8 @@ class AccountMove(models.Model):
         self.env.company.currency_secundaria_id.id
         for selff in self:
             if self.env.company.currency_secundaria_id.id==selff.currency_id.id:
-                #valor=selff.amount_residual
-                valor=abs(selff.amount_residual_signed/(selff.os_currency_rate+0.0000000000000000001)) # campo para jose gregorio
+                #valor=abs(selff.amount_residual_signed/(selff.os_currency_rate+0.0000000000000000001)) # campo para jose gregorio
+                valor=abs(selff.amount_residual)
             if self.env.company.currency_id.id==selff.currency_id.id:
                 if selff.custom_rate!=True:
                     lista_tasa = selff.env['res.currency.rate'].search([('currency_id', '=', self.env.company.currency_secundaria_id.id),('name','<=',selff.date)],order='id ASC')

@@ -8,7 +8,7 @@
             
             <xpath expr="//field[@name='partner_id']" position="after">
 
-            	<field name="usar_anticipo" string="Usar Anticipo?" widget="boolean_toggle" attrs="{'invisible': [('type', '=','entry')]}"/>
+            	<field name="usar_anticipo" string="Usar Anticipo?"  attrs="{'invisible': [('type', '=','entry')], 'readonly': [('state', '=', 'posted')]}" widget="radio"/> <!-- widget="boolean_toggle"-->
 
                 <!--field name="payment_id"  options="{'no_open':True, 'no_create': True}" domain="[('partner_id.id','=',partner_id),('usado','!=',True),('tipo','=',type)]" attrs="{'invisible': [('type', 'not in', ('in_invoice','out_invoice'))]}"/-->
 
@@ -20,14 +20,28 @@
 
 
 			<xpath expr="//page[@name='other_info']" position="before">
-			  <page string="Anticipos" attrs="{'invisible': [('type', '=', 'entry')]}">
-			    <group string="Anticipos Disponibles">
-			        <!--field name="payment_ids" widget="one2many"/-->
-			        <!--field name="payment_ids" widget="many2many_tags" /-->
-			        <field name="payment_ids" widget="one2many_list" domain="[('partner_id.id','=',partner_id),('usado','!=',True),('tipo','=',type)]" attrs="{'invisible': [('type', 'not in', ('in_invoice','out_invoice'))]}"/>
-			    </group>
-			  </page>
-			</xpath>
+              <page string="Anticipos" attrs="{'invisible': ['|',('type', '=', 'entry'),('usar_anticipo','!=','si')]}">
+                <group string="Anticipos Disponibles">
+                    <!--field name="payment_ids" widget="one2many"/-->
+                    <!--field name="payment_ids" widget="many2many_tags" /-->
+                    <!--field name="payment_ids" widget="one2many_list" domain="[('partner_id.id','=',partner_id),('usado','!=',True),('tipo','=',type)]" attrs="{'invisible': [('type', 'not in', ('in_invoice','out_invoice'))]}"/-->
+                    <field name="payment_ids" nolabel="1"  attrs="{'readonly': [('state', '=', 'posted')]}">
+                        <tree string="Anticipos" editable="buttom">
+                            <field name="payment_id" string="Pago Anticipo" domain="[('usado','!=',True),('partner_id.id','=',partner_id),('anticipo','=',True),('tipo','=',tipo)]" widget="many2one_barcode"/>
+                            <field name="monto_original" string="Monto original" readonly="1"/>
+                            <field name="saldo_disponible" string="Disponible"/>
+                            <field name="currency_id" string="Moneda" readonly="1" invisible="1"/>
+                            
+                            <field name="monto_usar" string="Monto a usar"/>
+                            <field name="partner_id" invisible="1"/>
+                            <field name="asiento_anticipo" readonly="1" widget="many2one_barcode"/>
+                            <field name="move_id" invisible="1"/>
+                            <field name="tipo" invisible="1"/>
+                        </tree>
+                    </field>
+                </group>
+              </page>
+            </xpath>
 			
             
         </field>
