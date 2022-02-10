@@ -34,6 +34,10 @@ class AccountMove(models.Model):
 
     #rel_field = fields.Char(string='Name', related='payment_id.amount')
 
+    def conf_anti(self):
+        self.crea_asiento_anticipo_v3()
+        #raise UserError(_('tipo = %s')%self.id)
+
     @api.onchange('payment_ids')
     def asigna_partner(self):
         self.payment_ids.partner_id=self.partner_id.id
@@ -89,110 +93,117 @@ class AccountMove(models.Model):
         #CREA LA CABECERA DEL ASIENTO DEL ANTICIPO
         valores=0
         valores_uds=0
+        nro_si=0
         if not self.payment_ids:
             raise UserError(_('Debe agregar Lineas de Pagos de Anticipo'))
         else:
             for det_anti in self.payment_ids:
-                nombre_anti=self.get_name_anticipo()
-                valores=det_anti.monto_usar
-                fecha_doc=det_anti.payment_id.payment_date
-                #fecha_doc=self.date
-                if det_anti.payment_id.currency_id.id!=self.env.company.currency_id.id:
-                    valores_uds=valores
-                    #raise UserError(_('valores= %s')%valores)
-                    #tasa= self.env['res.currency.rate'].search([('currency_id','=',det_anti.payment_id.currency_id.id),('name','<=',self.date)],order="name asc")
-                    """tasa= self.env['res.currency.rate'].search([('currency_id','=',det_anti.payment_id.currency_id.id),('name','<=',fecha_doc)],order="name asc")
-                    for det_tasa in tasa:
-                        if self.date>=det_tasa.name:
-                            valor_aux=det_tasa.rate
-                    rate=round(1/valor_aux,2)
-                    resultado=valores*rate
-                    valores=resultado"""
+                if det_anti.confirmado=='no':
+                    nro_si=nro_si+1
+                    nombre_anti=self.get_name_anticipo()
+                    valores=det_anti.monto_usar
+                    fecha_doc=det_anti.payment_id.payment_date
+                    #fecha_doc=self.date
+                    if det_anti.payment_id.currency_id.id!=self.env.company.currency_id.id:
+                        valores_uds=valores
+                        #raise UserError(_('valores= %s')%valores)
+                        #tasa= self.env['res.currency.rate'].search([('currency_id','=',det_anti.payment_id.currency_id.id),('name','<=',self.date)],order="name asc")
+                        """tasa= self.env['res.currency.rate'].search([('currency_id','=',det_anti.payment_id.currency_id.id),('name','<=',fecha_doc)],order="name asc")
+                        for det_tasa in tasa:
+                            if self.date>=det_tasa.name:
+                                valor_aux=det_tasa.rate
+                        rate=round(1/valor_aux,2)
+                        resultado=valores*rate
+                        valores=resultado"""
 
-                    resultado=valores*det_anti.payment_id.rate
-                    valores=resultado
+                        resultado=valores*det_anti.payment_id.rate
+                        valores=resultado
+                        
                     
-                
-                value = {
-                    'name': nombre_anti,
-                    'date': fecha_doc, #self.date,
-                    'journal_id': self.journal_id.id,
-                    'line_ids': False,
-                    'state': 'draft',
-                    'type': 'entry',# estte campo es el que te deja cambiar y almacenar valores 
-                    'amount_total':valores,# revisar
-                    ##'amount_total_signed':total_monto,# revisar
-                    'partner_id': self.partner_id.id,
-                    #'partner_id': 45,
-                    'ref': "Pago Anticipo Factura Nro: %s " % (self.invoice_number),
-                    'custom_rate':True,
-                    'os_currency_rate':det_anti.payment_id.rate,
-                    'amount_residual':0.0,
-                    'amount_residual_signed':0.0,
-                    #'name': "Comisión del %s %% del pago %s por comisión" % (igtf_porcentage,name),
+                    value = {
+                        'name': nombre_anti,
+                        'date': fecha_doc, #self.date,
+                        'journal_id': self.journal_id.id,
+                        'line_ids': False,
+                        'state': 'draft',
+                        'type': 'entry',# estte campo es el que te deja cambiar y almacenar valores 
+                        'amount_total':valores,# revisar
+                        ##'amount_total_signed':total_monto,# revisar
+                        'partner_id': self.partner_id.id,
+                        #'partner_id': 45,
+                        'ref': "Pago Anticipo Factura Nro: %s " % (self.invoice_number),
+                        'custom_rate':True,
+                        'os_currency_rate':det_anti.payment_id.rate,
+                        'amount_residual':0.0,
+                        'amount_residual_signed':0.0,
+                        #'name': "Comisión del %s %% del pago %s por comisión" % (igtf_porcentage,name),
 
-                }
-                move_obj = self.env['account.move']
-                move_id = move_obj.create(value)    
+                    }
+                    move_obj = self.env['account.move']
+                    move_id = move_obj.create(value)    
 
-                # CREA LAS LINEAS DE LOS ASIENTOS DE LOS ANTICIPOS
-                cuenta_anti_cliente = self.partner_id.account_anti_receivable_id.id
-                cuenta_anti_proveedor = self.partner_id.account_anti_payable_id.id
-                cuenta_cobrar = self.partner_id.property_account_receivable_id.id
-                cuenta_pagar = self.partner_id.property_account_payable_id.id
-                tipo_persona=self.type
-                if tipo_persona=="in_invoice":
-                    cuenta_a=cuenta_anti_proveedor
-                    cuenta_b=cuenta_pagar
-                if tipo_persona=="out_invoice":
-                    cuenta_a=cuenta_cobrar
-                    cuenta_b=cuenta_anti_cliente
-                #raise UserError(_('cuenta a=%s')%cuenta_anti_proveedor)
-                value = {
-                    'name': nombre_anti,
-                    'ref' : "Anticipo Documento Nro: %s " % (self.invoice_number),
-                    'move_id': int(move_id.id),
-                    'date': fecha_doc, #self.date,
-                    'partner_id': self.partner_id.id,
-                    #'partner_id': 45,
-                    'journal_id': self.journal_id.id,
-                    'account_id': cuenta_a,# aqui va cuenta de anticipo 
-                    'date_maturity': False,
-                    'credit': valores,#self.conv_div_extranjera(valores),#loca14
-                    'debit': 0.0, # aqi va cero
-                    'balance':-1*valores,#self.conv_div_extranjera(valores),#loca14
-                    'asiento_pagado':"si",
-                    'amount_currency': -1*valores_uds if det_anti.payment_id.currency_id.id!=self.env.company.currency_id.id else '',#-1*self.amount_currency(valores), #loca14
-                    'currency_id':2 if det_anti.payment_id.currency_id.id!=self.env.company.currency_id.id else '',#self.moneda(), #loca14
-                    ##'amount_residual_currency': -1*self.amount_currency(valores), #loca14
+                    # CREA LAS LINEAS DE LOS ASIENTOS DE LOS ANTICIPOS
+                    cuenta_anti_cliente = self.partner_id.account_anti_receivable_id.id
+                    cuenta_anti_proveedor = self.partner_id.account_anti_payable_id.id
+                    cuenta_cobrar = self.partner_id.property_account_receivable_id.id
+                    cuenta_pagar = self.partner_id.property_account_payable_id.id
+                    tipo_persona=self.type
+                    if tipo_persona=="in_invoice":
+                        cuenta_a=cuenta_anti_proveedor
+                        cuenta_b=cuenta_pagar
+                    if tipo_persona=="out_invoice":
+                        cuenta_a=cuenta_cobrar
+                        cuenta_b=cuenta_anti_cliente
+                    #raise UserError(_('cuenta a=%s')%cuenta_anti_proveedor)
+                    value = {
+                        'name': nombre_anti,
+                        'ref' : "Anticipo Documento Nro: %s " % (self.invoice_number),
+                        'move_id': int(move_id.id),
+                        'date': fecha_doc, #self.date,
+                        'partner_id': self.partner_id.id,
+                        #'partner_id': 45,
+                        'journal_id': self.journal_id.id,
+                        'account_id': cuenta_a,# aqui va cuenta de anticipo 
+                        'date_maturity': False,
+                        'credit': valores,#self.conv_div_extranjera(valores),#loca14
+                        'debit': 0.0, # aqi va cero
+                        'balance':-1*valores,#self.conv_div_extranjera(valores),#loca14
+                        'asiento_pagado':"si",
+                        'amount_currency': -1*valores_uds if det_anti.payment_id.currency_id.id!=self.env.company.currency_id.id else '',#-1*self.amount_currency(valores), #loca14
+                        'currency_id':2 if det_anti.payment_id.currency_id.id!=self.env.company.currency_id.id else '',#self.moneda(), #loca14
+                        ##'amount_residual_currency': -1*self.amount_currency(valores), #loca14
 
-                }
-               
-                move_line_obj = self.env['account.move.line']
-                move_line_id1 = move_line_obj.create(value)
+                    }
+                   
+                    move_line_obj = self.env['account.move.line']
+                    move_line_id1 = move_line_obj.create(value)
 
-                value['account_id'] = cuenta_b # aqui va cuenta pxp proveedores
-                value['credit'] = 0.0 # aqui va cero
-                value['debit'] = valores #self.conv_div_extranjera(valores)#loca14
-                value['balance'] = valores #self.conv_div_extranjera(valores)#loca14
-                value['asiento_pagado'] = "si"
-                value['amount_currency'] = valores_uds if det_anti.payment_id.currency_id.id!=self.env.company.currency_id.id else '' #self.amount_currency(valores) #loca14
-                value['currency_id'] =2 if det_anti.payment_id.currency_id.id!=self.env.company.currency_id.id else ''# self.moneda() #loca14
-                ##value['amount_residual_currency'] = self.amount_currency(valores) #loca14
-               
-                move_line_id2 = move_line_obj.create(value)
+                    value['account_id'] = cuenta_b # aqui va cuenta pxp proveedores
+                    value['credit'] = 0.0 # aqui va cero
+                    value['debit'] = valores #self.conv_div_extranjera(valores)#loca14
+                    value['balance'] = valores #self.conv_div_extranjera(valores)#loca14
+                    value['asiento_pagado'] = "si"
+                    value['amount_currency'] = valores_uds if det_anti.payment_id.currency_id.id!=self.env.company.currency_id.id else '' #self.amount_currency(valores) #loca14
+                    value['currency_id'] =2 if det_anti.payment_id.currency_id.id!=self.env.company.currency_id.id else ''# self.moneda() #loca14
+                    ##value['amount_residual_currency'] = self.amount_currency(valores) #loca14
+                   
+                    move_line_id2 = move_line_obj.create(value)
 
-                moves= self.env['account.move'].search([('id','=',move_id.id)])
-                moves.filtered(lambda move: move.journal_id.post_at != 'bank_rec').post() # aqui SE PUBLICA DICHO ASIENTO
-                #moves.action_post()  
+                    moves= self.env['account.move'].search([('id','=',move_id.id)])
+                    moves.filtered(lambda move: move.journal_id.post_at != 'bank_rec').post() # aqui SE PUBLICA DICHO ASIENTO
+                    #moves.action_post()  
 
-                ### AQUI ASOCIA EL ANTICIPO CON SU RESPECTIVO ASIENTO
-                det_anti.asiento_anticipo=move_id.id
+                    ### AQUI ASOCIA EL ANTICIPO CON SU RESPECTIVO ASIENTO
+                    det_anti.asiento_anticipo=move_id.id
 
-                ### AQUI COMIENZA A DESCONTAR EL MONTO USADO DEL ANTICIPO DE LO DISPONIBLE
-                disponible=det_anti.payment_id.saldo_disponible
-                det_anti.payment_id.saldo_disponible=disponible-det_anti.monto_usar
-                det_anti.payment_id.usado=True if det_anti.payment_id.saldo_disponible==0 else False
+                    ### AQUI COMIENZA A DESCONTAR EL MONTO USADO DEL ANTICIPO DE LO DISPONIBLE
+                    disponible=det_anti.payment_id.saldo_disponible
+                    det_anti.payment_id.saldo_disponible=disponible-det_anti.monto_usar
+                    det_anti.payment_id.usado=True if det_anti.payment_id.saldo_disponible==0 else False
+                    det_anti.confirmado='si'
+
+            if nro_si==0:
+                raise UserError(_('No hay nuevos anticipos para cruzar'))
 
 
 
@@ -209,6 +220,7 @@ class AccountMove(models.Model):
                     rec.payment_id.saldo_disponible=valor
                     rec.payment_id.usado=False
                     rec.monto_usar=valor
+                    rec.confirmado='no'
 
 
 
@@ -289,6 +301,7 @@ class AccountPaymentAnticipo(models.Model):
     partner_id=fields.Many2one('res.partner')
     asiento_anticipo = fields.Many2one('account.move')
     tipo = fields.Selection(related='move_id.type',store=True)
+    confirmado=fields.Char(default='no')
 
     @api.onchange('payment_id','move_id.state')
     def _compute_saldo_disponible(self):
@@ -302,3 +315,9 @@ class AccountPaymentAnticipo(models.Model):
                     rec.monto_usar=rec.payment_id.saldo_disponible
             if not rec.payment_id:
                 rec.saldo_disponible=0
+
+    def unlink(self):
+        for rec in self:
+            if rec.confirmado=='si':
+                raise UserError(_("No se pueden eliminar anticipos ya confirmados para esta factura"))
+        super().unlink()
