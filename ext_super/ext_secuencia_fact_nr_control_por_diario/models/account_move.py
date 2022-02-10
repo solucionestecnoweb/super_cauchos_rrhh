@@ -48,8 +48,7 @@ class AccountMove(models.Model):
     
 
     def get_invoice_number_cli(self):
-        '''metodo que crea el Nombre del asiento contable si la secuencia no esta creada, crea una con el
-        nombre: 'l10n_ve_cuenta_retencion_iva'''
+        
         name=''
         if self.act_nota_entre==False:
            name=self.name
@@ -57,8 +56,7 @@ class AccountMove(models.Model):
 
     
     def get_refuld_number_cli(self):# nota de credito cliente
-        '''metodo que crea el Nombre del asiento contable si la secuencia no esta creada, crea una con el
-        nombre: 'l10n_ve_cuenta_retencion_iva'''
+       
         name=''
         if self.act_nota_entre==False:
              name=self.name
@@ -66,12 +64,12 @@ class AccountMove(models.Model):
 
     
     def get_refuld_number_pro(self): #nota de debito Cliente
-        '''metodo que crea el Nombre del asiento contable si la secuencia no esta creada, crea una con el
-        nombre: 'l10n_ve_cuenta_retencion_iva'''
+        
         name=''
         if self.act_nota_entre==False:
              name=self.name
         return name
+
 
     
 
@@ -85,7 +83,7 @@ class AccountMove(models.Model):
                 if not self.journal_id.ctrl_sequence_id:
                     raise UserError(_('Este diario no tiene configurado el Nro de control. vaya al diario y en el campo *Proximo Nro control* agregue uno'))
                 else:
-                    if not self.journal_id.ctrl_sequence_id.code:
+                    if not self.journal_id.ctrl_sequence_id.code and self.journal_id.type=='sale':
                         raise UserError(_('La secuencia del Nro control llamado * %s * de este diario, no tiene configurada el Código se secuencias')%self.journal_id.ctrl_sequence_id.name)
                     else:
                         SEQUENCE_CODE=self.journal_id.ctrl_sequence_id.code

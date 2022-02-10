@@ -20,7 +20,7 @@ class AccountJournal(models.Model):
     _inherit = 'account.journal'
 
     ctrl_sequence_id = fields.Many2one('ir.sequence', string='Secuencia Nro Control',
-        help="Este campo asigna el nro de control de un documento sea factura, NC, ND", required=True, copy=False)
+        help="Este campo asigna el nro de control de un documento sea factura, NC, ND", required=False, copy=False)
     ctrl_sequence_number_next = fields.Char(compute='_compute_proximo_valor')
 
     def _compute_proximo_valor(self):
