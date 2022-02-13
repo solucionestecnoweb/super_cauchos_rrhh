@@ -41,6 +41,49 @@ class AccountMove(models.Model):
             if invoice.type in tipos:
                 for line in invoice.line_ids :
                     line._recompute_debit_credit_from_amount_currency()
+
+    @api.constrains('amount_total','amount_residual')
+    def amount_residual_anadir(self):
+        pago=monto=0
+        for selff in self:
+            cuenta_pro=selff.partner_id.property_account_payable_id.id
+            cuenta_cli=selff.partner_id.property_account_receivable_id.id
+            # CLIENTES
+            if selff.type in ('out_invoice','out_refund'): 
+                for rec in selff.line_ids:
+                    if rec.account_id.id==cuenta_cli:
+                        id_move=rec.id
+                cursor=selff.env['account.partial.reconcile'].search([('debit_move_id','=',id_move)])
+                if cursor:
+                    for det in cursor:
+                        ####
+                        busca_tasa=selff.env['account.move.line'].search([('id','=',det.credit_move_id.id)])
+                        if busca_tasa:
+                            for tasa in busca_tasa:
+                                valor_tasa=tasa.move_id.os_currency_rate
+                        ####
+                        monto=monto+(det.amount/valor_tasa)
+                        det.amount_currency=(det.amount/valor_tasa)
+                aux=selff.amount_total
+                selff.amount_residual=aux-monto
+            # PROVEEDOES
+            if selff.type in ('in_invoice','in_refund'): 
+                for rec in selff.line_ids:
+                    if rec.account_id.id==cuenta_pro:
+                        id_move=rec.id
+                cursor=selff.env['account.partial.reconcile'].search([('credit_move_id','=',id_move)])
+                if cursor:
+                    for det in cursor:
+                        ####
+                        busca_tasa=selff.env['account.move.line'].search([('id','=',det.debit_move_id.id)])
+                        if busca_tasa:
+                            for tasa in busca_tasa:
+                                valor_tasa=tasa.move_id.os_currency_rate
+                        ####
+                        monto=monto+(det.amount_currency/valor_tasa)
+                        det.amount_currency=(det.amount/valor_tasa)
+                aux=selff.amount_total
+                selff.amount_residual=aux-monto
             
     def _compute_payments_widget_to_reconcile_info(self):
         for move in self:
@@ -95,6 +138,7 @@ class AccountMove(models.Model):
                 info['title'] = type_payment
                 move.invoice_outstanding_credits_debits_widget = json.dumps(info)
                 move.invoice_has_outstanding = True
+                #move.amount_residual=amount_to_show
 
     def _get_reconciled_info_JSON_values(self):
         self.ensure_one()
@@ -138,6 +182,7 @@ class AccountMove(models.Model):
                 'move_id': counterpart_line.move_id.id,
                 'ref': ref,
             })
+            #self.amount_residual_anadir(amount)
         return reconciled_vals
 
     """@api.depends('type', 'line_ids.amount_residual')
