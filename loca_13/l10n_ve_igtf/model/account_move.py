@@ -210,17 +210,18 @@ class AccountMove(models.Model):
     
     def button_draft(self):
         super().button_draft()
-        if self.usar_anticipo=='si':
-            if self.payment_ids:
-                for rec in self.payment_ids:
-                    if rec.asiento_anticipo:
-                        rec.asiento_anticipo.with_context(force_delete=True).unlink()
-                    valor=rec.saldo_disponible+rec.monto_usar
-                    rec.saldo_disponible=valor
-                    rec.payment_id.saldo_disponible=valor
-                    rec.payment_id.usado=False
-                    rec.monto_usar=valor
-                    rec.confirmado='no'
+        for selff in self:
+            if selff.usar_anticipo=='si':
+                if selff.payment_ids:
+                    for rec in selff.payment_ids:
+                        if rec.asiento_anticipo:
+                            rec.asiento_anticipo.with_context(force_delete=True).unlink()
+                        valor=rec.saldo_disponible+rec.monto_usar
+                        rec.saldo_disponible=valor
+                        rec.payment_id.saldo_disponible=valor
+                        rec.payment_id.usado=False
+                        rec.monto_usar=valor
+                        rec.confirmado='no'
 
 
 
