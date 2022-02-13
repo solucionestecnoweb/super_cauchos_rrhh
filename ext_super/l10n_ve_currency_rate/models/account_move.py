@@ -42,6 +42,7 @@ class AccountMove(models.Model):
                 for line in invoice.line_ids :
                     line._recompute_debit_credit_from_amount_currency()
 
+######## NUEVO CÓDIGO 13/02/20222   ######################
     @api.constrains('amount_total','amount_residual')
     def amount_residual_anadir(self):
         pago=monto=0
@@ -185,22 +186,10 @@ class AccountMove(models.Model):
             #self.amount_residual_anadir(amount)
         return reconciled_vals
 
-    """@api.depends('type', 'line_ids.amount_residual')
-    def _compute_payments_widget_reconciled_info(self):
-        for move in self:
-            if move.state != 'posted' or not move.is_invoice(include_receipts=True):
-                move.invoice_payments_widget = json.dumps(False)
-                continue
-            reconciled_vals = move._get_reconciled_info_JSON_values()
-            if reconciled_vals:
-                info = {
-                    'title': _('Less Payment'),
-                    'outstanding': False,
-                    'content': reconciled_vals,
-                }
-                move.invoice_payments_widget = json.dumps(info, default=date_utils.json_default)
-            else:
-                move.invoice_payments_widget = json.dumps(False)"""
+
+######## FIN  CÓDIGO 13/02/20222   ######################
+
+
 
 class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
@@ -289,8 +278,10 @@ class AccountPayment(models.Model):
     @api.constrains('move_id','state')
     def _os_constrains_move_id_rate(self):
         if len(self.move_line_ids) > 0:
-            self.move_line_ids[0].move_id.os_currency_rate = self.rate
-            self.move_line_ids[0].move_id.custom_rate = True
+            for det in self.move_line_ids:
+                det.move_id.os_currency_rate = self.rate
+                det.move_id.custom_rate=True
+
 
     @api.onchange('invoice_ids', 'amount', 'payment_date', 'currency_id', 'payment_type','rate')
     def _onchange_os_currency_rate(self):
