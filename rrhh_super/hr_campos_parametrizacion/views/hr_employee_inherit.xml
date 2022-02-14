@@ -124,7 +124,7 @@
                                 <field name="parish_id" string="Parroquia" placeholder="Parroquia" domain="[('municipality_id','=',municipality_id)]"/>
                             </group>
                             <group name="nro_2" string="Datos Personales">
-                                <field name="tipo_contrinbuyente" string="Tipo"/>
+                                <field name="tipo_contribuyente" string="Tipo"/>
                                 <field name="identification_id" string="Cédula"/>
                                 <field name="rif" string="Rif"/>
                                 <field name="passport_id" />
@@ -150,6 +150,17 @@
                 <xpath expr="//field[@name='address_id']" position="replace">
                     <field name="direccion_trabajo" string="Dirección Trabájo" />
                     <!--xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='personal_information']/group[1]/group[1]/field[@name='address_home_id']" position="move"/-->
+                </xpath>
+
+                 <xpath expr="//field[@name='pin']" position="before">
+                    <div class="o_row">
+                        <field name="constancia_trab" string="Jefe de RRHH" readonly="1" />
+                        <field name="gerente_rrhh_id" string="Jefe de RRHH"/>
+                        <!--button string="Generar" class="btn btn-link" type="object" name="generar_constancia"/-->
+                    </div>
+                </xpath>
+                <xpath expr="//field[@name='parent_id']" position="after">
+                    <field name="fecha_hoy" string="Dia actual"/>
                 </xpath>
 
             </field>

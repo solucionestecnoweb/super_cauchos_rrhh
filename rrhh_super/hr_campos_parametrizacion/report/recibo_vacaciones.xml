@@ -149,7 +149,7 @@
                     <t t-call="account.report_invoice_document_with_payments" t-lang="lang"/-->
 
     <report
-            id="payslip_recibo_vaca"
+            id="zz"
             model="hr.payslip"
             string="Recibo de Vacaciones"
             report_type="qweb-pdf"

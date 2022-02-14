@@ -58,6 +58,7 @@
         'report/recibo_pago.xml',
         'report/recibo_vacaciones.xml',
         'report/recibo_liquidacion.xml',
+        'report/constancia_trabajo.xml',
         'views/hr_menu_setting_employee.xml',
         'security/ir.model.access.csv',
     ],
