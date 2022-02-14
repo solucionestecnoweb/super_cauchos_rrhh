@@ -15,3 +15,4 @@ from . import hr_salary_rule_inherit
 from . import hr_leave_inherit
 from . import x_hr_payslip_employees # para pagar de forma de lote
 from . import hr_payslip_line
+from . import hr_requisiciones
