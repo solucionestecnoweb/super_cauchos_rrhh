@@ -144,8 +144,8 @@ class BsoftContratoReport2(models.TransientModel):
 
         self.file_name = 'txt_generacion.txt'
 
-        ruta="C:/Odoo 13.0e/server/odoo/rrhh_super/hr_campos_parametrizacion/wizard/txt_generacion.txt" #ruta local
-        #ruta="/home/odoo/src/txt_generacion.txt" # ruta odoo sh
+        #ruta="C:/Odoo 13.0e/server/odoo/rrhh_super/hr_campos_parametrizacion/wizard/txt_generacion.txt" #ruta local
+        ruta="/home/odoo/src/txt_generacion.txt" # ruta odoo sh
 
         cabecera="Cedula;Tipo Trabajador;Tipo Contrato;Fecha Ingreso;Cargo;"
         cabecera=cabecera+"Ocupacion;Especializacion;Subproceso;Salario;Jornada;"
