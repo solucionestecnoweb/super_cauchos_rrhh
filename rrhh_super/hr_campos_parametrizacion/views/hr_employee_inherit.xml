@@ -109,6 +109,35 @@
                         <group name="studio_group_q7DRg_right"/-->
                       </group>
                     </page>
+
+                    <page string="Datos MINTRA" name="mintra">
+                        <group name="principal_mintra">
+                            <group name="mintra_izq">
+                                <field name="identification_id" readonly="1"/>
+                                <field name="tipo_trabajador"/>
+                                <field name="fecha_ingreso"/>
+                                <field name="ocupacion"/>
+                                <field name="profesion" string="Especialización"/>
+                                <field name="jornada"/>
+                                <field name="lab_domingo"/>
+                                <field name="prom_hora_noc"/>
+                                <field name="fam_discap"/>
+                                <field name="monto_bene_guar"/>
+                            </group>
+                            <group name="mintra_der">
+                                <field name="tipo_contrato"/>
+                                <field name="job_id" readonly="1" string="Cargo o puesto de trabajo"/>
+                                <field name="salario" string="Salario"/>
+                                <field name="subproceso"/>
+                                <field name="sindicalizado"/>
+                                <field name="prom_hora_lab"/>
+                                <field name="prom_hora_extras"/>
+                                <field name="carga_familiar"/>
+                                <field name="hijo_benf_guard"/>
+                                <field name="mujer_embarazad"/>
+                            </group>
+                        </group>
+                    </page>
                 </xpath>
 
                 <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='personal_information']" position="replace">

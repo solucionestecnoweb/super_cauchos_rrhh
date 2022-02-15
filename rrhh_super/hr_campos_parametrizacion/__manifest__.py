@@ -63,6 +63,7 @@
         'report/requisicion.xml',
         'views/hr_menu_setting_employee.xml',
         'security/ir.model.access.csv',
+        'wizard/wizard_generar_txt_view.xml',
     ],
     'demo': [],
     'installable': True,

@@ -37,6 +37,40 @@ class HrEmployee(models.Model):
     gerente_rrhh_id = fields.Many2one('hr.employee')
     fecha_hoy = fields.Date(compute='_compute_hoy')
 
+    ###### CAMPOS PARA EL MINTRA  #############
+    tipo_trabajador = fields.Selection([('1','De Dirección'),('2','De Inspección o Vigilancia'),('3','Aprendiz Ince'),('4','Pasante'),('5','Trabajador Calificado'),('6','Trabajador no Calificado')])
+    tipo_contrato = fields.Selection([('TD','Tiempo Completo'),('TI','Tiempo Indeterminado'),('OD','Obra Determinada')])
+    fecha_ingreso = fields.Date(compute='_compute_datos_contrato')
+    salario = fields.Float(compute='_compute_datos_contrato')
+    ocupacion = fields.Char(size=4)
+    subproceso = fields.Char(size=9)
+    jornada = fields.Selection([('D','Diurno'),('N','Nocturno'),('M','Mixta'),('R2','Rotativo 2 Turnos'),('R3','Rotativo 3 turnos'),('TC','De trabajo Continuo')])
+    sindicalizado = fields.Selection([('N','No'),('S','Si')])
+    lab_domingo = fields.Selection([('N','No'),('S','Si')])
+    prom_hora_lab = fields.Float(digits=(2,0))
+    prom_hora_extras = fields.Float(digits=(2,0))
+
+    prom_hora_noc = fields.Float(digits=(2,0))
+    carga_familiar = fields.Char(size=2)
+    fam_discap  = fields.Selection([('N','No'),('S','Si')])
+    hijo_benf_guard = fields.Char(digits=(1,0))
+    monto_bene_guar = fields.Float(digits=(3,2))
+    mujer_embarazad = fields.Selection([('N','No'),('S','Si')])
+
+
+    def _compute_datos_contrato(self):
+        valor='1999-01-01'
+        sueldo=0
+        for selff in self:
+            if selff.contract_id:
+                valor=selff.contract_id.date_start
+                sueldo=selff.contract_id.wage
+            selff.fecha_ingreso=valor
+            selff.salario=sueldo
+
+
+
+
     def _compute_hoy(self):
         for selff in self:
             hoy=datetime.now().strftime('%Y-%m-%d')

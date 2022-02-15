@@ -126,7 +126,7 @@
     <!--t t-set="lang" t-value="o.invoice_user_id.sudo().lang if o.type in ('in_invoice', 'in_refund') else o.partner_id.lang"/>
                     <t t-call="account.report_invoice_document_with_payments" t-lang="lang"/-->
 
-    <report
+    <!--report
             id="paperformat_requisiciones"
             model="hr.requisiciones"
             string="Orden de Requisiciones"
@@ -134,7 +134,7 @@
             name="hr_campos_parametrizacion.report_requisiciones"
             file="hr_campos_parametrizacion.report_requisiciones"
             paperformat="paperformat_requisiciones"
-        /> 
+        /--> 
   
   </data>
 </odoo>
