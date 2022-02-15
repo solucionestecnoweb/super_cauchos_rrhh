@@ -123,7 +123,8 @@ class AccountMove(models.Model):
                             amount_to_show = currency._convert(abs(line.amount_residual), move.currency_id, move.company_id,
                                                                line.date or fields.Date.today())
                         else: 
-                            amount_to_show=abs(line.amount_residual/line.move_id.os_currency_rate)
+                        	
+                            amount_to_show=abs(line.amount_residual/(line.move_id.os_currency_rate+0.0000000000000000001))
                         ## FIN MODIFICACION CODIGO PARA TASA PERSONALIZADA
                     if float_is_zero(amount_to_show, precision_rounding=move.currency_id.rounding):
                         continue
