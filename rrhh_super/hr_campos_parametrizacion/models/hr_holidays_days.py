@@ -60,6 +60,31 @@ class hr_special_days(models.Model):
     dias_pos_natal = fields.Integer(compute='_compute_permiso')
     dias_peternidad = fields.Integer(compute='_compute_permiso')
 
+    ########################33 CAMPO PARA ABONOS ADICIONALES ###############################
+    abono_check = fields.Boolean(default=False, string="Monto Abonos adicionales")
+    abono_value = fields.Float(default=0)
+    ########################33 CAMPO PARA DEDUCCIONES ADICIONALES ###############################
+    salary_deduction_check = fields.Boolean(default=False, string="Monto Deducciones")
+    salary_deduction_value = fields.Float(default=0)
+    ########################33 dias pendientes ADICIONALES ###############################
+    dias_pend_check = fields.Boolean(default=False, string="Dias pendientes por pagar")
+    dias_pen_d_value = fields.Float(default=1)
+    ####################### descuento por prestamos ########################
+    habilitar_des_pres = fields.Boolean(default=False)
+    custom_rate = fields.Boolean(default=True)
+    os_currecy_rate = fields.Float(default=1)
+    monto = fields.Float()
+    monto_bs = fields.Float()
+    currency_pres_id = fields.Many2one('res.currency', default=2)
+
+    @api.onchange('currency_pres_id','monto','os_currecy_rate')
+    def calcula_monto_prestamo_bs(self):
+        if self.currency_pres_id.id!=3:
+               self.monto_bs=self.monto*self.os_currecy_rate
+        else:
+            self.monto_bs=self.monto
+
+
 
     @api.depends('date_from','date_to')
     def _compute_dias(self):
