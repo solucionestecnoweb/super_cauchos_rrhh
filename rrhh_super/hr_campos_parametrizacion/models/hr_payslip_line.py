@@ -45,5 +45,7 @@ class HrPauslipLine(models.Model):
                 valor=rec.slip_id.dias_ausencia_injus
             if rec.code=="BOAYEC":
                 valor=rec.slip_id.days_attended
+            if rec.code=="DSP":
+                valor=int(rec.slip_id.dias_pen_d_value)
             rec.dias=str(valor)
             valor="--"

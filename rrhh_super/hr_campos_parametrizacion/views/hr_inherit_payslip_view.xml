@@ -61,7 +61,7 @@
                         <group col="2">
                             <field name="monto" string="Monto a descontar" attrs="{'invisible': [('habilitar_des_pres', '!=', True)]}" />
                             <field name="currency_pres_id" string="Moneda" attrs="{'invisible': [('habilitar_des_pres', '!=', True)]}"/>
-                            <field name="monto_bs" string="Equivalente en (Bs)" readonly="0" attrs="{'invisible': [('habilitar_des_pres', '!=', True)]}"/>
+                            <field name="monto_bs" string="Equivalente en (Bs)" readonly="1" attrs="{'invisible': [('habilitar_des_pres', '!=', True)]}"/>
                         </group>
                     </group>
 
