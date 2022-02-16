@@ -52,6 +52,33 @@
 			</field>
 		</record>
 
+		<record model="ir.ui.view" id="snc_wizard_mercantil_form_view">
+			<field name="name">snc.wizard.mercantil.form</field>
+			<field name="model">snc.wizard.mercantil</field>
+			<field name="arch" type="xml">
+				<form string="TXT BANCO MERCANTIL">
+					<group>
+						<field name="date_from" string="Fecha o Período"/>
+						<field name="payslip_run_id" string="Lote de pago"/>
+						<field name="company_id"/>
+						<field name="forma_de_pago" string="Forma de pago"/>
+						<field name="bank_ids" string="Nro de cuenta"/>
+						<field name = "file_data" filename = "file_name" readonly = "1"/>
+						<field name = "file_name" invisible="1"/>
+					</group>
+					<footer>
+						<div class="oe_left">
+			
+							<button string="Generar TXT" name="action_generate_txt"
+								type="object"  class="oe_highlight"/>
+							<button string="Cerrar" special="cancel" type="object"
+								class="oe_link" />
+						</div>
+					</footer>
+				</form>
+			</field>
+		</record>
+
         <!-- ACCIONES -->
 
 	    <record id="hr_mintra_menu" model="ir.actions.act_window">
@@ -69,6 +96,15 @@
 	        <field name="res_model">snc.wizard.faov</field>
 	        <field name="view_mode">form</field>
 	        <field name="view_id" ref="snc_wizard_faov_form_view"/>
+	        <field name="target">new</field>
+	    </record>
+
+	    <record id="hr_mercantil_menu" model="ir.actions.act_window">
+	        <field name="name">TXT MERCANTIL</field>
+	        <field name="type">ir.actions.act_window</field>
+	        <field name="res_model">snc.wizard.mercantil</field>
+	        <field name="view_mode">form</field>
+	        <field name="view_id" ref="snc_wizard_mercantil_form_view"/>
 	        <field name="target">new</field>
 	    </record>
 
@@ -90,6 +126,13 @@
 		parent="hr_payroll.menu_hr_payroll_payslips"
 		action="hr_faov_menu"
 		sequence="96"/>
+
+		<menuitem
+		id="menu_txt_mercantil"
+		name="TXT BANCO MERCANTIL" 
+		parent="hr_payroll.menu_hr_payroll_payslips"
+		action="hr_mercantil_menu"
+		sequence="97"/>
 
 	</data>
 </odoo>
