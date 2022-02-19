@@ -3,7 +3,7 @@
 import logging
 import re
 from odoo import api, fields, models, _ , exceptions
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError, ValidationError
 
 _logger = logging.getLogger(__name__)
 
@@ -11,6 +11,8 @@ _logger = logging.getLogger(__name__)
 class Contract(models.Model):
     _name = 'hr.contract'
     _inherit = ["hr.contract"]
+
+    historico_cargo_ids = fields.One2many('hr.historico.cargo', 'contract_id', string='Historico Cargos')
 
     #######################################ASIGNACIONES##################################################################
     night_bonus_check = fields.Boolean(string='Night Bonus')
@@ -106,3 +108,23 @@ class Contract(models.Model):
     abono_check = fields.Boolean(default=False, string="Abonos adicionales")
     abono_value = fields.Float(default=0)
 
+
+    ########################## CAMPOS TERMINOS FIN CONTRATO ################
+    fecha_egreso = fields.Datetime()
+    motivo_egreso = fields.Char()
+
+class HistoricoContract(models.Model):
+    _name= 'hr.historico.cargo'
+
+    contract_id = fields.Many2one('hr.contract')
+    job_id = fields.Many2one('hr.job')
+    fecha_asig = fields.Datetime()
+    activar = fields.Selection([('SI','SI'),('NO','NO')])
+
+
+    @api.onchange('activar')
+    def verifica(self):
+        for selff in self:
+            if selff.activar=="SI":
+                selff.contract_id.job_id=selff.job_id.id
+                #raise UserError(_('verifica %s')%selff.job_id.id)

@@ -7,6 +7,10 @@
             <field name="model">hr.contract</field>
             <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
             <field name="arch" type="xml">
+                <xpath expr="//field[@name='trial_date_end']" position="after">
+                    <field name="fecha_egreso" string="Fecha de Egreso"/>
+                    <field name="motivo_egreso" string="Motivo del Egreso"/>
+                </xpath>
                 <xpath expr="//notebook/page[@name='other']" position="after">
                     <page string="Asignaciones y Deducciones" name="asignaciones_deducciones">
                         <group>
@@ -269,6 +273,19 @@
                                     </div>
                             </group>
                     </group>
+                    </page>
+
+                    <page string="Historico de cargos" name="hist_cargo">
+                        <group name="general_historico">
+                            <field name="historico_cargo_ids" nolabel="1" readonly="False">
+                                <tree string="Historico Cargos" editable="buttom">
+                                    <field name="contract_id"/>
+                                    <field name="job_id" string="Cargo"/>
+                                    <field name="fecha_asig" string="Fecha de vigencia"/>
+                                    <field name="activar" string="Asg. Cargo?"/>
+                                </tree>
+                            </field>
+                        </group>
                     </page>
                 </xpath>
             </field>

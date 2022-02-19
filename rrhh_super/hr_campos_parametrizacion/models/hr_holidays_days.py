@@ -66,6 +66,8 @@ class hr_special_days(models.Model):
     ########################33 CAMPO PARA DEDUCCIONES ADICIONALES ###############################
     salary_deduction_check = fields.Boolean(default=False, string="Monto Deducciones")
     salary_deduction_value = fields.Float(default=0)
+    deduction_sc_check = fields.Boolean(default=False, string="Deducciones sin cobrar")
+    deduction_sc_value = fields.Float(default=0)
     ########################33 dias pendientes ADICIONALES ###############################
     dias_pend_check = fields.Boolean(default=False, string="Dias pendientes por pagar")
     dias_pen_d_value = fields.Float(default=1)
@@ -76,6 +78,9 @@ class hr_special_days(models.Model):
     monto = fields.Float()
     monto_bs = fields.Float()
     currency_pres_id = fields.Many2one('res.currency', default=2)
+    ########################33 CAMPO PARA DEDUCCIONES DE ANTICIPOS POR VACACIONES ###############################
+    anticipo_vac_check = fields.Boolean(default=False, string="Anticipos de Vacaciones")
+    anticipo_vac_value = fields.Float(default=1)
 
     @api.onchange('currency_pres_id','monto','os_currecy_rate')
     def calcula_monto_prestamo_bs(self):

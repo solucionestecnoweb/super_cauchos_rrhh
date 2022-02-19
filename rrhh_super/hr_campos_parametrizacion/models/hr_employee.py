@@ -276,7 +276,10 @@ class HrGrupoFamiliar(models.Model):
         tiempo=0
         for selff in self:
             if selff.employee_id.id:
-                fecha_ing=selff.fecha_nac
+                if selff.fecha_nac:
+                    fecha_ing=selff.fecha_nac
+                else:
+                    fecha_ing=selff.date_actual
                 fecha_actual=selff.date_actual
                 dias=selff.days_dife(fecha_actual,fecha_ing)
                 tiempo=dias/365

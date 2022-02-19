@@ -13,3 +13,4 @@ hr_promocion,hr.promocion,model_hr_promocion,base.group_user,1,1,1,1
 hr_payroll_employeed,hr.payroll.employeed,model_hr_payroll_employeed,base.group_user,1,1,1,1
 hr_requisiciones,hr.requisiciones,model_hr_requisiciones,base.group_user,1,1,1,1
 hr_requisiciones_line,hr.requisiciones.line,model_hr_requisiciones_line,base.group_user,1,1,1,1
+hr_historico_cargo,hr.historico.cargo,model_hr_historico_cargo,base.group_user,1,1,1,1
