@@ -8,8 +8,11 @@
 
             <xpath expr="//button[@id='account_invoice_payment_btn']" position="after">
                          <button name="conf_anti" string="Confirmar anticipos asociados" type="object" attrs="{'invisible': ['|','|',('usar_anticipo','!=','si'),('state','=','draft'),('invoice_payment_state','=','paid')]}" class="oe_highlight"/>
+
+                         <button name="prueba" string="prueba" type="object" class="oe_highlight"/>
                          <!--button name="button_draft" string="borrador 2" type="object" /-->
             </xpath>
+
             
             <xpath expr="//field[@name='partner_id']" position="after">
 
@@ -46,6 +49,7 @@
                             <field name="asiento_anticipo" readonly="1" widget="many2one_barcode"/>
                             <field name="move_id" invisible="1"/>
                             <field name="tipo" invisible="1"/>
+                            <field name="consiliacion_sec_id" invisible="1"/>
                             
                         </tree>
                     </field>

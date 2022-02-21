@@ -38,6 +38,49 @@ class AccountMove(models.Model):
         self.crea_asiento_anticipo_v3()
         #raise UserError(_('tipo = %s')%self.id)
 
+    def consiliacion_faltante(self):
+        if self.type=='in_invoice':
+            cuenta_anticipo=self.partner_id.account_anti_payable_id
+        if self.type=='out_invoice':
+            cuenta_anticipo=self.partner_id.account_anti_receivable_id
+        if self.payment_ids:
+            for line_pago in self.payment_ids:
+                ####### BUSCA LA LINEA DEL ASIENTO ANTICIPO ORIGINAL  CON CUENTA ANTICIPO
+                for det in line_pago.payment_id.move_line_ids:
+                    if det.account_id.id==cuenta_anticipo.id:
+                        move_line_1=det
+                        
+                #raise UserError(_('anticipo:%s')%move_line_1)
+                ####### BUSCA LA LINEA DEL ASIENTO ANTICIPO PARCIAL  CON CUENTA ANTICIPO
+                for dec in line_pago.asiento_anticipo.line_ids:
+                    if dec.account_id.id==cuenta_anticipo.id:
+                        move_line_2=dec
+                #raise UserError(_('%s')%move_line_2)
+                ########### CODIGO QUE RESTA LO PENDIENTE DEL ANTICIPO ORIGINAL ON EL ANTICIPO PARCIAL
+                """residual_1=move_line_1.amount_residual
+                residual_2=move_line_2.amount_residual
+                resultado=residual_1+residual_2 ##### suma algebraica, se resta ya que trae ya el signo contratrio al otro
+                move_line_1.amount_residual=resultado
+                move_line_2.amount_residual=0"""
+                ############ codigo que concilia ambas lineas
+                if self.type=='in_invoice':
+                    ## es proveedor
+                    id_move_debit=move_line_1.id
+                    id_move_credit=move_line_2.id
+                if self.type=='out_invoice':
+                    ## es cliente
+                    id_move_debit=move_line_2.id
+                    id_move_credit=move_line_1.id
+                value = {
+                'debit_move_id':id_move_debit,
+                'credit_move_id':id_move_credit,
+                'amount':abs(move_line_2.amount_residual),#abs(residual_2),
+                'max_date':self.date,
+                }
+                line_pago.consiliacion_sec_id=self.env['account.partial.reconcile'].create(value)
+
+
+
     @api.onchange('payment_ids')
     def asigna_partner(self):
         self.payment_ids.partner_id=self.partner_id.id
@@ -201,6 +244,7 @@ class AccountMove(models.Model):
                     det_anti.payment_id.saldo_disponible=disponible-det_anti.monto_usar
                     det_anti.payment_id.usado=True if det_anti.payment_id.saldo_disponible==0 else False
                     det_anti.confirmado='si'
+                    self.consiliacion_faltante()
 
             if nro_si==0:
                 raise UserError(_('No hay nuevos anticipos para cruzar'))
@@ -210,18 +254,29 @@ class AccountMove(models.Model):
     
     def button_draft(self):
         super().button_draft()
+
         for selff in self:
+            if selff.type=='in_invoice':
+                cuenta_anticipo=self.partner_id.account_anti_payable_id
+            if selff.type=='out_invoice':
+                cuenta_anticipo=self.partner_id.account_anti_receivable_id
             if selff.usar_anticipo=='si':
                 if selff.payment_ids:
                     for rec in selff.payment_ids:
-                        if rec.asiento_anticipo:
-                            rec.asiento_anticipo.with_context(force_delete=True).unlink()
-                        valor=rec.saldo_disponible+rec.monto_usar
-                        rec.saldo_disponible=valor
-                        rec.payment_id.saldo_disponible=valor
-                        rec.payment_id.usado=False
-                        rec.monto_usar=valor
-                        rec.confirmado='no'
+                        if rec.confirmado=="si":
+                            rec.consiliacion_sec_id.with_context(force_delete=True).unlink()
+                            valor=rec.saldo_disponible+rec.monto_usar
+                            rec.saldo_disponible=valor
+                            rec.payment_id.saldo_disponible=valor
+                            rec.payment_id.usado=False
+                            rec.monto_usar=valor
+                            rec.confirmado='no'
+                            if rec.asiento_anticipo:
+                                for roc in rec.asiento_anticipo.line_ids:
+                                    if roc.account_id.id==cuenta_anticipo.id:
+                                        roc.amount_residual=valor
+                                rec.asiento_anticipo.with_context(force_delete=True).unlink()
+                        
 
 
 
@@ -303,6 +358,7 @@ class AccountPaymentAnticipo(models.Model):
     asiento_anticipo = fields.Many2one('account.move')
     tipo = fields.Selection(related='move_id.type',store=True)
     confirmado=fields.Char(default='no')
+    consiliacion_sec_id = fields.Many2one('account.partial.reconcile')
 
     @api.onchange('payment_id','move_id.state')
     def _compute_saldo_disponible(self):

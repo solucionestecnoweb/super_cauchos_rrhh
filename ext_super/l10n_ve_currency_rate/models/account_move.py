@@ -51,6 +51,7 @@ class AccountMove(models.Model):
             cuenta_cli=selff.partner_id.property_account_receivable_id.id
             # CLIENTES
             if selff.type in ('out_invoice','out_refund'): 
+                moneda_fact=selff.currency_id
                 for rec in selff.line_ids:
                     if rec.account_id.id==cuenta_cli:
                         id_move=rec.id
@@ -62,13 +63,19 @@ class AccountMove(models.Model):
                         if busca_tasa:
                             for tasa in busca_tasa:
                                 valor_tasa=tasa.move_id.os_currency_rate
+                                balance=abs(tasa.balance)
                         ####
-                        monto=monto+(det.amount/valor_tasa)
-                        det.amount_currency=(det.amount/valor_tasa)
+                        if moneda_fact.id!=3:
+                            monto=monto+(balance/valor_tasa)#(det.amount_currency/valor_tasa)
+                            det.amount_currency=(balance/valor_tasa)#(det.amount/valor_tasa)
+                        else:
+                            monto=monto+balance
+                            det.amount_currency=balance
                 aux=selff.amount_total
                 selff.amount_residual=aux-monto
             # PROVEEDOES
             if selff.type in ('in_invoice','in_refund'): 
+                moneda_fact=selff.currency_id
                 for rec in selff.line_ids:
                     if rec.account_id.id==cuenta_pro:
                         id_move=rec.id
@@ -80,10 +87,17 @@ class AccountMove(models.Model):
                         if busca_tasa:
                             for tasa in busca_tasa:
                                 valor_tasa=tasa.move_id.os_currency_rate
+                                balance=abs(tasa.balance)
                         ####
-                        monto=monto+(det.amount_currency/valor_tasa)
-                        det.amount_currency=(det.amount/valor_tasa)
+                        idd=det.id
+                        if moneda_fact.id!=3:
+                            monto=monto+(balance/valor_tasa)#(det.amount_currency/valor_tasa)
+                            det.amount_currency=(balance/valor_tasa)#(det.amount/valor_tasa)
+                        else:
+                            monto=monto+balance
+                            det.amount_currency=balance
                 aux=selff.amount_total
+                #raise UserError(_('monto=%s y aux=%s')%(monto,aux))
                 selff.amount_residual=aux-monto
             
     def _compute_payments_widget_to_reconcile_info(self):
@@ -122,9 +136,11 @@ class AccountMove(models.Model):
                             currency = line.company_id.currency_id
                             amount_to_show = currency._convert(abs(line.amount_residual), move.currency_id, move.company_id,
                                                                line.date or fields.Date.today())
-                        else: 
-                        	
-                            amount_to_show=abs(line.amount_residual/(line.move_id.os_currency_rate+0.0000000000000000001))
+                        else:
+                            if move.currency_id.id!=move.company_id.currency_id.id:# diferente a la moneda local
+                                amount_to_show=abs(line.amount_residual/(line.move_id.os_currency_rate+0.0000000000000000001))
+                            else:
+                                amount_to_show=abs(line.amount_residual)
                         ## FIN MODIFICACION CODIGO PARA TASA PERSONALIZADA
                     if float_is_zero(amount_to_show, precision_rounding=move.currency_id.rounding):
                         continue
@@ -158,7 +174,10 @@ class AccountMove(models.Model):
                 if counterpart_line.move_id.custom_rate!=True:
                     amount = partial.amount_currency
                 else:
-                    amount = abs(counterpart_line.move_id.amount_total_signed/counterpart_line.move_id.os_currency_rate)
+                    if self.currency_id.id!=self.company_id.currency_id.id: # diferente a la moneda local
+                        amount = abs(counterpart_line.move_id.amount_total_signed/counterpart_line.move_id.os_currency_rate)
+                    else:
+                        amount = abs(counterpart_line.move_id.amount_total_signed)
                 ## FIN MODIFICACION CODIGO PARA TASA PERSONALIZADA
             else:
                 amount = partial.company_currency_id._convert(partial.amount, self.currency_id, self.company_id, self.date)
