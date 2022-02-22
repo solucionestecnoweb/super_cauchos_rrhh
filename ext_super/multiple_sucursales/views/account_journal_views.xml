@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="journal_inherit_view_form" model="ir.ui.view">
+        <field name="name">journal.inherit.view.form2</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+
+           
+
+            <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
+                <page string="Configuración sec. Facturación" name="conf_fact" attrs="{'invisible': [('type', 'not in',('sale','sale_refund','sale_debit'))]}">
+                  <group name="studio_group_exEyo">
+                    <group name="group_exEyo_left">
+                        <field name="sucursal_id" string="Sucursal"  domain="[('company_id.id','=',company_id)]"/>
+                        <label for="doc_sequence_number_next" string="Proximo Nro documento"/>
+                            <div>
+                                <field name="doc_sequence_number_next" style="padding-right: 1.0em" string="Proximo Nro Documento"/>
+                                <field name="doc_sequence_id" attrs="{'required':[('type', 'in',('sale','sale_refund','sale_debit'))]}"/>  
+                            </div> 
+                    </group>
+                    <group name="group_exEyo_right">
+                        <label for="ctrl_sequence_number_next" string="Proximo Nro Control"/>
+                            <div>
+                                <field name="ctrl_sequence_number_next" style="padding-right: 1.0em" string="Proximo Nro Control"/>
+                                <field name="ctrl_sequence_id" attrs="{'required':[('type', 'in',('sale','sale_refund','sale_debit'))]}"/>  
+                            </div>
+                    </group>
+                  </group>
+                </page>
+            </xpath>
+
+             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='conf_fact']/group[@name='studio_group_exEyo']/group[@name='group_exEyo_right']/label[1]" position="before">
+                <xpath expr="//field[@name='tipo_doc']" position="move"/>
+            </xpath>
+            <xpath expr="//field[@name='tipo_doc']" position="attributes">
+                <attribute name="attrs">{"required": ["&amp;",["type","=","sale"],["type","=","purchase"]]}</attribute>
+                <attribute name="required">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>

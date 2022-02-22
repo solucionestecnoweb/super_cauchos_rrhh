@@ -20,6 +20,7 @@ class ProrrateoIva(models.Model):
     purchase_invoice_ids = fields.Many2many(comodel_name='account.move', string='Facturas de Compras')
     # sale_invoice_ids = fields.Many2many(comodel_name='account.move', string='Facturas de Ventas')
     move_ids = fields.Many2many(comodel_name='account.move.line', string='Asientos Contables')
+    invoice_ids = fields.Many2one('account.move')
     
     ### Nombre Código ###
 

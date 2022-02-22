@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_res_sucursal,res.sucursal,model_res_sucursal,base.group_system,1,1,1,1
+access_transfer_account_move,wizards.transfer.account_move,model_wizards_transfer_account_move,base.group_system,1,1,1,1

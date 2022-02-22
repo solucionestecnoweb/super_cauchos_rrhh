@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_sucursal_form" model="ir.ui.view">
+        <field name="name">res.sucursal.form</field>
+        <field name="model">res.sucursal</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <header>
+                    <button name="action_post" string="Activar"    class="oe_highlight" type="object"  attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                    <button name="action_cancel" string="Cancelar" class="oe_highlight" type="object"  attrs="{'invisible': [('state', '!=', 'done')]}"/>
+                    <button name="action_draft" string="Borrador" class="oe_highlight" type="object"  attrs="{'invisible': [('state', '!=', 'cancel')]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,done,cancel"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <notebook colspan="4">
+                        <page string="Informacion General">
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                
+                            </group>
+                            <group>
+                                <field name="address"/>
+                                <field name="company_id" string="Compañia" required="1"/>
+                            </group>
+                        </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="res_sucursal_tree" model="ir.ui.view">
+        <field name="name">res.sucursal.tree</field>
+        <field name="model">res.sucursal</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name"/>
+                <field name="address"/>
+                <field name="state"/>
+                <field name="company_id" string="Compañia"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- <record id="view_users_form" model="ir.ui.view">
+        <field name="name">account.move.inherit.view.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+
+           <xpath expr="//field[@name='journal_id']" position="after"> 
+                <field name="sucursal_id"/>
+            </xpath>
+        </field>
+    </record> -->
+
+
+    <record id="res_sucursal_action" model="ir.actions.act_window">
+        <field name="name">Sucursales</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.sucursal</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <record id="view_users_form" model="ir.ui.view">
+        <field name="name">res.users.inherit.view.form</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <!-- Add your xpath here -->
+            <xpath expr="//group[2]" position="after">
+                <group name="Sucursales" string="Sucursales">
+                    <field name="sucursal_ids" widget="many2many_tags" string=" Sucursales permitidas" options="{'no_create': True}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <menuitem
+        id="res_sucursal_menu"
+        name="Sucursales"
+        action="res_sucursal_action"
+        parent="base.menu_users"
+        sequence="20"/>
+
+</odoo>

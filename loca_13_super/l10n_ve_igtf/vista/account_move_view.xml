@@ -5,10 +5,20 @@
         <field name="model">account.move</field>
         <field name="inherit_id" ref="account.view_move_form"/>
         <field name="arch" type="xml">
+
+            <xpath expr="//button[@id='account_invoice_payment_btn']" position="after">
+                         <button name="conf_anti" string="Confirmar anticipos asociados" type="object" attrs="{'invisible': ['|','|',('usar_anticipo','!=','si'),('state','=','draft'),('invoice_payment_state','=','paid')]}" class="oe_highlight"/>
+
+                         <button name="prueba" string="prueba" type="object" class="oe_highlight"/>
+                         <!--button name="button_draft" string="borrador 2" type="object" /-->
+            </xpath>
+
             
             <xpath expr="//field[@name='partner_id']" position="after">
 
-            	<field name="usar_anticipo" string="Usar Anticipo?" widget="boolean_toggle" attrs="{'invisible': [('type', '=','entry')]}"/>
+            	<field name="usar_anticipo" string="Usar Anticipo?"  attrs="{'invisible': [('type', '=','entry')]}" widget="radio"/> <!-- widget="boolean_toggle"-->
+
+                <!--  'readonly': [('state', '=', 'posted')] -->
 
                 <!--field name="payment_id"  options="{'no_open':True, 'no_create': True}" domain="[('partner_id.id','=',partner_id),('usado','!=',True),('tipo','=',type)]" attrs="{'invisible': [('type', 'not in', ('in_invoice','out_invoice'))]}"/-->
 
@@ -20,14 +30,32 @@
 
 
 			<xpath expr="//page[@name='other_info']" position="before">
-			  <page string="Anticipos" attrs="{'invisible': [('type', '=', 'entry')]}">
-			    <group string="Anticipos Disponibles">
-			        <!--field name="payment_ids" widget="one2many"/-->
-			        <!--field name="payment_ids" widget="many2many_tags" /-->
-			        <field name="payment_ids" widget="one2many_list" domain="[('partner_id.id','=',partner_id),('usado','!=',True),('tipo','=',type)]" attrs="{'invisible': [('type', 'not in', ('in_invoice','out_invoice'))]}"/>
-			    </group>
-			  </page>
-			</xpath>
+              <page string="Anticipos" attrs="{'invisible': ['|',('type', '=', 'entry'),('usar_anticipo','!=','si')]}">
+                <group string="Anticipos Disponibles">
+                    <!--field name="payment_ids" widget="one2many"/-->
+                    <!--field name="payment_ids" widget="many2many_tags" /-->
+                    <!--field name="payment_ids" widget="one2many_list" domain="[('partner_id.id','=',partner_id),('usado','!=',True),('tipo','=',type)]" attrs="{'invisible': [('type', 'not in', ('in_invoice','out_invoice'))]}"/-->
+                    <!--  attrs="{'readonly': [('state', '=', 'posted')]}" -->
+                    <field name="payment_ids" nolabel="1"  attrs="{'readonly': [('invoice_payment_state','=','paid')]}">
+                        <tree string="Anticipos" editable="buttom">
+                            <field name="payment_id" string="Pago Anticipo" domain="[('usado','!=',True),('partner_id.id','=',partner_id),('anticipo','=',True),('tipo','=',tipo)]" attrs="{'readonly': [('confirmado', '=', 'si')]}" widget="many2one_barcode"/>
+                            <field name="monto_original" string="Monto original" readonly="1"/>
+                            <field name="saldo_disponible" string="Disponible"/>
+                            <field name="currency_id" string="Moneda" readonly="1" invisible="1"/>
+                            
+                            <field name="monto_usar" string="Monto a usar" attrs="{'readonly': [('confirmado', '=', 'si')]}"/>
+                            <field name="partner_id" invisible="1"/>
+                            <field name="confirmado" invisible="0" readonly="1"/>
+                            <field name="asiento_anticipo" readonly="1" widget="many2one_barcode"/>
+                            <field name="move_id" invisible="1"/>
+                            <field name="tipo" invisible="1"/>
+                            <field name="consiliacion_sec_id" invisible="1"/>
+                            
+                        </tree>
+                    </field>
+                </group>
+              </page>
+            </xpath>
 			
             
         </field>

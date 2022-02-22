@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="vista_from_vat_manual_vendor" model="ir.ui.view">
+        <field name="name">vista.from.vat.manual.vendor</field>
+        <field name="model">vat.retention</field>
+        <field name="inherit_id" ref="vat_retention.retention_vat_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header//button[@name='cargar_fact']" position="before">
+                <button name="confirmar_2" type="object" string="Confirmar 2" class="oe_highlight" attrs="{'invisible': [('manual', '!=',True)]}"/>
+            </xpath>
+
+            <xpath expr="//field[@name='voucher_delivery_date']" position="after">
+                <field name="diario" string="Diario Contable" attrs="{'invisible': [('manual', '!=',True)]}"/>
+            </xpath>
+
+            <xpath expr="//field[@name='invoice_number']" position="after">
+                <field name="nro_control"/>
+            </xpath>
+
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='retention_line_ids']" position="replace">
+                <field name="retention_line_ids" nolabel="1" readonly="False">
+                    <tree string="VAT Retention Line" editable="buttom">
+                        <field name="invoice_number"/>
+                        <field name="amount_vat_ret" string="Importe del impuesto"/>
+                        <field name="retention_rate" string="Tasa de retención" readonly="False"/>
+                        <field name="retention_amount_aux" invisible="1"/>
+                        <field name="retention_amount" readonly="False"/>
+                        <field name="move_id" string="Account Entry"/>
+                    </tree>
+                </field>
+            </xpath>
+        </field>
+    </record>
+
+    
+</odoo>
