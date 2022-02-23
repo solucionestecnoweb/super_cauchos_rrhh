@@ -63,7 +63,7 @@ class AccountMove(models.Model):
 
     ################### esto e para los diarios  ##########################
 
-    """def get_invoice_number_cli(self):
+    def get_invoice_number_cli(self):
         '''metodo que crea el Nombre del asiento contable si la secuencia no esta creada, crea una con el
         nombre: 'l10n_ve_cuenta_retencion_iva'''
         name=''
@@ -122,7 +122,7 @@ class AccountMove(models.Model):
                     IrSequence = self.env['ir.sequence'].with_context(force_company=company_id)
                     name = IrSequence.next_by_code(SEQUENCE_CODE)
 
-        return name"""
+        return name
 ############################################
 
     def demo(self):
