@@ -81,6 +81,50 @@ class hr_special_days(models.Model):
     ########################33 CAMPO PARA DEDUCCIONES DE ANTICIPOS POR VACACIONES ###############################
     anticipo_vac_check = fields.Boolean(default=False, string="Anticipos de Vacaciones")
     anticipo_vac_value = fields.Float(default=1)
+    #################### ADICIONALES ############
+    fecha_hoy = fields.Date(compute='_compute_hoy')
+    custom_rate_gene = fields.Boolean(default=False)
+    os_currecy_rate_gene = fields.Float(digits=(12, 4))
+    os_currecy_rate_gene_aux = fields.Float(compute='_compute_tasa_odoo',digits=(12, 4))
+
+    @api.onchange('employee_id','currecy_rate_gene')
+    def _compute_tasa_odoo(self):
+        valor=1
+        lista_tasa = self.env['res.currency.rate'].search([('currency_id', '=', self.env.company.currency_secundaria_id.id),('name','<=',self.fecha_hoy)],order='name ASC')
+        if lista_tasa:
+            for det in lista_tasa:
+                if det.rate:
+                    valor=(1/det.rate)
+        self.os_currecy_rate_gene_aux=valor
+        if self.custom_rate_gene!=True:
+            self.os_currecy_rate_gene=valor
+
+    
+
+    @api.onchange('os_currecy_rate_gene')
+    def valida_valor_tasa_nula(self):
+        if self.os_currecy_rate_gene==0 or self.os_currecy_rate_gene<0:
+            raise UserError(_('Valor de la tasa no puede ser nula o negativa'))
+
+    ######### FUNCION QUE COLOCA LA TASA PERSONALIZADA EN EL ASIENTO CONTABLE
+    def action_payslip_done(self):
+        super().action_payslip_done()
+        #raise UserError(_('asiento=%s')%self.move_id.id)
+        for roc in self:
+            roc.valida_pago_repetido()
+            roc.move_id.custom_rate=roc.custom_rate_gene
+            roc.move_id.os_currency_rate=roc.os_currecy_rate_gene
+
+    def _compute_hoy(self):
+        for selff in self:
+            hoy=datetime.now().strftime('%Y-%m-%d')
+            selff.fecha_hoy=hoy
+
+    ############## FUNCION QUER VALIDA QUE A UN EMPLEADO NO SE LE PAGUE UNA NOMINA 2 VECES EN UN MISMO PERIODO
+    def valida_pago_repetido(self):
+        rastrea=self.env['hr.payslip'].search([('employee_id','=',self.employee_id.id),('struct_id','=',self.struct_id.id),('date_from','<=',self.date_from),('date_to','>=',self.date_from),('id','!=',self.id)])
+        if rastrea:
+            raise UserError(_('No se puede procesar esta nomina. El empleado %s  ya se le generó esta nómina en este periódo')%self.employee_id.name)
 
     @api.onchange('currency_pres_id','monto','os_currecy_rate')
     def calcula_monto_prestamo_bs(self):
@@ -151,8 +195,9 @@ class hr_special_days(models.Model):
             if selff.employee_id.id:
                 fecha_ing=selff.employee_id.contract_id.date_start
                 fecha_actual=selff.date_to
-                dias=selff.days_dife(fecha_actual,fecha_ing)
-                tiempo=dias/360
+                if selff.employee_id.contract_id:
+                    dias=selff.days_dife(fecha_actual,fecha_ing)
+                    tiempo=dias/360
             selff.tiempo_antiguedad=tiempo
 
     @api.depends('employee_id')
@@ -247,7 +292,7 @@ class hr_special_days(models.Model):
     def _compute_days_attended(self):
         for selff in self:
             nro_asis=0
-            asistencia=selff.env['hr.attendance'].search([('check_out','<=',selff.date_to),('check_in','>=',selff.date_from)])
+            asistencia=selff.env['hr.attendance'].search([('check_out','<=',selff.date_to),('check_in','>=',selff.date_from),('employee_id','=',selff.employee_id.id)])
             #raise UserError(_('valor= %s')%asistencia)
             if asistencia:
                 for det in asistencia:

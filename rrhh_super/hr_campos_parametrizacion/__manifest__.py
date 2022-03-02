@@ -40,7 +40,8 @@
         'hr_attendance',
         'hr_holidays',
         #'l10n_ve_res_currency',
-        'hr_holidays'
+        'hr_holidays',
+        'hr_payroll_account',  ## este es un modulo de odoo nativo para que haga el asiento de la nomina
     ],
     'data': [
         'views/hr_contract_add_fields_view1.xml',
@@ -56,6 +57,7 @@
         'views/hr_salary_rule_inherit.xml',
         'views/hr_leave_inherit.xml',
         'views/hr_requisiciones.xml',
+        'views/hr_payslip_employee_inherit.xml',
         'report/recibo_pago.xml',
         'report/recibo_vacaciones.xml',
         'report/recibo_liquidacion.xml',

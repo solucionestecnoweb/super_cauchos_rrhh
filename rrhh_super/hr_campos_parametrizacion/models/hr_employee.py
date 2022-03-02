@@ -264,16 +264,16 @@ class HrGrupoFamiliar(models.Model):
     name = fields.Char()
     name2 = fields.Char()
     fecha_nac = fields.Date()
-    edad = fields.Integer(compute='_compute_edad')
+    edad = fields.Char(compute='_compute_edad')
     sexo = fields.Selection([('F','Femenino'),('M','Masculino')])
     identificador = fields.Char(default="N/A")
     nro_telefono = fields.Char()
-    parentesco = fields.Selection([('ma','Madre'),('pa','Padre'),('hi','Hijo(@)'),('ab','Abuelo@'),('ot','Otro')])
+    parentesco = fields.Selection([('ma','Madre'),('pa','Padre'),('hi','Hijo(@)'),('ab','Abuelo@'),('ti','Tio(@)'),('pr','Padrino'),('mr','Madrina'),('ot','Otro')])
     date_actual = fields.Date(string='Date From', compute='_compute_fecha_hoy')
 
     @api.onchange('fecha_nac')
     def _compute_edad(self):
-        tiempo=0
+        tiempo="0 Mes"
         for selff in self:
             if selff.employee_id.id:
                 if selff.fecha_nac:
@@ -282,7 +282,10 @@ class HrGrupoFamiliar(models.Model):
                     fecha_ing=selff.date_actual
                 fecha_actual=selff.date_actual
                 dias=selff.days_dife(fecha_actual,fecha_ing)
-                tiempo=dias/365
+                if dias<365:
+                    tiempo=str(round(dias/30,1))+" Meses"
+                else:
+                    tiempo=str(int(round(dias/365,0)))+" Años"
             selff.edad=tiempo
 
     def days_dife(self,d1, d2):

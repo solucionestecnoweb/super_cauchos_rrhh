@@ -7,6 +7,10 @@
             <field name="model">hr.contract</field>
             <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
             <field name="arch" type="xml">
+                <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='information']/group[@name='main_info']/group[@name='salary_and_advantages']/field[@name='wage_type']" position="after">
+                    <field name="nr_cuenta" string="Cuenta Bancaria"/>
+                    <field name="wage_div" string="Salario en Divisas($)"/>
+                </xpath>
                 <xpath expr="//field[@name='trial_date_end']" position="after">
                     <field name="fecha_egreso" string="Fecha de Egreso"/>
                     <field name="motivo_egreso" string="Motivo del Egreso"/>

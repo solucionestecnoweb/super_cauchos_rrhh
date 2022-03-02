@@ -113,6 +113,10 @@ class Contract(models.Model):
     fecha_egreso = fields.Datetime()
     motivo_egreso = fields.Char()
 
+    ########################## CAMPO SALARIO BASICO EN DOLARES DEL EMPLEADO SEGUN CONTRATO ##########
+    wage_div = fields.Float()
+    nr_cuenta = fields.Char()
+
 class HistoricoContract(models.Model):
     _name= 'hr.historico.cargo'
 
